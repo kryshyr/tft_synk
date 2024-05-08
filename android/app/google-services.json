@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "700778693716",
+    "project_id": "tft-synk",
+    "storage_bucket": "tft-synk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700778693716:android:3b42bd9bdb0cdf1fdb59c1",
+        "android_client_info": {
+          "package_name": "com.example.tft_synk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6mVT-SZjwG1vJzCrJ8QSoBGgGiKXlmRo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

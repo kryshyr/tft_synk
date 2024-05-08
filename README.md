@@ -1,16 +1,19 @@
-# tft_synk
+# TFT Synk
 
-A new Flutter project.
+TFT Synk is a mobile app designed to enhance your experience with the popular game Teamfight Tactics (TFT). With TFT Synk, you can effortlessly create custom team compositions, equip champions with items, and strategize your way to victory on the battlefield.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Team Composition Builder:** Craft personalized team compositions with ease, utilizing intuitive drag-and-drop functionality and champion filters for seamless selection.
 
-A few resources to get you started if this is your first Flutter project:
+- **Item Equipping:** Equip champions with up to three items each, utilizing detailed item information to optimize your team's performance.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Save and Manage Team Compositions:** Save your custom team compositions for future reference, and edit them at any time to adapt to changing strategies.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Usage
+
+1. Open the app and navigate to the Team Composition Builder.
+2. Select champions from the provided list and drag them onto the map to create your desired team composition.
+3. Equip champions with items by tapping on them and selecting from the available options.
+4. Save your composition for future reference and edit it as needed.
