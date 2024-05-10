@@ -1,0 +1,684 @@
+{
+    "tier1": [
+        {
+            "id": "ahri",
+            "name": "Ahri",
+            "tier": 1,
+            "image": "Ahri.png",
+            "traits": [
+                "Arcanist",
+                "Fated"
+            ],
+            "description": "Love Bomb: Damage to target and adjacent enemies"
+        },
+        {
+            "id": "caitlyn",
+            "name": "Caitlyn",
+            "tier": 1,
+            "image": "Caitlyn.png",
+            "traits": [
+                "Ghostly",
+                "Sniper"
+            ],
+            "description": "Ace in the Hole: Long-range physical damage"
+        },
+        {
+            "id": "cho'gath",
+            "name": "Cho'Gath",
+            "tier": 1,
+            "image": "Cho'Gath.png",
+            "traits": [
+                "Behemoth",
+                "Mythic"
+            ],
+            "description": "Eruption: Burns or wounds with a shield"
+        },
+        {
+            "id": "darius",
+            "name": "Darius",
+            "tier": 1,
+            "image": "Darius.png",
+            "traits": [
+                "Duelist",
+                "Umbral"
+            ],
+            "description": "Decimate: Magic damage and self-buff"
+        },
+        {
+            "id": "garen",
+            "name": "Garen",
+            "tier": 1,
+            "image": "Garen.png",
+            "traits": [
+                "Storyweaver",
+                "Warden"
+            ],
+            "description": "Courage: Shield and empowered attack"
+        },
+        {
+            "id": "jax",
+            "name": "Jax",
+            "tier": 1,
+            "image": "Jax.png",
+            "traits": [
+                "Inkshadow",
+                "Warden"
+            ],
+            "description": "Counter-Strike: Stuns after defenses up"
+        },
+        {
+            "id": "kha'zix",
+            "name": "Kha'Zix",
+            "tier": 1,
+            "image": "Kha'Zix.png",
+            "traits": [
+                "Heavenly",
+                "Reaper"
+            ],
+            "description": "Leap: Dash to low health for damage"
+        },
+        {
+            "id": "kobuko",
+            "name": "Kobuko",
+            "tier": 1,
+            "image": "Kobuko.png",
+            "traits": [
+                "Bruiser",
+                "Fortune"
+            ],
+            "description": "Money Dance: Gains health or gold, empowered attack"
+        },
+        {
+            "id": "kog'maw",
+            "name": "Kog'Maw",
+            "tier": 1,
+            "image": "Kog'Maw.png",
+            "traits": [
+                "Invoker",
+                "Mythic",
+                "Sniper"
+            ],
+            "description": "Raining Artillery: Long-range magic damage"
+        },
+        {
+            "id": "malphite",
+            "name": "Malphite",
+            "tier": 1,
+            "image": "Malphite.png",
+            "traits": [
+                "Behemoth",
+                "Heavenly"
+            ],
+            "description": "Topaz Skin: Shield and cone attack"
+        },
+        {
+            "id": "rek'sai",
+            "name": "Rek'Sai",
+            "tier": 1,
+            "image": "Rek'Sai.png",
+            "traits": [
+                "Bruiser",
+                "Dryad"
+            ],
+            "description": "Uproot: Resists and damage or heal"
+        },
+        {
+            "id": "sivir",
+            "name": "Sivir",
+            "tier": 1,
+            "image": "Sivir.png",
+            "traits": [
+                "Storyweaver",
+                "Trickshot"
+            ],
+            "description": "On The Hunt: Attack speed buff"
+        },
+        {
+            "id": "yasuo",
+            "name": "Yasuo",
+            "tier": 1,
+            "image": "Yasuo.png",
+            "traits": [
+                "Duelist",
+                "Fated"
+            ],
+            "description": "Steel Tempest: Shield and magic damage"
+        }
+    ],
+    "tier2": [
+        {
+            "id": "aatrox",
+            "name": "Aatrox",
+            "tier": 2,
+            "image": "Aatrox.png",
+            "traits": [
+                "Bruiser",
+                "Ghostly",
+                "Inkshadow"
+            ],
+            "description": "Phantom Blade: Shreds magic resist and heals"
+        },
+        {
+            "id": "gnar",
+            "name": "Gnar",
+            "tier": 2,
+            "image": "Gnar.png",
+            "traits": [
+                "Dryad",
+                "Warden"
+            ],
+            "description": "Boulder Toss: Damage or disruption line"
+        },
+        {
+            "id": "janna",
+            "name": "Janna",
+            "tier": 2,
+            "image": "Janna.png",
+            "traits": [
+                "Dragonlord",
+                "Invoker"
+            ],
+            "description": "Heavenly Winds: Shield allies and give damage"
+        },
+        {
+            "id": "kindred",
+            "name": "Kindred",
+            "tier": 2,
+            "image": "Kindred.png",
+            "traits": [
+                "Dryad",
+                "Fated",
+                "Reaper"
+            ],
+            "description": "Flourish of Arrows: Dash and damage two targets"
+        },
+        {
+            "id": "lux",
+            "name": "Lux",
+            "tier": 2,
+            "image": "Lux.png",
+            "traits": [
+                "Arcanist",
+                "Porcelain"
+            ],
+            "description": "Bunny Binding: Projectile CC"
+        },
+        {
+            "id": "neeko",
+            "name": "Neeko",
+            "tier": 2,
+            "image": "Neeko.png",
+            "traits": [
+                "Arcanist",
+                "Heavenly",
+                "Mythic"
+            ],
+            "description": "Hop Blossom: Defense, heal, slam damage"
+        },
+        {
+            "id": "qiyana",
+            "name": "Qiyana",
+            "tier": 2,
+            "image": "Qiyana.png",
+            "traits": [
+                "Duelist",
+                "Heavenly"
+            ],
+            "description": "Supreme Display: Empowered attacks in a line"
+        },
+        {
+            "id": "riven",
+            "name": "Riven",
+            "tier": 2,
+            "image": "Riven.png",
+            "traits": [
+                "Altruist",
+                "Bruiser",
+                "Storyweaver"
+            ],
+            "description": "Broken Wings: Knocks away and damages"
+        },
+        {
+            "id": "senna",
+            "name": "Senna",
+            "tier": 2,
+            "image": "Senna.png",
+            "traits": [
+                "Inkshadow",
+                "Sniper"
+            ],
+            "description": "Absolution: Long-range damage and buff"
+        },
+        {
+            "id": "shen",
+            "name": "Shen",
+            "tier": 2,
+            "image": "Shen.png",
+            "traits": [
+                "Behemoth",
+                "Ghostly"
+            ],
+            "description": "Spirit's Refuge: Ally defense and self-empowerment"
+        },
+        {
+            "id": "teemo",
+            "name": "Teemo",
+            "tier": 2,
+            "image": "Teemo.png",
+            "traits": [
+                "Fortune",
+                "Trickshot"
+            ],
+            "description": "Dim-Sum Delivery: Single target poison"
+        },
+        {
+            "id": "yorick",
+            "name": "Yorick",
+            "tier": 2,
+            "image": "Yorick.png",
+            "traits": [
+                "Behemoth",
+                "Umbral"
+            ],
+            "description": "Dark Despoil: Health or damage siphon"
+        },
+        {
+            "id": "zyra",
+            "name": "Zyra",
+            "tier": 2,
+            "image": "Zyra.png",
+            "traits": [
+                "Sage",
+                "Storyweaver"
+            ],
+            "description": "Paper Thorns: Summons damaging plants"
+        }
+    ],
+    "tier3": [
+        {
+            "id": "alune",
+            "name": "Alune",
+            "tier": 3,
+            "image": "Alune.png",
+            "traits": [
+                "Invoker",
+                "Umbral"
+            ],
+            "description": "Lunar Barrage: Multi-target meteor shower"
+        },
+        {
+            "id": "amumu",
+            "name": "Amumu",
+            "tier": 3,
+            "image": "Amumu.png",
+            "traits": [
+                "Porcelain",
+                "Warden"
+            ],
+            "description": "Herbal Tea-rs: Heal or damage tears around self"
+        },
+        {
+            "id": "aphelios",
+            "name": "Aphelios",
+            "tier": 3,
+            "image": "Aphelios.png",
+            "traits": [
+                "Fated",
+                "Sniper"
+            ],
+            "description": "Duskwave: Magic damage waves"
+        },
+        {
+            "id": "diana",
+            "name": "Diana",
+            "tier": 3,
+            "image": "Diana.png",
+            "traits": [
+                "Dragonlord",
+                "Sage"
+            ],
+            "description": "Purification Rites: Self-heal and empower attacks"
+        },
+        {
+            "id": "illaoi",
+            "name": "Illaoi",
+            "tier": 3,
+            "image": "Illaoi.png",
+            "traits": [
+                "Arcanist",
+                "Ghostly",
+                "Warden"
+            ],
+            "description": "Prophet of Spirits: Shield and damaging tentacle"
+        },
+        {
+            "id": "soraka",
+            "name": "Soraka",
+            "tier": 3,
+            "image": "Soraka.png",
+            "traits": [
+                "Altruist",
+                "Heavenly"
+            ],
+            "description": "Divine Judgement: Strips mana and magic damage"
+        },
+        {
+            "id": "tahm_kench",
+            "name": "Tahm Kench",
+            "tier": 3,
+            "image": "Tahm Kench.png",
+            "traits": [
+                "Bruiser",
+                "Mythic"
+            ],
+            "description": "Tongue Lash: Shield and damage"
+        },
+        {
+            "id": "thresh",
+            "name": "Thresh",
+            "tier": 3,
+            "image": "Thresh.png",
+            "traits": [
+                "Behemoth",
+                "Fated"
+            ],
+            "description": "Guided Passage: Transfer stats to ally"
+        },
+        {
+            "id": "tristana",
+            "name": "Tristana",
+            "tier": 3,
+            "image": "Tristana.png",
+            "traits": [
+                "Duelist",
+                "Fortune"
+            ],
+            "description": "Firecracker Frenzy: Dash explosion"
+        },
+        {
+            "id": "volibear",
+            "name": "Volibear",
+            "tier": 3,
+            "image": "Volibear.png",
+            "traits": [
+                "Duelist",
+                "Inkshadow"
+            ],
+            "description": "Ink Smash: Empowered attacks"
+        },
+        {
+            "id": "yone",
+            "name": "Yone",
+            "tier": 3,
+            "image": "Yone.png",
+            "traits": [
+                "Reaper",
+                "Umbral"
+            ],
+            "description": "Fate Sealed: Dash through enemies with debuff"
+        },
+        {
+            "id": "zoe",
+            "name": "Zoe",
+            "tier": 3,
+            "image": "Zoe.png",
+            "traits": [
+                "Arcanist",
+                "Fortune",
+                "Storyweaver"
+            ],
+            "description": "Calculated: Missile bounces between targets"
+        },
+        {
+            "id": "bard",
+            "name": "Bard",
+            "tier": 3,
+            "image": "Bard.png",
+            "traits": [
+                "Mythic",
+                "Trickshot"
+            ],
+            "description": "Meep Meep: For the next seconds, Bard attacks instead throw 2 Meeps, each dealing physical damage and magic damage."
+        }
+    ],
+    "tier4": [
+        {
+            "id": "annie",
+            "name": "Annie",
+            "tier": 4,
+            "image": "Annie.png",
+            "traits": [
+                "Fortune",
+                "Invoker"
+            ],
+            "description": "Get'em Tibbers: AoE stun/damage zone"
+        },
+        {
+            "id": "ashe",
+            "name": "Ashe",
+            "tier": 4,
+            "image": "Ashe.png",
+            "traits": [
+                "Porcelain",
+                "Sniper"
+            ],
+            "description": "Rain of Shards: Multi arrow physical damage volleys"
+        },
+        {
+            "id": "galio",
+            "name": "Galio",
+            "tier": 4,
+            "image": "Galio.png",
+            "traits": [
+                "Bruiser",
+                "Storyweaver"
+            ],
+            "description": "Savior's Protection: Taunt and shield allies"
+        },
+        {
+            "id": "kai_sa",
+            "name": "Kai'Sa",
+            "tier": 4,
+            "image": "Kai'Sa.png",
+            "traits": [
+                "Inkshadow",
+                "Trickshot"
+            ],
+            "description": "Inkstorm: Rapid missiles from multiple angles"
+        },
+        {
+            "id": "kayn",
+            "name": "Kayn",
+            "tier": 4,
+            "image": "Kayn.png",
+            "traits": [
+                "Ghostly",
+                "Reaper"
+            ],
+            "description": "Shadow Assassin: Transform and damage around self"
+        },
+        {
+            "id": "lee_sin",
+            "name": "Lee Sin",
+            "tier": 4,
+            "image": "Lee Sin.png",
+            "traits": [
+                "Dragonlord",
+                "Duelist"
+            ],
+            "description": "Dragon's Dance: Displace and vulnerable enemy champion"
+        },
+        {
+            "id": "lillia",
+            "name": "Lillia",
+            "tier": 4,
+            "image": "Lillia.png",
+            "traits": [
+                "Invoker",
+                "Mythic"
+            ],
+            "description": "Eep!: Rolling orb magic damage zones"
+        },
+        {
+            "id": "morgana",
+            "name": "Morgana",
+            "tier": 4,
+            "image": "Morgana.png",
+            "traits": [
+                "Ghostly",
+                "Sage"
+            ],
+            "description": "The Tempest's Torment: Blizzard zone of magic damage/CC"
+        },
+        {
+            "id": "nautilus",
+            "name": "Nautilus",
+            "tier": 4,
+            "image": "Nautilus.png",
+            "traits": [
+                "Mythic",
+                "Warden"
+            ],
+            "description": "Depth Charge: Multi-target knock-up waves"
+        },
+        {
+            "id": "ornn",
+            "name": "Ornn",
+            "tier": 4,
+            "image": "Ornn.png",
+            "traits": [
+                "Behemoth",
+                "Dryad"
+            ],
+            "description": "Forge of the Forest: Shield then channel damage"
+        },
+        {
+            "id": "sylas",
+            "name": "Sylas",
+            "tier": 4,
+            "image": "Sylas.png",
+            "traits": [
+                "Bruiser",
+                "Umbral"
+            ],
+            "description": "Unchain the Demon: Dash through enemies with swiping strikes"
+        },
+        {
+            "id": "syndra",
+            "name": "Syndra",
+            "tier": 4,
+            "image": "Syndra.png",
+            "traits": [
+                "Arcanist",
+                "Fated"
+            ],
+            "description": "Phantom Butterflies: Damage over time from orbiting orbs"
+        }
+    ],
+    "tier5": [
+        {
+            "id": "azir",
+            "name": "Azir",
+            "tier": 5,
+            "image": "Azir.png",
+            "traits": [
+                "Dryad",
+                "Invoker"
+            ],
+            "description": "Abilities pending"
+        },
+        {
+            "id": "hwei",
+            "name": "Hwei",
+            "tier": 5,
+            "image": "Hwei.png",
+            "traits": [
+                "Artist",
+                "Mythic"
+            ],
+            "description": "A Brush with Fate: Paint zones heal/damage"
+        },
+        {
+            "id": "irelia",
+            "name": "Irelia",
+            "tier": 5,
+            "image": "Irelia.png",
+            "traits": [
+                "Duelist",
+                "Storyweaver"
+            ],
+            "description": "Blade Dance: Projectiles strike low health enemies"
+        },
+        {
+            "id": "lissandra",
+            "name": "Lissandra",
+            "tier": 5,
+            "image": "Lissandra.png",
+            "traits": [
+                "Arcanist",
+                "Porcelain"
+            ],
+            "description": "Let'em Brew: Single target damage/CC tea infuser"
+        },
+        {
+            "id": "rakan",
+            "name": "Rakan",
+            "tier": 5,
+            "image": "Rakan.png",
+            "traits": [
+                "Altruist",
+                "Dragonlord",
+                "Lovers"
+            ],
+            "description": "Grand Entrance: AoE engage/CC"
+        },
+        {
+            "id": "sett",
+            "name": "Sett",
+            "tier": 5,
+            "image": "Sett.png",
+            "traits": [
+                "Fated",
+                "Umbral",
+                "Warden"
+            ],
+            "description": "Light and Shadow: Slam sends enemies flying"
+        },
+        {
+            "id": "udyr",
+            "name": "Udyr",
+            "tier": 5,
+            "image": "Udyr.png",
+            "traits": [
+                "Behemoth",
+                "Inkshadow",
+                "Spirit",
+                "Walker"
+            ],
+            "description": "Stance swapping: Fire cone and shredder modes"
+        },
+        {
+            "id": "wukong",
+            "name": "Wukong",
+            "tier": 5,
+            "image": "Wukong.png",
+            "traits": [
+                "Great Sage",
+                "Heavenly"
+            ],
+            "description": "Legendary Prowess: Cycles-empowered attacks"
+        },
+        {
+            "id": "xayah",
+            "name": "Xayah",
+            "tier": 5,
+            "image": "Xayah.png",
+            "traits": [
+                "Dragonlord",
+                "Trickshot",
+                "Lovers"
+            ],
+            "description": "Dynamic Duo: Feather barrage and AoE damage/disruption"
+        }
+    ]
+}
