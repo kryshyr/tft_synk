@@ -26,7 +26,7 @@ TFT Synk is a mobile app designed to enhance your experience with the popular ga
    - Navigate to the desired directory.
    - Clone the repository by running the following command:
    ```
-   git clone https://github.com/xkaze09/dpsm-website.git
+   git clone https://github.com/kryshyr/tft_synk.git
    ```
 
 ### Install Dependencies
