@@ -46,10 +46,18 @@ class ChampionList extends StatelessWidget {
                               runSpacing: 8.0,
                               children: [
                                 for (var champion in tieredChampions[tier]!)
-                                  Image.asset(
-                                    '../assets/champions/${champion.image}',
-                                    width: 60,
-                                    height: 60,
+                                  LongPressDraggable<Champion>(
+                                    data: champion,
+                                    feedback: Image.asset(
+                                      '../assets/champions/${champion.image}',
+                                      width: 60,
+                                      height: 60,
+                                    ),
+                                    child: Image.asset(
+                                      '../assets/champions/${champion.image}',
+                                      width: 60,
+                                      height: 60,
+                                    ),
                                   ),
                               ],
                             ),

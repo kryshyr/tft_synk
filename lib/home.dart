@@ -84,7 +84,7 @@ class HomeTab extends StatelessWidget {
             color: Color.fromRGBO(10, 20, 40, 1),
             height: MediaQuery.of(context).size.height / 3,
             child: Container(
-              child: buildHorizontalGrid(),
+              child: HexagonGrid(),
             ),
           ),
           Container(
