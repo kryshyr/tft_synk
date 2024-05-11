@@ -1,5 +1,5 @@
 {
-    "tier1": [
+    "1": [
         {
             "id": "ahri",
             "name": "Ahri",
@@ -145,7 +145,7 @@
             "description": "Steel Tempest: Shield and magic damage"
         }
     ],
-    "tier2": [
+    "2": [
         {
             "id": "aatrox",
             "name": "Aatrox",
@@ -294,7 +294,7 @@
             "description": "Paper Thorns: Summons damaging plants"
         }
     ],
-    "tier3": [
+    "3": [
         {
             "id": "alune",
             "name": "Alune",
@@ -366,7 +366,7 @@
             "id": "tahm_kench",
             "name": "Tahm Kench",
             "tier": 3,
-            "image": "Tahm Kench.png",
+            "image": "TahmKench.png",
             "traits": [
                 "Bruiser",
                 "Mythic"
@@ -441,7 +441,7 @@
             "description": "Meep Meep: For the next seconds, Bard attacks instead throw 2 Meeps, each dealing physical damage and magic damage."
         }
     ],
-    "tier4": [
+    "4": [
         {
             "id": "annie",
             "name": "Annie",
@@ -501,7 +501,7 @@
             "id": "lee_sin",
             "name": "Lee Sin",
             "tier": 4,
-            "image": "Lee Sin.png",
+            "image": "LeeSin.png",
             "traits": [
                 "Dragonlord",
                 "Duelist"
@@ -575,7 +575,7 @@
             "description": "Phantom Butterflies: Damage over time from orbiting orbs"
         }
     ],
-    "tier5": [
+    "5": [
         {
             "id": "azir",
             "name": "Azir",
