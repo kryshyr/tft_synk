@@ -1,34 +1,13 @@
 import 'package:flutter/material.dart';
 
-import './utils/champion.dart';
+import 'utils/champion_list.dart';
+import 'utils/hexagon_grid.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    final List<List<Widget>> hexRows = [];
-
-    // Generate the hexes in rows
-    for (int i = 0; i < 4; i++) {
-      final List<Widget> row = [];
-      for (int j = 0; j < 7; j++) {
-        row.add(
-          Flexible(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 80),
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Image.asset('../assets/icons/hex-icon.png',
-                    fit: BoxFit.contain),
-              ),
-            ),
-          ),
-        );
-      }
-      hexRows.add(row);
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(10, 20, 40, 1),
@@ -104,32 +83,8 @@ class HomeTab extends StatelessWidget {
           Container(
             color: Color.fromRGBO(10, 20, 40, 1),
             height: MediaQuery.of(context).size.height / 3,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    // color: Colors.green,
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: Column(
-                      children: [
-                        for (int i = 0; i < hexRows.length; i++)
-                          Padding(
-                            padding: const EdgeInsets.all(1),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                if (i % 2 == 0) SizedBox(width: 30),
-                                ...hexRows[i],
-                                if (i % 2 != 0) SizedBox(width: 30),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            child: Container(
+              child: buildHorizontalGrid(),
             ),
           ),
           Container(
@@ -193,67 +148,7 @@ class HomeTab extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-              child: Container(
-                // color: Colors.orange,
-                child: FutureBuilder<Map<int, List<Champion>>>(
-                  future: parseChampionsFromJson(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else {
-                      Map<int, List<Champion>> tieredChampions = snapshot.data!;
-                      return SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            for (var tier in tieredChampions.keys)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    'Tier $tier', // Display the tier number
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                      height:
-                                          5), // Space between tier number and champions
-                                  Wrap(
-                                    alignment: WrapAlignment.start,
-                                    spacing: 8.0,
-                                    runSpacing: 8.0,
-                                    children: [
-                                      for (var champion
-                                          in tieredChampions[tier]!)
-                                        Image.asset(
-                                          '../assets/champions/${champion.image}',
-                                          width: 60,
-                                          height: 60,
-                                        ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                      height: 10), //Space between each tiers
-                                ],
-                              ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
-            ),
-          ),
+          ChampionList(),
         ],
       ),
     );
