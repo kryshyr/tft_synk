@@ -39,7 +39,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                 rows: 4,
                 buildTile: (col, row) => HexagonWidgetBuilder(
                   color: (col == dropTargetCol && row == dropTargetRow)
-                      ? Colors.yellow.withOpacity(0.5)
+                      ? Color.fromARGB(255, 27, 158, 149).withOpacity(0.5)
                       : const Color.fromRGBO(10, 50, 60, 1),
                   elevation: 2,
                   padding: 2,

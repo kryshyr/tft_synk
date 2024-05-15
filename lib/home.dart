@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 import 'utils/champion_list.dart';
 import 'utils/hexagon_grid.dart';
 
-class HomeTab extends StatelessWidget {
-  const HomeTab({Key? key});
+class HomeTab extends StatefulWidget {
+  const HomeTab({Key? key}) : super(key: key);
+
+  @override
+  _HomeTabState createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  String searchQuery = ''; // Store the search query
 
   @override
   Widget build(BuildContext context) {
@@ -118,8 +125,14 @@ class HomeTab extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Container(
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        onChanged: (value) {
+                          // Update the search query
+                          setState(() {
+                            searchQuery = value;
+                          });
+                        },
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.search),
                           hintText: 'Search...',
                           border: OutlineInputBorder(),
@@ -148,7 +161,7 @@ class HomeTab extends StatelessWidget {
               ),
             ),
           ),
-          ChampionList(),
+          Container(child: ChampionList(searchQuery: searchQuery))
         ],
       ),
     );
