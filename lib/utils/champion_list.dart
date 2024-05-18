@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../utils/champion.dart';
 
 class ChampionList extends StatelessWidget {
-  const ChampionList({Key? key}) : super(key: key);
+  final String searchQuery;
+
+  const ChampionList({Key? key, required this.searchQuery}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,45 +28,49 @@ class ChampionList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       for (var tier in tieredChampions.keys)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 10),
-                            Text(
-                              'Tier $tier', // Display the tier number
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                        if (tieredChampions[tier]!.any((champion) => champion
+                            .name
+                            .toLowerCase()
+                            .contains(searchQuery.toLowerCase())))
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 10),
+                              Text(
+                                'Tier $tier',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                                height:
-                                    5), // Space between tier number and champions
-                            Wrap(
-                              alignment: WrapAlignment.start,
-                              spacing: 8.0,
-                              runSpacing: 8.0,
-                              children: [
-                                for (var champion in tieredChampions[tier]!)
-                                  LongPressDraggable<Champion>(
-                                    data: champion,
-                                    feedback: Image.asset(
-                                      '../assets/champions/${champion.image}',
-                                      width: 60,
-                                      height: 60,
-                                    ),
-                                    child: Image.asset(
-                                      '../assets/champions/${champion.image}',
-                                      width: 60,
-                                      height: 60,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                            const SizedBox(
-                                height: 10), //Space between each tiers
-                          ],
-                        ),
+                              const SizedBox(height: 5),
+                              Wrap(
+                                alignment: WrapAlignment.start,
+                                spacing: 8.0,
+                                runSpacing: 8.0,
+                                children: [
+                                  for (var champion in tieredChampions[tier]!)
+                                    if (champion.name
+                                        .toLowerCase()
+                                        .contains(searchQuery))
+                                      LongPressDraggable<Champion>(
+                                        data: champion,
+                                        feedback: Image.asset(
+                                          '../assets/champions/${champion.image}',
+                                          width: 60,
+                                          height: 60,
+                                        ),
+                                        child: Image.asset(
+                                          '../assets/champions/${champion.image}',
+                                          width: 60,
+                                          height: 60,
+                                        ),
+                                      ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
                     ],
                   ),
                 );
