@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+// import './utils/device_id.dart';
 import 'comp_view.dart';
 import 'database.dart';
 import 'home.dart';
 
 void main() {
   runApp(const MyApp());
+  // printDeviceID(); // Call the function to print the device ID
 }
 
 class MyApp extends StatelessWidget {

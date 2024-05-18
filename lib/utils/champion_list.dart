@@ -56,12 +56,12 @@ class ChampionList extends StatelessWidget {
                                       LongPressDraggable<Champion>(
                                         data: champion,
                                         feedback: Image.asset(
-                                          '../assets/champions/${champion.image}',
+                                          'assets/champions/${champion.image}',
                                           width: 60,
                                           height: 60,
                                         ),
                                         child: Image.asset(
-                                          '../assets/champions/${champion.image}',
+                                          'assets/champions/${champion.image}',
                                           width: 60,
                                           height: 60,
                                         ),

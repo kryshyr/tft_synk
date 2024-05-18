@@ -51,7 +51,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                     return LongPressDraggable<Champion>(
                       data: champion,
                       feedback: Image.asset(
-                        '../assets/champions/${champion.image}',
+                        'assets/champions/${champion.image}',
                         width: 40, // Adjust size as needed
                         height: 40,
                       ),
@@ -72,7 +72,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                         });
                       },
                       child: Image.asset(
-                        '../assets/champions/${champion.image}',
+                        'assets/champions/${champion.image}',
                       ),
                     );
                   } else {

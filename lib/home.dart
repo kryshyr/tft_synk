@@ -39,8 +39,8 @@ class _HomeTabState extends State<HomeTab> {
                 print("Edit icon clicked");
               },
               child: Image.asset(
-                '../assets/icons/edit-icon.png',
-                height: 20,
+                'assets/icons/edit-icon.png',
+                height: 30,
               ),
             ),
           ],
@@ -52,7 +52,7 @@ class _HomeTabState extends State<HomeTab> {
               print("Expand icon clicked");
             },
             child: Image.asset(
-              '../assets/icons/expand-button.png',
+              'assets/icons/expand-button.png',
               width: 30,
               height: 30,
             ),
@@ -65,7 +65,7 @@ class _HomeTabState extends State<HomeTab> {
               print("Delete icon clicked");
             },
             child: Image.asset(
-              '../assets/icons/delete-icon.png',
+              'assets/icons/delete-icon.png',
               width: 30,
               height: 30,
             ),
@@ -78,7 +78,7 @@ class _HomeTabState extends State<HomeTab> {
               print("Save icon clicked");
             },
             child: Image.asset(
-              '../assets/icons/save-button.png',
+              'assets/icons/save-button.png',
               height: 30,
             ),
           ),
@@ -107,7 +107,7 @@ class _HomeTabState extends State<HomeTab> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Image.asset(
-                          '../assets/traits/Trait_Icon_11_Sage.TFT_Set11.png',
+                          'assets/traits/Trait_Icon_11_Sage.TFT_Set11.png',
                         ),
                       ),
                   ],
