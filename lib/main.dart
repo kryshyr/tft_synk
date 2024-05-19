@@ -1,13 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-// import './utils/device_id.dart';
 import 'comp_view.dart';
 import 'database.dart';
+import 'firebase_options.dart';
 import 'home.dart';
 
-void main() {
+Future<void> main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
-  // printDeviceID(); // Call the function to print the device ID
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -40,7 +40,7 @@ class _HomeTabState extends State<HomeTab> {
               },
               child: Image.asset(
                 'assets/icons/edit-icon.png',
-                height: 30,
+                height: 20,
               ),
             ),
           ],
