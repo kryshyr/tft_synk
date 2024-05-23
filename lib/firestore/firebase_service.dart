@@ -11,8 +11,7 @@ class FirebaseService {
       BuildContext context,
       String deviceId,
       String compName,
-      List<String> champions,
-      List<Map<String, int>> positions) async {
+      List<Map<String, String>> championPositions) async {
     // Reference to the collection
     CollectionReference teamComps = _firestore.collection('team_comps');
     //New document ID
@@ -67,8 +66,7 @@ class FirebaseService {
 
     // Save the team composition
     await deviceDocRef.collection('compositions').doc(compName).set({
-      'champions': champions,
-      'positions': positions,
+      'championPositions': championPositions,
       'timestamp': FieldValue.serverTimestamp(), // timestamp
     });
 
