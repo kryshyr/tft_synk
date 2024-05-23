@@ -4,18 +4,15 @@ import 'package:hexagon/hexagon.dart';
 import 'champion.dart';
 
 typedef ChampionDroppedCallback = void Function(
-    int row, int col, Champion champion);
-
-typedef ChampionDraggedCallback = void Function(
-    int? draggedFromCol, int? draggedFromRow);
+    int? dropTargetRow, int? dropTargetCol,
+    int? draggedFromRow, int? draggedFromCol, Champion champion);
 
 class HexagonGrid extends StatefulWidget {
   final ChampionDroppedCallback onChampionDropped;
-  final ChampionDraggedCallback onChampionDragged;
 
-  const HexagonGrid({Key? key, required this.onChampionDropped, required this.onChampionDragged})
-      : super(key: key);
-
+  const HexagonGrid({Key? key, required this.onChampionDropped})
+      : super(key: 
+      key);
   // Global key for accessing the state of HexagonGrid
   static final GlobalKey<_HexagonGridState> hexagonGridKey =
       GlobalKey<_HexagonGridState>();
@@ -62,9 +59,11 @@ class _HexagonGridState extends State<HexagonGrid> {
                 ),
                 buildChild: (col, row) {
                   Champion? champion = championsGrid[row][col];
+                  Widget? dragTargetChild;
+
                   if (champion != null) {
                     // If a champion has been dropped
-                    return LongPressDraggable<Champion>(
+                    dragTargetChild = LongPressDraggable<Champion>(
                       data: champion,
                       feedback: Image.asset(
                         'assets/champions/${champion.image}',
@@ -78,7 +77,6 @@ class _HexagonGridState extends State<HexagonGrid> {
                         setState(() {
                           draggedFromCol = col;
                           draggedFromRow = row;
-                          widget.onChampionDragged(draggedFromCol, draggedFromRow);
                         });
                       },
                       onDraggableCanceled: (_, __) {
@@ -86,42 +84,38 @@ class _HexagonGridState extends State<HexagonGrid> {
                         setState(() {
                           draggedFromCol = null;
                           draggedFromRow = null;
-                          widget.onChampionDragged(draggedFromCol, draggedFromRow);
                         });
                       },
                       child: Image.asset(
                         'assets/champions/${champion.image}',
                       ),
                     );
-                  } else {
+                  } 
                     // If no champion has been dropped yet
-                    return DragTarget<Champion>(
-                      builder: (context, candidateData, rejectedData) {
-                        return Container(); // Empty container
-                      },
-                      onWillAcceptWithDetails: (champion) {
-                        // Store the position where the champion will be dropped
-                        setState(() {
-                          dropTargetCol = col;
-                          dropTargetRow = row;
-                          widget.onChampionDragged(draggedFromCol, draggedFromRow);
-                        });
-                        return true;
-                      },
-                      onAcceptWithDetails: (details) {
-                        final champion = details.data as Champion;
-                        updateChampion(col, row, champion);
-                      },
-                      onLeave: (_) {
-                        // Clear the drop target position when the champion is dragged away
-                        setState(() {
-                          dropTargetCol = null;
-                          dropTargetRow = null;
-                          widget.onChampionDragged(draggedFromCol, draggedFromRow);
-                        });
-                      },
-                    );
-                  }
+                  return DragTarget<Champion>(
+                    builder: (context, candidateData, rejectedData) {
+                      return dragTargetChild ?? Container();
+                    },
+                    onWillAcceptWithDetails: (champion) {
+                      // Store the position where the champion will be dropped
+                      setState(() {
+                        dropTargetCol = col;
+                        dropTargetRow = row;
+                      });
+                      return true;
+                    },
+                    onAcceptWithDetails: (details) {
+                      final champion = details.data as Champion;
+                      updateChampion(dropTargetRow, dropTargetCol, draggedFromRow, draggedFromCol, champion);
+                    },
+                    onLeave: (_) {
+                      // Clear the drop target position when the champion is dragged away
+                      setState(() {
+                        dropTargetCol = null;
+                        dropTargetRow = null;
+                      });
+                    },
+                  );
                 },
               ),
             ),
@@ -132,25 +126,30 @@ class _HexagonGridState extends State<HexagonGrid> {
   }
 
   // To update the champion that is dropped on a specific hexagon
-  void updateChampion(int col, int row, Champion champion) {
+  void updateChampion(int? dropTargetRow, int? dropTargetCol,
+                      int? draggedFromRow, int? draggedFromCol, Champion champion) {
+    // Notify the parent widget (HomeTab) about the dropped champion
+    widget.onChampionDropped(dropTargetRow, dropTargetCol, draggedFromRow, draggedFromCol, champion);
+
     setState(() {
       // Remove the champion from its previous position
       if (draggedFromCol != null && draggedFromRow != null) {
         championsGrid[draggedFromRow!][draggedFromCol!] = null;
       }
+      
+      
       // Update the champion's position to the new hexagon
-      championsGrid[row][col] = champion;
+      championsGrid[dropTargetRow!][dropTargetCol!] = champion;
+
+
       // Clear the dragged from position
       draggedFromCol = null;
       draggedFromRow = null;
       // Clear the drop target position
       dropTargetCol = null;
       dropTargetRow = null;
-      // widget.onChampionDragged(draggedFromCol, draggedFromRow);
+      // widget.onChampionDragged(draggedFromRow, draggedFromCol);
     });
-
-    // Notify the parent widget (HomeTab) about the dropped champion
-    widget.onChampionDropped(row, col, champion);
   }
 
   // Method to clear the championsGrid list (Not working)
@@ -170,7 +169,6 @@ class _HexagonGridState extends State<HexagonGrid> {
       draggedFromRow = null;
       dropTargetCol = null;
       dropTargetRow = null;
-      widget.onChampionDragged(draggedFromCol, draggedFromRow);
     });
   }
 }

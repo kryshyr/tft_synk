@@ -21,41 +21,68 @@ class _HomeTabState extends State<HomeTab> {
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
 
-  // Variables to store the position of the dragged champion
-  int? draggedFromCol;
-  int? draggedFromRow;
-  int? dropTargetCol;
-  int? dropTargetRow;
-
-  void _handleChampionDragged(int? childDraggedFromCol, int? childDraggedFromRow) {
-    setState(() {
-      draggedFromCol = childDraggedFromCol;
-      draggedFromRow = childDraggedFromRow;
-      
-      // Debugging purposes
-      print('Champion dragged from row: $draggedFromRow, col: $draggedFromCol');
-    });
-  }
-
-
   // Callback function to handle champion that is dropped onto the board
-  void _handleChampionDropped(int row, int col, Champion champion) {
-    // Check if a champion was dragged from a hexagon
-    if (draggedFromCol != null && draggedFromRow != null) {
+  void _handleChampionDropped(int? dropTargetRow, int? dropTargetCol, 
+                              int? draggedFromRow, int? draggedFromCol, Champion champion) {
+    
+    bool isDraggedFromHexagon = (draggedFromCol != null && draggedFromRow != null);
+    bool targetHexagonOccupied = championsList.any((element) =>
+        element.row == dropTargetRow && element.col == dropTargetCol);
+    bool isSameHexagon = (draggedFromRow == dropTargetRow && draggedFromCol == dropTargetCol);
+
+    String? previousChampionName;
+
+    // If the champion is dropped on the same hexagon
+    if (isSameHexagon) {
+      return;
+    }
+
+    // If dragged from a hexagon and the target has no champion
+    if (isDraggedFromHexagon && !targetHexagonOccupied) {
       // Remove the champion from the previous position
       setState(() {
         championsList.removeWhere((element) =>
             element.row == draggedFromRow && element.col == draggedFromCol);
       });
     }
+
+    // If not dragged from a hexagon and the target is occupied
+    if (!isDraggedFromHexagon && targetHexagonOccupied) {
+      // Remove the champion from the target position
+      setState(() {
+        championsList.removeWhere((element) =>
+            element.row == dropTargetRow && element.col == dropTargetCol);
+      });
+    }
     
+    // If dragged from a hexagon and the target has a champion
+    if (isDraggedFromHexagon && targetHexagonOccupied) {
+      // Swap them
+      setState(() {
+        // Save name of the champion in the target position
+        previousChampionName = championsList.firstWhere((element) =>
+            element.row == dropTargetRow && element.col == dropTargetCol).championName;
+
+        // Remove the champion from the previous position
+        championsList.removeWhere((element) =>
+            element.row == draggedFromRow && element.col == draggedFromCol);
+
+        // Remove the champion from the target position
+        championsList.removeWhere((element) =>
+            element.row == dropTargetRow && element.col == dropTargetCol);
+            
+        // Add the champion from the target position to the previous position
+        championsList.add(ChampionPosition(previousChampionName!, draggedFromRow, draggedFromCol));
+      });
+    }
+
     // Add the champion to the list
     setState(() {
-      championsList.add(ChampionPosition(champion.name, row, col));
+      championsList.add(ChampionPosition(champion.name, dropTargetRow!, dropTargetCol!));
     });
 
     // Debugging purposes
-    print('Champion ${champion.name} dropped at row: $row, col: $col');
+    print('Champion ${champion.name} dropped at row: $dropTargetRow, col: $dropTargetCol');
     for (var champ in championsList) {
       print('Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
     }
@@ -233,7 +260,6 @@ class _HomeTabState extends State<HomeTab> {
             child: Container(
               child: HexagonGrid(
                 onChampionDropped: _handleChampionDropped,
-                onChampionDragged: _handleChampionDragged,
               ),
             ),
           ),
