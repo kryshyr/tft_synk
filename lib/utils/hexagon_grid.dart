@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
-
+import 'package:tft_synk/home.dart' show HexagonGridController;
 import 'champion.dart';
 
 typedef ChampionDroppedCallback = void Function(
@@ -9,8 +9,9 @@ typedef ChampionDroppedCallback = void Function(
 
 class HexagonGrid extends StatefulWidget {
   final ChampionDroppedCallback onChampionDropped;
+  final HexagonGridController controller;
 
-  const HexagonGrid({Key? key, required this.onChampionDropped})
+  const HexagonGrid({Key? key, required this.onChampionDropped, required this.controller})
       : super(key: 
       key);
   // Global key for accessing the state of HexagonGrid
@@ -137,11 +138,9 @@ class _HexagonGridState extends State<HexagonGrid> {
         championsGrid[draggedFromRow!][draggedFromCol!] = null;
       }
       
-      
       // Update the champion's position to the new hexagon
-      championsGrid[dropTargetRow!][dropTargetCol!] = champion;
-
-
+      placeChampion(dropTargetRow, dropTargetCol, champion);
+      
       // Clear the dragged from position
       draggedFromCol = null;
       draggedFromRow = null;
@@ -149,6 +148,13 @@ class _HexagonGridState extends State<HexagonGrid> {
       dropTargetCol = null;
       dropTargetRow = null;
       // widget.onChampionDragged(draggedFromRow, draggedFromCol);
+    });
+  }
+
+  // Places a champion on a specific hexagon
+  void placeChampion(int? dropTargetRow, int? dropTargetCol, Champion champion) {
+    setState(() {
+      championsGrid[dropTargetRow!][dropTargetCol!] = champion;
     });
   }
 

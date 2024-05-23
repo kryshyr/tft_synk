@@ -6,6 +6,12 @@ import './utils/device_id.dart';
 import 'utils/champion_list.dart';
 import 'utils/hexagon_grid.dart';
 
+class HexagonGridController {
+  void placeChampion(int? dropTargetRow, int? dropTargetCol, Champion champion) {
+    HexagonGrid.hexagonGridKey.currentState?.placeChampion(dropTargetRow, dropTargetCol, champion);
+  }
+}
+
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
 
@@ -18,6 +24,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
+  final HexagonGridController hexagonGridController = HexagonGridController();
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
 
@@ -30,6 +37,7 @@ class _HomeTabState extends State<HomeTab> {
         element.row == dropTargetRow && element.col == dropTargetCol);
     bool isSameHexagon = (draggedFromRow == dropTargetRow && draggedFromCol == dropTargetCol);
 
+    // Champion? previousChampion;
     String? previousChampionName;
 
     // If the champion is dropped on the same hexagon
@@ -59,9 +67,13 @@ class _HomeTabState extends State<HomeTab> {
     if (isDraggedFromHexagon && targetHexagonOccupied) {
       // Swap them
       setState(() {
-        // Save name of the champion in the target position
+        // // Save name of the champion in the target position
+        // previousChampion = championsList.firstWhere((element) =>
+        //     element.row == dropTargetRow && element.col == dropTargetCol).championName;
         previousChampionName = championsList.firstWhere((element) =>
             element.row == dropTargetRow && element.col == dropTargetCol).championName;
+
+
 
         // Remove the champion from the previous position
         championsList.removeWhere((element) =>
@@ -73,6 +85,7 @@ class _HomeTabState extends State<HomeTab> {
             
         // Add the champion from the target position to the previous position
         championsList.add(ChampionPosition(previousChampionName!, draggedFromRow, draggedFromCol));
+        // hexagonGridController.placeChampion(draggedFromRow, draggedFromCol, previousChampion!);
       });
     }
 
@@ -260,6 +273,7 @@ class _HomeTabState extends State<HomeTab> {
             child: Container(
               child: HexagonGrid(
                 onChampionDropped: _handleChampionDropped,
+                controller: hexagonGridController,
               ),
             ),
           ),
