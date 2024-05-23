@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 
 import 'comp_view.dart';
 import 'database.dart';
-import 'firebase_options.dart';
 import 'home.dart';
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
 }
 
 class MyApp extends StatelessWidget {

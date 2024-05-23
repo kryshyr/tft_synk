@@ -1,17 +1,130 @@
 import 'package:flutter/material.dart';
 
+import './firestore/firebase_service.dart';
+import './utils/champion.dart';
+import './utils/device_id.dart';
 import 'utils/champion_list.dart';
 import 'utils/hexagon_grid.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
 
+  // Global key for accessing the state of HomeTab
+  static final GlobalKey<_HomeTabState> homeTabKey = GlobalKey<_HomeTabState>();
+
   @override
   _HomeTabState createState() => _HomeTabState();
 }
 
 class _HomeTabState extends State<HomeTab> {
-  String searchQuery = ''; // Store the search query
+  final FirebaseService _firebaseService = FirebaseService();
+  String searchQuery = ''; // To store the search query
+  List<Champion> championsList = []; // List to store the champions
+  Map<String, ChampionPosition> championPositions = {};
+
+  // Callback function to handle champion that is dropped onto the board
+  void _handleChampionDropped(int row, int col, Champion champion) {
+    // To check if the champion already exists in the list
+    bool championExists = championsList
+        .any((existingChampion) => existingChampion.name == champion.name);
+
+    setState(() {
+      if (championExists) {
+        // Update the position of the existing champion
+        var existingChampionIndex = championsList.indexWhere(
+            (existingChampion) => existingChampion.name == champion.name);
+        championsList[existingChampionIndex] = champion;
+      } else {
+        // Add the dropped champion to the list
+        championsList.add(champion);
+      }
+
+      // Store the position of the champion
+      championPositions[champion.name] = ChampionPosition(row, col);
+    });
+  }
+
+  Future<void> saveTeamCompToFirestore() async {
+    // Gettin the names of the champions from the championsList
+    List<String> champions =
+        championsList.map((champion) => champion.name).toList();
+
+    // Getting the positions of champions from the championPositions map
+    List<Map<String, int>> positions = [];
+    for (var champion in championsList) {
+      ChampionPosition position = championPositions[champion.name]!;
+      positions.add({'row': position.row, 'col': position.col});
+    }
+
+    // GET DEVICE ID
+    String deviceId = await getDeviceID();
+
+    // SAVE TEAM COMP
+    await _firebaseService.saveTeamComp(
+        context, deviceId, _compositionName, champions, positions);
+
+    print('Team composition saved!');
+
+    // Reset the champions grid (NOT WORKING)
+    HexagonGrid.hexagonGridKey.currentState?.resetChampionsGrid();
+    resetState();
+  }
+
+  TextEditingController _compositionNameController = TextEditingController();
+
+  // Define a variable to hold the current composition name
+  String _compositionName = 'Name';
+
+  // Function to show the dialog to edit the composition name
+  Future<void> _showEditCompositionNameDialog() async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Team Comp Name"),
+          content: TextField(
+            controller: _compositionNameController,
+            decoration: InputDecoration(hintText: "Enter new composition name"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Save"),
+              onPressed: () {
+                setState(() {
+                  _compositionName = _compositionNameController.text.isNotEmpty
+                      ? _compositionNameController.text
+                      : 'Name';
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _compositionNameController.dispose();
+    super.dispose();
+  }
+
+  void resetState() {
+    setState(() {
+      // To clear the champions list and positions map
+      championsList.clear();
+      championPositions.clear();
+      // To reset the composition name
+      _compositionName = 'Name';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +141,15 @@ class _HomeTabState extends State<HomeTab> {
         title: Row(
           children: [
             // TITLE
-            const Text("TFT Planner",
-                style: TextStyle(color: Color.fromRGBO(200, 155, 60, 1))),
+
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                _compositionName,
+                style: const TextStyle(
+                    fontSize: 16, color: Color.fromRGBO(200, 155, 60, 1)),
+              ),
+            ),
 
             const SizedBox(width: 15),
 
@@ -37,6 +157,7 @@ class _HomeTabState extends State<HomeTab> {
             GestureDetector(
               onTap: () {
                 print("Edit icon clicked");
+                _showEditCompositionNameDialog();
               },
               child: Image.asset(
                 'assets/icons/edit-icon.png',
@@ -76,6 +197,7 @@ class _HomeTabState extends State<HomeTab> {
           GestureDetector(
             onTap: () {
               print("Save icon clicked");
+              saveTeamCompToFirestore();
             },
             child: Image.asset(
               'assets/icons/save-button.png',
@@ -91,7 +213,9 @@ class _HomeTabState extends State<HomeTab> {
             color: Color.fromRGBO(10, 20, 40, 1),
             height: MediaQuery.of(context).size.height / 3,
             child: Container(
-              child: HexagonGrid(),
+              child: HexagonGrid(
+                onChampionDropped: _handleChampionDropped,
+              ),
             ),
           ),
           Container(
