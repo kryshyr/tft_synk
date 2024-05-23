@@ -9,6 +9,7 @@ class AppColors {
   static const Color background = Color(0xFF0A1428);
   static const Color primaryAccent = Color(0xFF165A6B);
   static const Color secondaryAccent = Color(0xFF092231);
+  static const Color tertiaryAccent = Color(0xFF0AC8B9);
   static const Color primaryText = Color(0xFFFFFFFF);
   static const Color secondaryText = Color(0xFFC89B3C);
   static const Color hintText = Color(0xFFA09B8C);
