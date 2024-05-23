@@ -34,10 +34,11 @@ class Champion {
 }
 
 class ChampionPosition {
+  final String championName;
   final int row;
   final int col;
 
-  ChampionPosition(this.row, this.col);
+  ChampionPosition(this.championName, this.row, this.col);
 }
 
 Future<Map<int, List<Champion>>> parseChampionsFromJson() async {
