@@ -6,10 +6,14 @@ import 'champion.dart';
 typedef ChampionDroppedCallback = void Function(
     int row, int col, Champion champion);
 
+typedef ChampionDraggedCallback = void Function(
+    int? draggedFromCol, int? draggedFromRow);
+
 class HexagonGrid extends StatefulWidget {
   final ChampionDroppedCallback onChampionDropped;
+  final ChampionDraggedCallback onChampionDragged;
 
-  const HexagonGrid({Key? key, required this.onChampionDropped})
+  const HexagonGrid({Key? key, required this.onChampionDropped, required this.onChampionDragged})
       : super(key: key);
 
   // Global key for accessing the state of HexagonGrid
@@ -74,6 +78,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                         setState(() {
                           draggedFromCol = col;
                           draggedFromRow = row;
+                          widget.onChampionDragged(draggedFromCol, draggedFromRow);
                         });
                       },
                       onDraggableCanceled: (_, __) {
@@ -81,6 +86,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                         setState(() {
                           draggedFromCol = null;
                           draggedFromRow = null;
+                          widget.onChampionDragged(draggedFromCol, draggedFromRow);
                         });
                       },
                       child: Image.asset(
@@ -98,6 +104,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                         setState(() {
                           dropTargetCol = col;
                           dropTargetRow = row;
+                          widget.onChampionDragged(draggedFromCol, draggedFromRow);
                         });
                         return true;
                       },
@@ -110,6 +117,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                         setState(() {
                           dropTargetCol = null;
                           dropTargetRow = null;
+                          widget.onChampionDragged(draggedFromCol, draggedFromRow);
                         });
                       },
                     );
@@ -138,6 +146,7 @@ class _HexagonGridState extends State<HexagonGrid> {
       // Clear the drop target position
       dropTargetCol = null;
       dropTargetRow = null;
+      // widget.onChampionDragged(draggedFromCol, draggedFromRow);
     });
 
     // Notify the parent widget (HomeTab) about the dropped champion
@@ -161,6 +170,7 @@ class _HexagonGridState extends State<HexagonGrid> {
       draggedFromRow = null;
       dropTargetCol = null;
       dropTargetRow = null;
+      widget.onChampionDragged(draggedFromCol, draggedFromRow);
     });
   }
 }

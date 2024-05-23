@@ -19,32 +19,36 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
   String searchQuery = ''; // To store the search query
-  // List<Champion> championsList = []; // List to store the champions
-  // Map<String, ChampionPosition> championPositions = {};
   List<ChampionPosition> championsList = [];
+
+  // Variables to store the position of the dragged champion
+  int? draggedFromCol;
+  int? draggedFromRow;
+  int? dropTargetCol;
+  int? dropTargetRow;
+
+  void _handleChampionDragged(int? childDraggedFromCol, int? childDraggedFromRow) {
+    setState(() {
+      draggedFromCol = childDraggedFromCol;
+      draggedFromRow = childDraggedFromRow;
+      
+      // Debugging purposes
+      print('Champion dragged from row: $draggedFromRow, col: $draggedFromCol');
+    });
+  }
 
 
   // Callback function to handle champion that is dropped onto the board
   void _handleChampionDropped(int row, int col, Champion champion) {
-    // // To check if the champion already exists in the list
-    // bool championExists = championsList
-    //     .any((existingChampion) => existingChampion.name == champion.name);
-
-    // setState(() {
-    //   if (championExists) {
-    //     // Update the position of the existing champion
-    //     var existingChampionIndex = championsList.indexWhere(
-    //         (existingChampion) => existingChampion.name == champion.name);
-    //     championsList[existingChampionIndex] = champion;
-    //   } else {
-    //     // Add the dropped champion to the list
-    //     championsList.add(champion);
-    //   }
-
-    //   // Store the position of the champion
-    //   championPositions[champion.name] = ChampionPosition(row, col);
-    // });
-
+    // Check if a champion was dragged from a hexagon
+    if (draggedFromCol != null && draggedFromRow != null) {
+      // Remove the champion from the previous position
+      setState(() {
+        championsList.removeWhere((element) =>
+            element.row == draggedFromRow && element.col == draggedFromCol);
+      });
+    }
+    
     // Add the champion to the list
     setState(() {
       championsList.add(ChampionPosition(champion.name, row, col));
@@ -59,17 +63,6 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Future<void> saveTeamCompToFirestore() async {
-    // // Gettin the names of the champions from the championsList
-    // List<String> champions =
-    //     championsList.map((champion) => champion.name).toList();
-
-    // // Getting the positions of champions from the championPositions map
-    // List<Map<String, int>> positions = [];
-    // for (var champion in championsList) {
-    //   ChampionPosition position = championPositions[champion.name]!;
-    //   positions.add({'row': position.row, 'col': position.col});
-    // }
-
     List<Map<String, String>> championPositions = [];
 
     // Get the names and positions in championsList
@@ -240,6 +233,7 @@ class _HomeTabState extends State<HomeTab> {
             child: Container(
               child: HexagonGrid(
                 onChampionDropped: _handleChampionDropped,
+                onChampionDragged: _handleChampionDragged,
               ),
             ),
           ),
