@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-
 import 'app_constants.dart';
 import 'firebase_options.dart';
 
 import 'comp_view.dart';
 import 'database.dart';
 import 'home.dart';
+import 'widgets/tabbed_screen.dart';
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'TFT SynK',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+          useMaterial3: true,
+          scaffoldBackgroundColor: AppColors.background),
       home: const MyHomePage(title: 'Synk'),
     );
   }
@@ -52,7 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
   static final List<Widget> _pages = <Widget>[
     HomeTab(),
     CompViewTab(),
-    DatabaseTab(),
+    // DatabaseTab(),
+    TabbedScreen()
   ];
 
   @override
@@ -89,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
           selectedItemColor: AppColors.secondary,
           showSelectedLabels: false,
           showUnselectedLabels: false,
+          elevation: 6,
         ),
       ),
     );
