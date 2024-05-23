@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+
 import 'app_constants.dart';
+import 'firebase_options.dart';
+
 import 'comp_view.dart';
 import 'database.dart';
 import 'home.dart';
@@ -9,11 +12,11 @@ import 'home.dart';
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
 }
 
 class MyApp extends StatelessWidget {
