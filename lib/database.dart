@@ -40,8 +40,8 @@ class DatabaseTab extends StatelessWidget {
                         margin:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         child: ListTile(
-                          leading: Image.asset(
-                              '../assets/champions/${champion.image}'),
+                          leading:
+                              Image.asset('assets/champions/${champion.image}'),
                           title: Text(champion.name),
                           subtitle: Text(champion.description),
                           trailing: Text('Tier: $tier'),

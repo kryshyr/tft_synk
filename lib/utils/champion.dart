@@ -33,8 +33,15 @@ class Champion {
   }
 }
 
+class ChampionPosition {
+  final int row;
+  final int col;
+
+  ChampionPosition(this.row, this.col);
+}
+
 Future<Map<int, List<Champion>>> parseChampionsFromJson() async {
-  String jsonData = await rootBundle.loadString('../../data/champions.json');
+  String jsonData = await rootBundle.loadString('assets/data/champions.json');
   final Map<String, dynamic> data = json.decode(jsonData);
   Map<int, List<Champion>> tieredChampions = {};
 

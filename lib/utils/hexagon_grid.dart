@@ -3,7 +3,19 @@ import 'package:hexagon/hexagon.dart';
 
 import 'champion.dart';
 
+typedef ChampionDroppedCallback = void Function(
+    int row, int col, Champion champion);
+
 class HexagonGrid extends StatefulWidget {
+  final ChampionDroppedCallback onChampionDropped;
+
+  const HexagonGrid({Key? key, required this.onChampionDropped})
+      : super(key: key);
+
+  // Global key for accessing the state of HexagonGrid
+  static final GlobalKey<_HexagonGridState> hexagonGridKey =
+      GlobalKey<_HexagonGridState>();
+
   @override
   _HexagonGridState createState() => _HexagonGridState();
 }
@@ -51,7 +63,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                     return LongPressDraggable<Champion>(
                       data: champion,
                       feedback: Image.asset(
-                        '../assets/champions/${champion.image}',
+                        'assets/champions/${champion.image}',
                         width: 40, // Adjust size as needed
                         height: 40,
                       ),
@@ -72,7 +84,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                         });
                       },
                       child: Image.asset(
-                        '../assets/champions/${champion.image}',
+                        'assets/champions/${champion.image}',
                       ),
                     );
                   } else {
@@ -124,6 +136,29 @@ class _HexagonGridState extends State<HexagonGrid> {
       draggedFromCol = null;
       draggedFromRow = null;
       // Clear the drop target position
+      dropTargetCol = null;
+      dropTargetRow = null;
+    });
+
+    // Notify the parent widget (HomeTab) about the dropped champion
+    widget.onChampionDropped(row, col, champion);
+  }
+
+  // Method to clear the championsGrid list (Not working)
+  void resetChampionsGrid() {
+    setState(() {
+      // Clear the champions grid
+      championsGrid = List.generate(
+        4,
+        (row) => List.generate(
+          7,
+          (col) => null,
+        ),
+      );
+
+      // Reset position variables
+      draggedFromCol = null;
+      draggedFromRow = null;
       dropTargetCol = null;
       dropTargetRow = null;
     });
