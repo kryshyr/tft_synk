@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  FirebaseFirestore get firestore => _firestore; // Add this getter
+
   Future<void> saveTeamComp(
       BuildContext context,
       String deviceId,
