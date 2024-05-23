@@ -1,6 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+
+import 'app_constants.dart';
 import 'firebase_options.dart';
+
 import 'comp_view.dart';
 import 'database.dart';
 import 'home.dart';
@@ -79,9 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           iconSize: 25,
-          backgroundColor: Colors.grey,
-          selectedIconTheme: IconThemeData(color: Colors.amberAccent, size: 30),
-          selectedItemColor: Colors.amberAccent,
+          backgroundColor: AppColors.primaryVariant,
+          selectedIconTheme:
+              IconThemeData(color: AppColors.secondary, size: 30),
+          selectedItemColor: AppColors.secondary,
           showSelectedLabels: false,
           showUnselectedLabels: false,
         ),
