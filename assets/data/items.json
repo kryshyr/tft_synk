@@ -1,0 +1,318 @@
+[
+    {
+        "id": "adaptive-helm",
+        "name": "Adaptive Helm",
+        "image":"adaptive-helm.png",
+        "description": "Combat Start: Gain different bonuses based on starting position.\n\nFront Two Rows: 40 Armor and Magic Resist. Gain 1 Mana when struck by an attack.\n\nBack Two Rows: 20 Ability Power. Gain 10 Mana every 3 seconds.",
+        "components": ["negatron-cloak", "tear-of-the-goddess"]
+    },
+    {
+        "id": "archangels-staff",
+        "name": "Archangel's Staff",
+        "image":"archangels-staff.png",
+        "description": "Combat start: Gain 30 Ability Power every 5 seconds in combat.",
+        "components": ["needlessly-large-rod", "tear-of-the-goddess"]
+    },
+    {
+        "id": "bloodthirster",
+        "name": "Bloodthirster",
+        "image":"bloodthirster.png",
+        "description": "Gain 20% Omnivamp.\n\nOnce per combat at 40% Health, gain a 25% max Health Shield that lasts up to 5 seconds.\n\nOmnivamp: heal for some of damage dealt",
+        "components": ["bf-sword", "negatron-cloak"]
+    },
+    {
+        "id": "blue-buff",
+        "name": "Blue Buff",
+        "image":"blue-buff2.png",
+        "description": "Max mana reduced by 10.\n\nWhen the holder gets a takedown, they deal 7% more damage for 8 seconds.\n\n[Unique - only 1 per champion]",
+        "components": ["tear-of-the-goddess", "tear-of-the-goddess"]
+    },
+    {
+        "id": "bramble-vest",
+        "name": "Brample Vest",
+        "image":"bramble-vest.png",
+        "description": "Gain 5% max health.\n\nTake 7% reduced damage from attacks. When struck by any attack, deal 100 magic damage to all adjacent enemies.\n\nCooldown: 2 seconds",
+        "components": ["chain-vest", "chain-vest"]
+    },
+    {
+        "id": "crownguard",
+        "name": "Crownguard",
+        "image":"crownguard.png",
+        "description": "Combat start: Gain a 30% max Health Shield for 8 seconds.\n\nWhen the shield expires, gain 35 Ability Power.",
+        "components": ["chain-vest", "needlessly-large-rod"]
+    },
+    {
+        "id": "deathblade",
+        "name": "Deathblade",
+        "image":"deathblade.png",
+        "description": "Deal 7% bonus damage.",
+        "components": ["bf-sword", "bf-sword"]
+    },
+    {
+        "id": "dragons-claw",
+        "name": "Dragon's Claw",
+        "image":"dragons-claw.png",
+        "description": "Gain 9% max health.\n\nEvery 2 seconds, heal 5% max Health.",
+        "components": ["negatron-cloak", "negatron-cloak"]
+    },
+    {
+        "id": "edge-of-night",
+        "name": "Edge of Night",
+        "image":"edge-of-night.png",
+        "description": "Once per combat: At 60% Health, briefly become untargetable and shed negative effects. Then, gain 15% bonus Attack Speed.\n\n[Unique - only 1 per champion]",
+        "components": ["bf-sword", "chain-vest"]
+    },
+    {
+        "id": "evenshroud",
+        "name": "Evenshroud",
+        "image":"evenshroud.png",
+        "description": "30% Sunder enemies within 2 hexes. Gain 25 Armor and Magic Resist for the first 10 seconds of combat.\n\nSunder: Reduce Armor",
+        "components": ["giants-belt", "negatron-cloak"]
+    },
+    {
+        "id": "gargoyle-stoneplate",
+        "name": "Gargoyle Stoneplate",
+        "image":"gargoyle-stoneplate.png",
+        "description": "Gain 10 Armor and 10 Magic Resist for each enemy targeting the holder.",
+        "components": ["chain-vest", "negatron-cloak"]
+    },
+    {
+        "id": "giant-slayer",
+        "name": "Giant Slayer",
+        "image":"giant-slayer.png",
+        "description": "Deal 25% more damage to enemies with more than 1600 maximum Health.",
+        "components": ["bf-sword", "recurve-bow"]
+    },
+    {
+        "id": "guardbreaker",
+        "name": "Guardbreaker",
+        "image":"guardbreaker.png",
+        "description": "After damaging a Shield, deal 25% more damage for 3 seconds.",
+        "components": ["giants-belt", "sparring-gloves"]
+    },
+    {
+        "id": "guinsoos-rageblade",
+        "name": "Guinsoo's Rageblade",
+        "image":"guinsoos-rageblade.png",
+        "description": "Attacks grant 5% stacking Attack Speed.",
+        "components": ["needlessly-large-rod", "recurve-bow"]
+    },
+    {
+        "id": "hand-of-justice",
+        "name": "Hand of Justice",
+        "image":"hand-of-justice.png",
+        "description": "Gain 2 effects:\n\n• 15% Attack Damage and 15 Ability Power.\n• 15% Omnivamp.\n\nEach round, randomly double 1 of these effects.\n\nOmnivamp: heal for some of damage dealt",
+        "components": ["tear-of-the-goddess", "sparring-gloves"]
+    },
+    {
+        "id": "hextech-gunblade",
+        "name": "Hextech Gunblade",
+        "image":"hextech-gunblade.png",
+        "description": "Grant 22% Omnivamp, which also heals the lowest percent Health ally.\nOmnivamp: heal for some of damage dealt",
+        "components": ["bf-sword", "needlessly-large-rod"]
+    },
+    {
+        "id": "infinity-edge",
+        "name": "Infinity Edge",
+        "image":"infinity-edge.png",
+        "description": "Abilities can critically strike.\n\nIf the holder's abilities can already critically strike, gain 10% Critical Strike Damage instead.",
+        "components": ["bf-sword", "sparring-gloves"]
+    },
+    {
+        "id": "ionic-spark",
+        "name": "Ionic Spark",
+        "image":"ionic-spark.png",
+        "description": "30% Shred enemies within 2 hexes. When enemies cast an Ability, deal magic damage equal to 160% of their maximum Mana.\nShred: Reduce Magic Resist",
+        "components": ["needlessly-large-rod", "negatron-cloak"]
+    },
+    {
+        "id": "jeweled-gauntlet",
+        "name": "Jeweled Gauntlet",
+        "image":"jeweled-gauntlet.png",
+        "description": "Abilities can critically strike.\n\nIf the holder's abilities can already critically strike, gain 10% Critical Strike Damage instead.",
+        "components": ["needlessly-large-rod", "sparring-gloves"]
+    },
+    {
+        "id": "last-whisper",
+        "name": "Last Whisper",
+        "image":"last-whisper.png",
+        "description": "Physical damage 30% Sunders the target for 3 seconds. This effect does not stack.\n\n[Unique - only 1 per champion]\n\nSunder: Reduce Armor",
+        "components": ["recurve-bow", "sparring-gloves"]
+    },
+    {
+        "id": "morellonomicon",
+        "name": "Morellonomicon",
+        "image":"morellonomicon.png",
+        "description": "Attacks and Abilities deal 1% Burn and 33% Wound to enemies for 10 seconds.\n\n[Unique - only 1 per champion]\n\nBurn: Deals a percent of the target's maximum Health as true damage every second\nWound: Reduces healing received",
+        "components": ["giants-belt","needlessly-large-rod"]
+    },
+    {
+        "id": "nashor's-tooth",
+        "name": "Nashor's Tooth",
+        "image":"nashor's-tooth.png",
+        "description": "After casting an Ability, gain 40% Attack Speed for 5 seconds.",
+        "components": ["giants-belt","recurve-bow"]
+    },
+    {
+        "id": "protectors-vow",
+        "name": "Protector's Vow",
+        "image":"protectors-vow.png",
+        "description": "Once per combat at 40% Health, gain a 25% max Health Shield that lasts 5 seconds and gain 20 Armor and 20 Magic Resist.",
+        "components": ["chain-vest","tear-of-the-goddess"]
+    },
+    {
+        "id": "quicksilver",
+        "name": "Quicksilver",
+        "image":"quicksilver.png",
+        "description": "Combat start: Gain immunity to crowd control for 14 seconds. During this time, gain 3% Attack Speed every 2 seconds.\n\n[Unique - only 1 per champion]",
+        "components": ["negatron-cloak","sparring-gloves"]
+    },
+    {
+        "id": "rabadons-deathcap",
+        "name": "Rabadon's Deathcap",
+        "image":"rabadons-deathcap.png",
+        "description": "Deal 20% bonus damage.",
+        "components": ["needlessly-large-rod","needlessly-large-rod"]
+    },
+    {
+        "id": "redbuff",
+        "name": "Red Buff",
+        "image":"redbuff.png",
+        "description": "Deal 5% bonus damage.\n\nAttacks and Abilities 1% Burn and 33% Wound enemies for 5 seconds.\n\nBurn: Deals a percent of the target's maximum Health as true damage every second\n\nWound: Reduces healing received",
+        "components": ["recurve-bow","recurve-bow"]
+    },
+    {
+        "id": "redemption",
+        "name": "Redemption",
+        "image":"redemption.png",
+        "description": "Heal allies within 1 hex for 15% of their missing Health every 5 seconds. They also take 10% less damage for 5 seconds (damage reduction does not stack).\n\n[Aura item]",
+        "components": ["giants-belt","tear-of-the-goddess"]
+    },
+    {
+        "id": "runaans-hurricane",
+        "name": "Runaan's Hurricane",
+        "image":"runaans-hurricane.png",
+        "description": "Attacks fire a bolt at a nearby enemy, dealing 55% Attack Damage as physical damage.",
+        "components": ["negatron-cloak","recurve-bow"]
+    },
+    {
+        "id": "spear-of-shojin2",
+        "name": "Spear of Shojin",
+        "image":"spear-of-shojin2.png",
+        "description": "Attacks grant 5 bonus Mana.",
+        "components": ["bf-sword","tear-of-the-goddess"]
+    },
+    {
+        "id": "statikk-shiv",
+        "name": "Statikk Shiv",
+        "image":"statikk-shiv.png",
+        "description": "Every 3rd attack deals 35 magic damage and 30% Shreds 4 enemies for 5 seconds.\n\nShred: Reduce Magic Resist",
+        "components": ["recurve-bow","tear-of-the-goddess"]
+    },
+    {
+        "id": "steadfast-heart",
+        "name": "Steadfast Heart",
+        "image":"steadfast-heart.png",
+        "description": "Take 8% less damage. While above 50% Health, take 15% less damage instead.",
+        "components": ["chain-vest","sparring-gloves"]
+    },
+    {
+        "id": "sterak's-gage",
+        "name": "Sterak's Gage",
+        "image":"sterak's-gage.png",
+        "description": "Once per combat at 60% Health, gain 20% max Health and 35% Attack Damage.",
+        "components": ["bf-sword","giants-belt"]
+    },
+    {
+        "id": "sunfire-cape",
+        "name": "Sunfire Cape",
+        "image":"sunfire-cape.png",
+        "description": "Every 2 seconds, deal 1% Burn and 33% Wound to an enemy within 2 hexes for 10 seconds.\n\n[Unique - only 1 per champion]\nBurn: Deals a percent of the target's maximum Health as true damage every second\nWound: Reduces healing received",
+        "components": ["chain-vest","giants-belt"]
+    },
+    {
+        "id": "tactician's-crown",
+        "name": "Tactician's Crown",
+        "image":"tactician's-crown.png",
+        "description": "Your team gains +1 maximum team size.",
+        "components": ["spatula","spatula"]
+    },
+    {
+        "id": "thiefs-gloves",
+        "name": "Thief's Gloves",
+        "image":"thiefs-gloves.png",
+        "description": "Each round: Equip 2 random items.\n\n[Consumes 3 item slots.]",
+        "components": ["sparring-gloves","sparring-gloves"]
+    },
+    {
+        "id": "titan's-resolve",
+        "name": "Titan's Resolve",
+        "image":"titan's-resolve.png",
+        "description": "Each round: Equip 2 random items.\n\n[Consumes 3 item slots.]",
+        "components": ["chain-vest","recurve-bow"]
+    },
+    {
+        "id": "warmog's-armor",
+        "name": "Warmog's Armor",
+        "image":"warmog's-armor.png",
+        "description": "Gain 7% max health.",
+        "components": ["giants-belt","giants-belt"]
+    },
+    {
+        "id": "dryad-emblem",
+        "name": "Dryad Emblem",
+        "image":"dryad-emblem.png",
+        "description": "The holder gains the Dryad trait.\n\n[Unique - only 1 per champion.]",
+        "components": ["spatula","giants-belt"]
+    },
+    {
+        "id": "fated-emblem",
+        "name": "Fated Emblem",
+        "image":"fated-emblem.png",
+        "description": "The holder gains the Fated trait.\n\nFated Bonus: Restore 2% Health every 3 seconds.\n\n[Unique - only 1 per champion.]",
+        "components": ["spatula","needlessly-large-rod"]
+    },
+    {
+        "id": "ghostly-emblem",
+        "name": "Ghostly Emblem",
+        "image":"ghostly-emblem.png",
+        "description": "The holder gains the Ghostly trait.\n\n[Unique - only 1 per champion.]",
+        "components": ["spatula","bf-sword"]
+    },
+    {
+        "id": "heavenly-emblem",
+        "name": "Heavenly Emblem",
+        "image":"heavenly-emblem.png",
+        "description": "The holder gains the Heavenly trait.\n\n[Unique - only 1 per champion.]",
+        "components": ["spatula","negatron-cloak"]
+    },
+    {
+        "id": "mythic-emblem",
+        "name": "Mythic Emblem",
+        "image":"mythic-emblem.png",
+        "description": "The holder gains the Mythic trait.\n\n[Unique - only 1 per champion.]",
+        "components": ["spatula","tear-of-the-goddess"]
+    },
+    {
+        "id": "porcelain-emblem",
+        "name": "Porcelain Emblem",
+        "image":"porcelain-emblem.png",
+        "description": "The holder gains the Porcelain trait.\n\n[Unique - only 1 per champion.]",
+        "components": ["spatula","recurve-bow"]
+    },
+    {
+        "id": "storyweaver-emblem",
+        "name": "Storyweaver Emblem",
+        "image":"storyweaver-emblem.png",
+        "description": "The holder gains the Storyweaver trait.\n\n[Unique - only 1 per champion.]",
+        "components": ["spatula","chain-vest"]
+    },
+    {
+        "id": "umbral-emblem",
+        "name": "Umbral Emblem",
+        "image":"umbral-emblem.png",
+        "description": "The holder gains the Umbral trait.\n\n[Unique - only 1 per champion.]",
+        "components": ["spatula","sparring-gloves"]
+    }
+
+]
