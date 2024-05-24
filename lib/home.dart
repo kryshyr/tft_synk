@@ -210,7 +210,7 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
-  String synergyFilter = 'Any Synergy';
+  String? synergyFilter = 'Any Synergy';
 
   @override
   void dispose() {
@@ -353,9 +353,7 @@ class _HomeTabState extends State<HomeTab> {
                   const SizedBox(width: 20),
                   DropdownButton<String>(
                     value: synergyFilter,
-                    items: <String>[
-                      'Any Synergy',
-                    ].map((String value) {
+                    items: traitBonuses.keys.toList().map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -374,7 +372,7 @@ class _HomeTabState extends State<HomeTab> {
           ),
           Expanded(
             child: Container(
-              child: ChampionList(searchQuery: searchQuery, synergyFilter: synergyFilter),
+              child: ChampionList(searchQuery: searchQuery, synergyFilter: synergyFilter ?? ''),
             ),
           ),
         ],
