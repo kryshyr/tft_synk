@@ -33,10 +33,12 @@ class ChampionList extends StatelessWidget {
                     children: [
                       for (var tier in tieredChampions.keys)
                         if (tieredChampions[tier]!.any((champion) => champion
-                            .name
-                            .toLowerCase()
-                            .contains(searchQuery.toLowerCase()
-                            )))
+                              .name
+                              .toLowerCase()
+                              .contains(searchQuery.toLowerCase()
+                              .trim()) 
+                            && (synergyFilter == 'Any Synergy' || champion.traits.contains(synergyFilter)
+                          )))
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
