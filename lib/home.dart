@@ -61,6 +61,14 @@ class _HomeTabState extends State<HomeTab> {
     String? previousChampionName;
     List<String>? previousChampionTraits;
 
+    if (targetHexagonOccupied) {
+      previousChampionName = championsList
+              .firstWhere((element) =>
+                  element.row == dropTargetRow && element.col == dropTargetCol)
+              .championName;
+      previousChampionTraits = getTraitListByChampionName(previousChampionName);
+    }
+
     // If the champion is dropped on the same hexagon
     if (isSameHexagon) {
       return;
@@ -71,7 +79,7 @@ class _HomeTabState extends State<HomeTab> {
       // Remove the champion from the previous position
       championsList.removeWhere((element) =>
           element.row == draggedFromRow && element.col == draggedFromCol);
-          // decrement the trait count
+      // decrement the trait count if the champion is no longer in the list
       champion.traits.forEach((trait) {
         synergyListController.decrementTraitCount(trait);
       });
@@ -81,17 +89,12 @@ class _HomeTabState extends State<HomeTab> {
     if (!isDraggedFromHexagon && targetHexagonOccupied) {
       // Remove the champion from the target position
       setState(() {
-        previousChampionName = championsList
-            .firstWhere((element) =>
-                element.row == dropTargetRow && element.col == dropTargetCol)
-            .championName;
-        previousChampionTraits = getTraitListByChampionName(previousChampionName!);
         
         championsList.removeWhere((element) =>
             element.row == dropTargetRow && element.col == dropTargetCol);
 
         // check if the champion is no longer in the list
-        if (!championsList.any((element) => element.championName == champion.name)) {
+        if (!championsList.any((element) => element.championName == previousChampionName)) {
           // decrement the trait count
           previousChampionTraits!.forEach((trait) {
             synergyListController.decrementTraitCount(trait);
@@ -104,14 +107,6 @@ class _HomeTabState extends State<HomeTab> {
     if (isDraggedFromHexagon && targetHexagonOccupied) {
       // Swap them
       setState(() {
-        // // Save name of the champion in the target position
-        // previousChampion = championsList.firstWhere((element) =>
-        //     element.row == dropTargetRow && element.col == dropTargetCol).championName;
-        previousChampionName = championsList
-            .firstWhere((element) =>
-                element.row == dropTargetRow && element.col == dropTargetCol)
-            .championName;
-
         // Remove the champion from the previous position
         championsList.removeWhere((element) =>
             element.row == draggedFromRow && element.col == draggedFromCol);
@@ -126,14 +121,16 @@ class _HomeTabState extends State<HomeTab> {
       });
     }
 
+    // Do not increment trait if champion has duplicate
+    if (!championsList.any((element) => element.championName == champion.name)) {
+      champion.traits.forEach((trait) {
+        synergyListController.incrementTraitCount(trait);
+      });
+    }
+
     // Add the champion to the list
     championsList
         .add(ChampionPosition(champion.name, dropTargetRow!, dropTargetCol!));
-
-    // Increment the trait count
-    champion.traits.forEach((trait) {
-      synergyListController.incrementTraitCount(trait);
-    });
 
     // Debugging purposes
     print(
@@ -143,6 +140,18 @@ class _HomeTabState extends State<HomeTab> {
           'Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
     }
     print('\n');
+  }
+
+  void _handleChampionRemoved(int? draggedFromRow, int? draggedFromCol, Champion champion) {
+    // Remove the champion from the list
+    championsList.removeWhere((element) => element.row == draggedFromRow && element.col == draggedFromCol);
+
+    // decrement the trait count if the champion is no longer in the list
+    if (!championsList.any((element) => element.championName == champion.name)) {
+      champion.traits.forEach((trait) {
+        synergyListController.decrementTraitCount(trait);
+      });
+    }
   }
 
   Future<void> saveTeamCompToFirestore() async {
@@ -318,13 +327,7 @@ class _HomeTabState extends State<HomeTab> {
                 onChampionDropped: _handleChampionDropped,
                 controller: hexagonGridController,
                 // Remove the champion from the list
-                onChampionRemoved: (champion) {
-                  championsList.removeWhere(
-                      (element) => element.championName == champion.name);
-                  champion.traits.forEach((trait) {
-                    synergyListController.decrementTraitCount(trait);
-                  });
-                },
+                onChampionRemoved: _handleChampionRemoved,
               ),
             ),
           ),
