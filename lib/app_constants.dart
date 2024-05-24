@@ -75,7 +75,7 @@ class AppTextStyles {
   static const TextStyle bodyText2Spiegel = TextStyle(
     fontFamily: 'Spiegel',
     fontSize: 14.0,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.bold,
     color: AppColors.primaryText,
   );
 }

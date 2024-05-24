@@ -71,6 +71,7 @@ flutter:
     - assets/traits/Trait_Icon_11_Sage.TFT_Set11.png
     - assets/traits/
     - assets/champions/
+    - assets/unit_champions/
     - assets/items/
     - assets/data/champions.json
     - assets/fonts/
