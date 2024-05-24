@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-
 import '../utils/champion.dart';
 
 class ChampionList extends StatelessWidget {
   final String searchQuery;
+  final String synergyFilter;
 
-  const ChampionList({Key? key, required this.searchQuery}) : super(key: key);
+  const ChampionList({
+    Key? key, 
+    required this.searchQuery,
+    required this.synergyFilter,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,8 @@ class ChampionList extends StatelessWidget {
                         if (tieredChampions[tier]!.any((champion) => champion
                             .name
                             .toLowerCase()
-                            .contains(searchQuery.toLowerCase())))
+                            .contains(searchQuery.toLowerCase()
+                            )))
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -51,8 +56,10 @@ class ChampionList extends StatelessWidget {
                                 children: [
                                   for (var champion in tieredChampions[tier]!)
                                     if (champion.name
-                                        .toLowerCase()
-                                        .contains(searchQuery))
+                                          .toLowerCase()
+                                          .contains(searchQuery)
+                                        && (synergyFilter == 'Any Synergy' ||
+                                            champion.traits.contains(synergyFilter)))
                                       LongPressDraggable<Champion>(
                                         data: champion,
                                         feedback: Image.asset(

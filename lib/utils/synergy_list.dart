@@ -2,32 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tft_synk/app_constants.dart';
 import 'package:tft_synk/home.dart' show SynergyListController;
 
-
-class SynergyList extends StatefulWidget {
-  final SynergyListController controller;
-
-  const SynergyList({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  // Global key for accessing the state of HexagonGrid
-  static final GlobalKey<_SynergyListState> synergyListKey =
-      GlobalKey<_SynergyListState>();
-
-  @override
-  _SynergyListState createState() => _SynergyListState(controller);
-}
-
-class _SynergyListState extends State<SynergyList> {
-  Map<String, int> traitCounts = {};
-
-  _SynergyListState(SynergyListController controller) {
-    controller.incrementTraitCount = incrementTraitCount;
-    controller.decrementTraitCount = decrementTraitCount;
-  }
-
-  Map<String, List<int>> traitBonuses = {
+Map<String, List<int>> traitBonuses = {
     "Dragonlord": [2, 3, 4, 5],
     "Dryad": [2, 4, 6],
     "Fated": [3, 5, 7, 10],
@@ -56,6 +31,30 @@ class _SynergyListState extends State<SynergyList> {
     "Trickshot": [2, 4],
     "Warden": [2, 4, 6],
   };
+
+class SynergyList extends StatefulWidget {
+  final SynergyListController controller;
+
+  const SynergyList({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  // Global key for accessing the state of HexagonGrid
+  static final GlobalKey<_SynergyListState> synergyListKey =
+      GlobalKey<_SynergyListState>();
+
+  @override
+  _SynergyListState createState() => _SynergyListState(controller);
+}
+
+class _SynergyListState extends State<SynergyList> {
+  Map<String, int> traitCounts = {};
+
+  _SynergyListState(SynergyListController controller) {
+    controller.incrementTraitCount = incrementTraitCount;
+    controller.decrementTraitCount = decrementTraitCount;
+  }
 
   String getSynergyIcon(String trait) {
     return 'assets/traits/Trait_Icon_11_$trait.TFT_Set11.png';

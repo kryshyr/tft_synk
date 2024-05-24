@@ -16,16 +16,6 @@ class HexagonGridController {
 }
 
 class SynergyListController {
-  // void incrementTraitCount(String trait) {
-  //   SynergyList.synergyListKey.currentState
-  //       ?.incrementTraitCount(trait);
-  // }
-
-  // void decrementTraitCount(String trait) {
-  //   SynergyList.synergyListKey.currentState
-  //       ?.decrementTraitCount(trait);
-  // }
-
   void Function(String) incrementTraitCount = (trait) {};
   void Function(String) decrementTraitCount = (trait) {};
 }
@@ -220,6 +210,8 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
+  String synergyFilter = 'Any Synergy';
+
   @override
   void dispose() {
     _compositionNameController.dispose();
@@ -360,18 +352,20 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                   const SizedBox(width: 20),
                   DropdownButton<String>(
+                    value: synergyFilter,
                     items: <String>[
                       'Any Synergy',
-                      'Synergy 1',
-                      'Synergy 2',
-                      'Synergy 3',
                     ].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
                       );
                     }).toList(),
-                    onChanged: (String? newValue) {},
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        synergyFilter = newValue!;
+                      });
+                    },
                     hint: Text('Any Synergy'),
                   ),
                 ],
@@ -380,7 +374,7 @@ class _HomeTabState extends State<HomeTab> {
           ),
           Expanded(
             child: Container(
-              child: ChampionList(searchQuery: searchQuery),
+              child: ChampionList(searchQuery: searchQuery, synergyFilter: synergyFilter),
             ),
           ),
         ],
