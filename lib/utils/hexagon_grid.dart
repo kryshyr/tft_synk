@@ -147,17 +147,20 @@ class _HexagonGridState extends State<HexagonGrid> {
     widget.onChampionDropped(
         dropTargetRow, dropTargetCol, draggedFromRow, draggedFromCol, champion);
 
+
     setState(() {
+      bool isDraggedFromHexagon = (draggedFromCol != null && draggedFromRow != null);
+
       // Store the champion from the target hexagon
       final championInTargetHexagon =
           championsGrid[dropTargetRow!][dropTargetCol!];
 
       // Update the champion's position to the target hexagon
-      placeChampion(dropTargetRow, dropTargetCol, champion);
+      placeChampion(dropTargetRow!, dropTargetCol!, champion);
 
-      // If there was a champion in the target hexagon, move it to the source hexagon
-      if (championInTargetHexagon != null) {
-        placeChampion(draggedFromRow, draggedFromCol, championInTargetHexagon);
+      // If there was a champion in the target hexagon and new champion not from hexagon, move it to the source hexagon
+      if ((championInTargetHexagon != null) && isDraggedFromHexagon) {
+        placeChampion(draggedFromRow!, draggedFromCol!, championInTargetHexagon);
       } else {
         // If there was no champion in the target hexagon, clear the source hexagon
         if (draggedFromRow != null && draggedFromCol != null) {
@@ -175,7 +178,7 @@ class _HexagonGridState extends State<HexagonGrid> {
 
   // Places a champion on a specific hexagon
   void placeChampion(
-      int? dropTargetRow, int? dropTargetCol, Champion? champion) {
+      int? dropTargetRow, int? dropTargetCol, Champion champion) {
     setState(() {
       championsGrid[dropTargetRow!][dropTargetCol!] = champion;
     });
