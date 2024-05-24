@@ -83,6 +83,9 @@ flutter:
       fonts:
         - asset: assets/fonts/Spiegel-Regular.otf
         - asset: assets/fonts/Spiegel-Bold.otf
+    - family: MyFlutterApp
+      fonts:
+        - asset: assets/fonts/custom_icons/MyFlutterApp.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

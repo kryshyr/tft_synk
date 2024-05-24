@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tft_synk/custom_icons/my_flutter_app_icons.dart';
 
 import 'app_constants.dart';
 import 'firebase_options.dart';
@@ -8,6 +9,7 @@ import 'comp_view.dart';
 import 'database.dart';
 import 'home.dart';
 import 'widgets/tabbed_screen.dart';
+import 'custom_icons/my_flutter_app_icons.dart';
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -69,11 +71,11 @@ class _MyHomePageState extends State<MyHomePage> {
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
+              icon: Icon(CustomIcon.hexagons),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.format_list_bulleted),
+              icon: Icon(Icons.layers),
               label: '',
             ),
             BottomNavigationBarItem(
