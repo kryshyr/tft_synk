@@ -10,7 +10,7 @@ class HexagonGridController {
   void placeChampion(
       int? dropTargetRow, int? dropTargetCol, Champion champion) {
     HexagonGrid.hexagonGridKey.currentState
-        ?.placeChampion(dropTargetRow, dropTargetCol, champion);
+        ?.placeChampion(dropTargetRow!, dropTargetCol!, champion);
   }
 }
 
