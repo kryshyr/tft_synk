@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:tft_synk/app_constants.dart';
+import 'package:tft_synk/home.dart' show SynergyListController;
+
 
 class SynergyList extends StatefulWidget {
-  const SynergyList({Key? key}) : super(key: key);
+  final SynergyListController controller;
+
+  const SynergyList({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  // Global key for accessing the state of HexagonGrid
+  static final GlobalKey<_SynergyListState> synergyListKey =
+      GlobalKey<_SynergyListState>();
 
   @override
-  _SynergyListState createState() => _SynergyListState();
+  _SynergyListState createState() => _SynergyListState(controller);
 }
 
 class _SynergyListState extends State<SynergyList> {
   Map<String, int> traitCounts = {};
+
+  _SynergyListState(SynergyListController controller) {
+    controller.incrementTraitCount = incrementTraitCount;
+    controller.decrementTraitCount = decrementTraitCount;
+  }
 
   Map<String, List<int>> traitBonuses = {
     "Dragonlord": [2, 3, 4, 5],
@@ -47,7 +63,7 @@ class _SynergyListState extends State<SynergyList> {
 
   String getFraction(String traitName, int count) {
     String numerator = count.toString();
-    String denominator = "1";
+    String denominator = count.toString();
 
     List<int> bonuses = traitBonuses[traitName]!;
 
@@ -65,6 +81,11 @@ class _SynergyListState extends State<SynergyList> {
     setState(() {
       traitCounts[trait] = (traitCounts[trait] ?? 0) + 1;
     });
+
+    // for debugging
+    for (var trait in traitCounts.keys) {
+      print(trait + ": " + traitCounts[trait].toString());
+    }
   }
 
   void decrementTraitCount(String trait) {
@@ -74,6 +95,11 @@ class _SynergyListState extends State<SynergyList> {
         traitCounts.remove(trait);
       }
     });
+
+    // for debugging
+    for (var trait in traitCounts.keys) {
+      print(trait + ": " + traitCounts[trait].toString());
+    }
   }
 
   Widget buildSynergyIcon(String trait) {

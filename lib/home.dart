@@ -15,6 +15,21 @@ class HexagonGridController {
   }
 }
 
+class SynergyListController {
+  // void incrementTraitCount(String trait) {
+  //   SynergyList.synergyListKey.currentState
+  //       ?.incrementTraitCount(trait);
+  // }
+
+  // void decrementTraitCount(String trait) {
+  //   SynergyList.synergyListKey.currentState
+  //       ?.decrementTraitCount(trait);
+  // }
+
+  void Function(String) incrementTraitCount = (trait) {};
+  void Function(String) decrementTraitCount = (trait) {};
+}
+
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
 
@@ -28,7 +43,7 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
   final HexagonGridController hexagonGridController = HexagonGridController();
-  final SynergyList synergyList = SynergyList();
+  final SynergyListController synergyListController = SynergyListController();
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
 
@@ -44,6 +59,7 @@ class _HomeTabState extends State<HomeTab> {
 
     // Champion? previousChampion;
     String? previousChampionName;
+    List<String>? previousChampionTraits;
 
     // If the champion is dropped on the same hexagon
     if (isSameHexagon) {
@@ -53,17 +69,34 @@ class _HomeTabState extends State<HomeTab> {
     // If dragged from a hexagon and the target has no champion
     if (isDraggedFromHexagon && !targetHexagonOccupied) {
       // Remove the champion from the previous position
-
       championsList.removeWhere((element) =>
           element.row == draggedFromRow && element.col == draggedFromCol);
+          // decrement the trait count
+      champion.traits.forEach((trait) {
+        synergyListController.decrementTraitCount(trait);
+      });
     }
 
     // If not dragged from a hexagon and the target is occupied
     if (!isDraggedFromHexagon && targetHexagonOccupied) {
       // Remove the champion from the target position
       setState(() {
+        previousChampionName = championsList
+            .firstWhere((element) =>
+                element.row == dropTargetRow && element.col == dropTargetCol)
+            .championName;
+        previousChampionTraits = getTraitListByChampionName(previousChampionName!);
+        
         championsList.removeWhere((element) =>
             element.row == dropTargetRow && element.col == dropTargetCol);
+
+        // check if the champion is no longer in the list
+        if (!championsList.any((element) => element.championName == champion.name)) {
+          // decrement the trait count
+          previousChampionTraits!.forEach((trait) {
+            synergyListController.decrementTraitCount(trait);
+          });
+        }
       });
     }
 
@@ -90,14 +123,17 @@ class _HomeTabState extends State<HomeTab> {
         // Add the champion from the target position to the previous position
         championsList.add(ChampionPosition(
             previousChampionName!, draggedFromRow, draggedFromCol));
-        // hexagonGridController.placeChampion(draggedFromRow, draggedFromCol, previousChampion!);
       });
     }
 
     // Add the champion to the list
-
     championsList
         .add(ChampionPosition(champion.name, dropTargetRow!, dropTargetCol!));
+
+    // Increment the trait count
+    champion.traits.forEach((trait) {
+      synergyListController.incrementTraitCount(trait);
+    });
 
     // Debugging purposes
     print(
@@ -285,11 +321,14 @@ class _HomeTabState extends State<HomeTab> {
                 onChampionRemoved: (champion) {
                   championsList.removeWhere(
                       (element) => element.championName == champion.name);
+                  champion.traits.forEach((trait) {
+                    synergyListController.decrementTraitCount(trait);
+                  });
                 },
               ),
             ),
           ),
-          synergyList,
+          SynergyList(controller: synergyListController),
           Container(
             color: const Color.fromARGB(255, 9, 137, 143),
             height: 60,
