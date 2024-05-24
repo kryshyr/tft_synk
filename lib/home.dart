@@ -53,10 +53,9 @@ class _HomeTabState extends State<HomeTab> {
     // If dragged from a hexagon and the target has no champion
     if (isDraggedFromHexagon && !targetHexagonOccupied) {
       // Remove the champion from the previous position
-      setState(() {
-        championsList.removeWhere((element) =>
-            element.row == draggedFromRow && element.col == draggedFromCol);
-      });
+
+      championsList.removeWhere((element) =>
+          element.row == draggedFromRow && element.col == draggedFromCol);
     }
 
     // If not dragged from a hexagon and the target is occupied
@@ -96,10 +95,9 @@ class _HomeTabState extends State<HomeTab> {
     }
 
     // Add the champion to the list
-    setState(() {
-      championsList
-          .add(ChampionPosition(champion.name, dropTargetRow!, dropTargetCol!));
-    });
+
+    championsList
+        .add(ChampionPosition(champion.name, dropTargetRow!, dropTargetCol!));
 
     // Debugging purposes
     print(
@@ -285,10 +283,8 @@ class _HomeTabState extends State<HomeTab> {
                 controller: hexagonGridController,
                 // Remove the champion from the list
                 onChampionRemoved: (champion) {
-                  setState(() {
-                    championsList.removeWhere(
-                        (element) => element.championName == champion.name);
-                  });
+                  championsList.removeWhere(
+                      (element) => element.championName == champion.name);
                 },
               ),
             ),
@@ -340,7 +336,11 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
           ),
-          Container(child: ChampionList(searchQuery: searchQuery))
+          Expanded(
+            child: Container(
+              child: ChampionList(searchQuery: searchQuery),
+            ),
+          ),
         ],
       ),
     );
