@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
 import 'package:tft_synk/home.dart' show HexagonGridController;
+
 import 'champion.dart';
 
 typedef ChampionDroppedCallback = void Function(
-    int? dropTargetRow, int? dropTargetCol,
-    int? draggedFromRow, int? draggedFromCol, Champion champion);
+    int? dropTargetRow,
+    int? dropTargetCol,
+    int? draggedFromRow,
+    int? draggedFromCol,
+    Champion champion);
 
 class HexagonGrid extends StatefulWidget {
   final ChampionDroppedCallback onChampionDropped;
   final HexagonGridController controller;
 
-  const HexagonGrid({Key? key, required this.onChampionDropped, required this.controller})
-      : super(key: 
-      key);
+  const HexagonGrid(
+      {Key? key, required this.onChampionDropped, required this.controller})
+      : super(key: key);
+
   // Global key for accessing the state of HexagonGrid
   static final GlobalKey<_HexagonGridState> hexagonGridKey =
       GlobalKey<_HexagonGridState>();
@@ -87,12 +92,21 @@ class _HexagonGridState extends State<HexagonGrid> {
                           draggedFromRow = null;
                         });
                       },
+                      onDragCompleted: () {
+                        // Clear the dragged image from the screen
+                        setState(() {
+                          draggedFromCol = null;
+                          draggedFromRow = null;
+                          dropTargetCol = null;
+                          dropTargetRow = null;
+                        });
+                      },
                       child: Image.asset(
                         'assets/champions/${champion.image}',
                       ),
                     );
-                  } 
-                    // If no champion has been dropped yet
+                  }
+                  // If no champion has been dropped yet
                   return DragTarget<Champion>(
                     builder: (context, candidateData, rejectedData) {
                       return dragTargetChild ?? Container();
@@ -107,7 +121,8 @@ class _HexagonGridState extends State<HexagonGrid> {
                     },
                     onAcceptWithDetails: (details) {
                       final champion = details.data as Champion;
-                      updateChampion(dropTargetRow, dropTargetCol, draggedFromRow, draggedFromCol, champion);
+                      updateChampion(dropTargetRow, dropTargetCol,
+                          draggedFromRow, draggedFromCol, champion);
                     },
                     onLeave: (_) {
                       // Clear the drop target position when the champion is dragged away
@@ -126,39 +141,47 @@ class _HexagonGridState extends State<HexagonGrid> {
     );
   }
 
-  // To update the champion that is dropped on a specific hexagon
   void updateChampion(int? dropTargetRow, int? dropTargetCol,
-                      int? draggedFromRow, int? draggedFromCol, Champion champion) {
+      int? draggedFromRow, int? draggedFromCol, Champion champion) {
     // Notify the parent widget (HomeTab) about the dropped champion
-    widget.onChampionDropped(dropTargetRow, dropTargetCol, draggedFromRow, draggedFromCol, champion);
+    widget.onChampionDropped(
+        dropTargetRow, dropTargetCol, draggedFromRow, draggedFromCol, champion);
 
     setState(() {
-      // Remove the champion from its previous position
-      if (draggedFromCol != null && draggedFromRow != null) {
-        championsGrid[draggedFromRow!][draggedFromCol!] = null;
-      }
-      
-      // Update the champion's position to the new hexagon
+      // Store the champion from the target hexagon
+      final championInTargetHexagon =
+          championsGrid[dropTargetRow!][dropTargetCol!];
+
+      // Update the champion's position to the target hexagon
       placeChampion(dropTargetRow, dropTargetCol, champion);
-      
-      // Clear the dragged from position
+
+      // If there was a champion in the target hexagon, move it to the source hexagon
+      if (championInTargetHexagon != null) {
+        placeChampion(draggedFromRow, draggedFromCol, championInTargetHexagon);
+      } else {
+        // If there was no champion in the target hexagon, clear the source hexagon
+        if (draggedFromRow != null && draggedFromCol != null) {
+          championsGrid[draggedFromRow!][draggedFromCol!] = null;
+        }
+      }
+
+      // Reset drag positions
       draggedFromCol = null;
       draggedFromRow = null;
-      // Clear the drop target position
       dropTargetCol = null;
       dropTargetRow = null;
-      // widget.onChampionDragged(draggedFromRow, draggedFromCol);
     });
   }
 
   // Places a champion on a specific hexagon
-  void placeChampion(int? dropTargetRow, int? dropTargetCol, Champion champion) {
+  void placeChampion(
+      int? dropTargetRow, int? dropTargetCol, Champion? champion) {
     setState(() {
       championsGrid[dropTargetRow!][dropTargetCol!] = champion;
     });
   }
 
-  // Method to clear the championsGrid list (Not working)
+  // Method to clear the championsGrid list
   void resetChampionsGrid() {
     setState(() {
       // Clear the champions grid

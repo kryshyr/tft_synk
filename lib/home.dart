@@ -7,8 +7,10 @@ import 'utils/champion_list.dart';
 import 'utils/hexagon_grid.dart';
 
 class HexagonGridController {
-  void placeChampion(int? dropTargetRow, int? dropTargetCol, Champion champion) {
-    HexagonGrid.hexagonGridKey.currentState?.placeChampion(dropTargetRow, dropTargetCol, champion);
+  void placeChampion(
+      int? dropTargetRow, int? dropTargetCol, Champion champion) {
+    HexagonGrid.hexagonGridKey.currentState
+        ?.placeChampion(dropTargetRow, dropTargetCol, champion);
   }
 }
 
@@ -29,13 +31,14 @@ class _HomeTabState extends State<HomeTab> {
   List<ChampionPosition> championsList = [];
 
   // Callback function to handle champion that is dropped onto the board
-  void _handleChampionDropped(int? dropTargetRow, int? dropTargetCol, 
-                              int? draggedFromRow, int? draggedFromCol, Champion champion) {
-    
-    bool isDraggedFromHexagon = (draggedFromCol != null && draggedFromRow != null);
+  void _handleChampionDropped(int? dropTargetRow, int? dropTargetCol,
+      int? draggedFromRow, int? draggedFromCol, Champion champion) {
+    bool isDraggedFromHexagon =
+        (draggedFromCol != null && draggedFromRow != null);
     bool targetHexagonOccupied = championsList.any((element) =>
         element.row == dropTargetRow && element.col == dropTargetCol);
-    bool isSameHexagon = (draggedFromRow == dropTargetRow && draggedFromCol == dropTargetCol);
+    bool isSameHexagon =
+        (draggedFromRow == dropTargetRow && draggedFromCol == dropTargetCol);
 
     // Champion? previousChampion;
     String? previousChampionName;
@@ -62,7 +65,7 @@ class _HomeTabState extends State<HomeTab> {
             element.row == dropTargetRow && element.col == dropTargetCol);
       });
     }
-    
+
     // If dragged from a hexagon and the target has a champion
     if (isDraggedFromHexagon && targetHexagonOccupied) {
       // Swap them
@@ -70,10 +73,10 @@ class _HomeTabState extends State<HomeTab> {
         // // Save name of the champion in the target position
         // previousChampion = championsList.firstWhere((element) =>
         //     element.row == dropTargetRow && element.col == dropTargetCol).championName;
-        previousChampionName = championsList.firstWhere((element) =>
-            element.row == dropTargetRow && element.col == dropTargetCol).championName;
-
-
+        previousChampionName = championsList
+            .firstWhere((element) =>
+                element.row == dropTargetRow && element.col == dropTargetCol)
+            .championName;
 
         // Remove the champion from the previous position
         championsList.removeWhere((element) =>
@@ -82,22 +85,26 @@ class _HomeTabState extends State<HomeTab> {
         // Remove the champion from the target position
         championsList.removeWhere((element) =>
             element.row == dropTargetRow && element.col == dropTargetCol);
-            
+
         // Add the champion from the target position to the previous position
-        championsList.add(ChampionPosition(previousChampionName!, draggedFromRow, draggedFromCol));
+        championsList.add(ChampionPosition(
+            previousChampionName!, draggedFromRow, draggedFromCol));
         // hexagonGridController.placeChampion(draggedFromRow, draggedFromCol, previousChampion!);
       });
     }
 
     // Add the champion to the list
     setState(() {
-      championsList.add(ChampionPosition(champion.name, dropTargetRow!, dropTargetCol!));
+      championsList
+          .add(ChampionPosition(champion.name, dropTargetRow!, dropTargetCol!));
     });
 
     // Debugging purposes
-    print('Champion ${champion.name} dropped at row: $dropTargetRow, col: $dropTargetCol');
+    print(
+        'Champion ${champion.name} dropped at row: $dropTargetRow, col: $dropTargetCol');
     for (var champ in championsList) {
-      print('Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
+      print(
+          'Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
     }
     print('\n');
   }
