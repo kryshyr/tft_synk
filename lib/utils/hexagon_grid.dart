@@ -11,12 +11,18 @@ typedef ChampionDroppedCallback = void Function(
     int? draggedFromCol,
     Champion champion);
 
+typedef ChampionRemovedCallback = void Function(Champion champion);
+
 class HexagonGrid extends StatefulWidget {
   final ChampionDroppedCallback onChampionDropped;
+  final ChampionRemovedCallback onChampionRemoved;
   final HexagonGridController controller;
 
   const HexagonGrid(
-      {Key? key, required this.onChampionDropped, required this.controller})
+      {Key? key,
+      required this.onChampionDropped,
+      required this.onChampionRemoved,
+      required this.controller})
       : super(key: key);
 
   // Global key for accessing the state of HexagonGrid
@@ -88,6 +94,18 @@ class _HexagonGridState extends State<HexagonGrid> {
                       onDraggableCanceled: (_, __) {
                         // Clear the dragged from position if dragging is canceled
                         setState(() {
+                          if (draggedFromRow != null &&
+                              draggedFromCol != null) {
+                            Champion? championToRemove =
+                                championsGrid[draggedFromRow!][draggedFromCol!];
+                            championsGrid[draggedFromRow!][draggedFromCol!] =
+                                null;
+
+                            if (championToRemove != null) {
+                              widget.onChampionRemoved(
+                                  championToRemove); // Remove from list if destination is not valid
+                            }
+                          }
                           draggedFromCol = null;
                           draggedFromRow = null;
                         });
@@ -147,9 +165,9 @@ class _HexagonGridState extends State<HexagonGrid> {
     widget.onChampionDropped(
         dropTargetRow, dropTargetCol, draggedFromRow, draggedFromCol, champion);
 
-
     setState(() {
-      bool isDraggedFromHexagon = (draggedFromCol != null && draggedFromRow != null);
+      bool isDraggedFromHexagon =
+          (draggedFromCol != null && draggedFromRow != null);
 
       // Store the champion from the target hexagon
       final championInTargetHexagon =
@@ -160,7 +178,8 @@ class _HexagonGridState extends State<HexagonGrid> {
 
       // If there was a champion in the target hexagon and new champion not from hexagon, move it to the source hexagon
       if ((championInTargetHexagon != null) && isDraggedFromHexagon) {
-        placeChampion(draggedFromRow!, draggedFromCol!, championInTargetHexagon);
+        placeChampion(
+            draggedFromRow!, draggedFromCol!, championInTargetHexagon);
       } else {
         // If there was no champion in the target hexagon, clear the source hexagon
         if (draggedFromRow != null && draggedFromCol != null) {
