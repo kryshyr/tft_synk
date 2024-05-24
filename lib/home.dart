@@ -7,7 +7,6 @@ import './utils/synergy_list.dart';
 import 'utils/champion_list.dart';
 import 'utils/hexagon_grid.dart';
 
-
 class HexagonGridController {
   void placeChampion(
       int? dropTargetRow, int? dropTargetCol, Champion champion) {
@@ -284,6 +283,13 @@ class _HomeTabState extends State<HomeTab> {
               child: HexagonGrid(
                 onChampionDropped: _handleChampionDropped,
                 controller: hexagonGridController,
+                // Remove the champion from the list
+                onChampionRemoved: (champion) {
+                  setState(() {
+                    championsList.removeWhere(
+                        (element) => element.championName == champion.name);
+                  });
+                },
               ),
             ),
           ),
