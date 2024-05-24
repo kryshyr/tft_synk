@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import './firestore/firebase_service.dart';
 import './utils/champion.dart';
 import './utils/device_id.dart';
+import './utils/synergy_list.dart';
 import 'utils/champion_list.dart';
 import 'utils/hexagon_grid.dart';
+
 
 class HexagonGridController {
   void placeChampion(
@@ -27,6 +29,7 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
   final HexagonGridController hexagonGridController = HexagonGridController();
+  final SynergyList synergyList = SynergyList();
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
 
@@ -284,27 +287,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
           ),
-          Container(
-            color: Colors.deepPurple,
-            height: 60,
-            child: Center(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    for (int i = 0; i < 15; i++)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Image.asset(
-                          'assets/traits/Trait_Icon_11_Sage.TFT_Set11.png',
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          synergyList,
           Container(
             color: const Color.fromARGB(255, 9, 137, 143),
             height: 60,
