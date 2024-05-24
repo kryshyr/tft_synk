@@ -7,11 +7,8 @@ class FirebaseService {
 
   FirebaseFirestore get firestore => _firestore; // Add this getter
 
-  Future<void> saveTeamComp(
-      BuildContext context,
-      String deviceId,
-      String compName,
-      List<Map<String, String>> championPositions) async {
+  Future<void> saveTeamComp(BuildContext context, String deviceId,
+      String compName, List<Map<String, String>> championPositions) async {
     // Reference to the collection
     CollectionReference teamComps = _firestore.collection('team_comps');
     //New document ID

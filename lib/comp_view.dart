@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
 
-import './firestore/firebase_service.dart'; // Assuming FirebaseService is defined here
-import './utils/device_id.dart'; // Assuming getDeviceID() is defined here
-import 'app_constants.dart';
+import './detailed_view.dart';
+import './firestore/firebase_service.dart';
+import './utils/device_id.dart';
 
 class CompViewTab extends StatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _CompViewTabState extends State<CompViewTab> {
         snapshot.docs.length,
         (index) => Container(
           decoration: BoxDecoration(
-            color: AppColors.primary,
+            color: Colors.blueGrey,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
@@ -86,7 +86,13 @@ class _CompViewTabState extends State<CompViewTab> {
                   align: ALIGN.CENTER,
                   onSelectedItem: (index) {
                     print("Selected: ${titles[index]}");
-                    // Add your desired action here when a card is clicked
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetailedViewPage(title: titles[index]),
+                      ),
+                    );
                   },
                 ),
               ),
