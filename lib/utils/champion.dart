@@ -4,6 +4,9 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart'; // Import Services library for reading JSON file
 
+List<Champion> champions = [];
+Map<int, List<Champion>> tieredChampions = {};
+
 class Champion {
   final String id;
   final String name;
@@ -44,7 +47,6 @@ class ChampionPosition {
 Future<Map<int, List<Champion>>> parseChampionsFromJson() async {
   String jsonData = await rootBundle.loadString('assets/data/champions.json');
   final Map<String, dynamic> data = json.decode(jsonData);
-  Map<int, List<Champion>> tieredChampions = {};
 
   data.forEach((tier, championList) {
     int tierNumber =
@@ -57,4 +59,14 @@ Future<Map<int, List<Champion>>> parseChampionsFromJson() async {
   });
 
   return tieredChampions;
+}
+
+// get trait list by champion name
+List<String> getTraitListByChampionName(String championName) {
+  for (var champion in champions) {
+    if (champion.name == championName) {
+      return champion.traits;
+    }
+  }
+  return [];
 }
