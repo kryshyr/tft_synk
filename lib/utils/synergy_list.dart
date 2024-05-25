@@ -128,7 +128,7 @@ class _SynergyListState extends State<SynergyList> {
       ..sort((e1, e2) => e1.key.compareTo(e2.key)));
 
     return Container(
-      color: AppColors.secondaryAccent,
+      color: AppColors.primary,
       height: 60,
       child: Center(
         child: SingleChildScrollView(
@@ -136,14 +136,25 @@ class _SynergyListState extends State<SynergyList> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // for every trait in traitCount, build a synergy icon
+              if (traitCounts.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    'No synergies yet. Drag champions to create your comp.',
+                    style: TextStyle(
+                      color: AppColors.primaryAccent,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Spiegel',
+                    ),
+                  ),
+                ),
               for (var trait in traitCounts.keys)
                 Column(
                   children: [
                     buildSynergyIcon(trait),
                     Text(
                       getFraction(trait, traitCounts[trait] ?? 0),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.primaryAccent,
                         fontWeight: FontWeight.bold,
                       ),
