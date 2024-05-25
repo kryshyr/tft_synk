@@ -58,9 +58,9 @@ class _HomeTabState extends State<HomeTab> {
 
     if (targetHexagonOccupied) {
       previousChampionName = championsList
-              .firstWhere((element) =>
-                  element.row == dropTargetRow && element.col == dropTargetCol)
-              .championName;
+          .firstWhere((element) =>
+              element.row == dropTargetRow && element.col == dropTargetCol)
+          .championName;
       previousChampionTraits = getTraitListByChampionName(previousChampionName);
     }
 
@@ -84,12 +84,12 @@ class _HomeTabState extends State<HomeTab> {
     if (!isDraggedFromHexagon && targetHexagonOccupied) {
       // Remove the champion from the target position
       setState(() {
-        
         championsList.removeWhere((element) =>
             element.row == dropTargetRow && element.col == dropTargetCol);
 
         // check if the champion is no longer in the list
-        if (!championsList.any((element) => element.championName == previousChampionName)) {
+        if (!championsList
+            .any((element) => element.championName == previousChampionName)) {
           // decrement the trait count
           previousChampionTraits!.forEach((trait) {
             synergyListController.decrementTraitCount(trait);
@@ -107,7 +107,8 @@ class _HomeTabState extends State<HomeTab> {
             element.row == draggedFromRow && element.col == draggedFromCol);
 
         // Do not decrement trait if champion has duplicate
-        if (!championsList.any((element) => element.championName == champion.name)) {
+        if (!championsList
+            .any((element) => element.championName == champion.name)) {
           champion.traits.forEach((trait) {
             synergyListController.decrementTraitCount(trait);
           });
@@ -124,7 +125,8 @@ class _HomeTabState extends State<HomeTab> {
     }
 
     // Do not increment trait if champion has duplicate
-    if (!championsList.any((element) => element.championName == champion.name)) {
+    if (!championsList
+        .any((element) => element.championName == champion.name)) {
       champion.traits.forEach((trait) {
         synergyListController.incrementTraitCount(trait);
       });
@@ -144,12 +146,15 @@ class _HomeTabState extends State<HomeTab> {
     print('\n');
   }
 
-  void _handleChampionRemoved(int? draggedFromRow, int? draggedFromCol, Champion champion) {
+  void _handleChampionRemoved(
+      int? draggedFromRow, int? draggedFromCol, Champion champion) {
     // Remove the champion from the list
-    championsList.removeWhere((element) => element.row == draggedFromRow && element.col == draggedFromCol);
+    championsList.removeWhere((element) =>
+        element.row == draggedFromRow && element.col == draggedFromCol);
 
     // decrement the trait count if the champion is no longer in the list
-    if (!championsList.any((element) => element.championName == champion.name)) {
+    if (!championsList
+        .any((element) => element.championName == champion.name)) {
       champion.traits.forEach((trait) {
         synergyListController.decrementTraitCount(trait);
       });
@@ -176,10 +181,6 @@ class _HomeTabState extends State<HomeTab> {
         context, deviceId, _compositionName, championPositions);
 
     print('Team composition saved!');
-
-    // Reset the champions grid (NOT WORKING)
-    HexagonGrid.hexagonGridKey.currentState?.resetChampionsGrid();
-    resetState();
   }
 
   TextEditingController _compositionNameController = TextEditingController();
@@ -230,14 +231,10 @@ class _HomeTabState extends State<HomeTab> {
     super.dispose();
   }
 
-  void resetState() {
-    setState(() {
-      // To clear the champions list and positions map
-      championsList.clear();
-      // championPositions.clear();
-      // To reset the composition name
+  void resetPage() {
       _compositionName = widget.initialCompositionName ?? 'Name';
-    });
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => super.widget));
   }
 
   @override
@@ -298,6 +295,7 @@ class _HomeTabState extends State<HomeTab> {
           GestureDetector(
             onTap: () {
               print("Delete icon clicked");
+              resetPage();
             },
             child: Image.asset(
               'assets/icons/delete-icon.png',
@@ -384,7 +382,8 @@ class _HomeTabState extends State<HomeTab> {
           ),
           Expanded(
             child: Container(
-              child: ChampionList(searchQuery: searchQuery, synergyFilter: synergyFilter ?? ''),
+              child: ChampionList(
+                  searchQuery: searchQuery, synergyFilter: synergyFilter ?? ''),
             ),
           ),
         ],
