@@ -52,6 +52,12 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
     color: Color.fromARGB(255, 255, 255, 255),
   );
+  static const TextStyle headline5BeaufortforLOL = TextStyle(
+    fontFamily: 'BeaufortforLOL',
+    fontSize: 16.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.secondaryText,
+  );
   static const TextStyle bodyText1BeaufortforLOL = TextStyle(
     fontFamily: 'BeaufortforLOL',
     fontSize: 16.0,
@@ -103,6 +109,11 @@ class AppTextStyles {
   static const TextStyle bodyText5Spiegel = TextStyle(
     fontFamily: 'Spiegel',
     fontSize: 14.0,
+    color: AppColors.hintText,
+  );
+  static const TextStyle bodyText6Spiegel = TextStyle(
+    fontFamily: 'Spiegel',
+    fontSize: 16.0,
     color: AppColors.hintText,
   );
 }
