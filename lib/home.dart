@@ -20,6 +20,16 @@ class HexagonGridController {
     // Place the champion in the specified row and column of the grid
     championsGrid[row][col] = champion;
   }
+
+}
+
+void clearHexagonGrid() {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 7; j++) {
+      championsGrid[i][j] = null;
+    }
+  }
+
 }
 
 class SynergyListController {
@@ -181,8 +191,12 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
 
-    _fetchTeamComps();
-    initCompositionName();
+    if (widget.initialCompositionName != null) {
+      _fetchTeamComps();
+      initCompositionName();
+    }
+
+    clearHexagonGrid();
   }
 
   Future<void> _fetchTeamComps() async {
@@ -384,6 +398,7 @@ class _HomeTabState extends State<HomeTab> {
       _compositionNameController.clear();
       synergyListController.clearTraitCounts();
       hexagonGridKey = UniqueKey(); // Update the key to rebuild HexagonGrid
+      clearHexagonGrid();
     });
   }
 
