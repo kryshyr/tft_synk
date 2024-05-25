@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:tft_synk/app_constants.dart';
 
 // item.dart
 class Item {
@@ -69,13 +70,20 @@ class _ItemsPageState extends State<ItemsTab> {
                 final item = snapshot.data![index];
                 return Center(
                   child: Card(
+                    color: AppColors.primaryAccent,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         ListTile(
                           leading: Image.asset('assets/items/${item.image}'),
-                          title: Text(item.name),
-                          subtitle: Text(item.description),
+                          title: Text(
+                            item.name,
+                            style: AppTextStyles.bodyText1Spiegel,
+                          ),
+                          subtitle: Text(
+                            item.description,
+                            style: AppTextStyles.bodyText2Spiegel,
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
