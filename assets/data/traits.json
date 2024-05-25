@@ -99,7 +99,7 @@
         "id": "lovers",
         "name": "Lovers",
         "description": "Change which Lover takes the field depending on whether they are placed in the front or back 2 rows. When the fielded Lover casts, the other provides a bonus effect. Front: Trickshot Xayah Back: Altruist Rakan",
-        "stats": null
+        "stats": ""
     },
     {
         "id": "mythic",
@@ -135,7 +135,7 @@
         "id": "spiritwalker",
         "name": "Spirit Walker",
         "description": "The first time the Spirit Walker drops below 50% Health, he unleashes the rage within, healing to full Health, gaining increased movement speed, and changing his Ability from Ram Slam to Tiger Strikes.",
-        "stats": null
+        "stats": ""
     },
     {
         "id": "trickshot",
