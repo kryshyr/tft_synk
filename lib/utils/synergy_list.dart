@@ -111,8 +111,13 @@ class _SynergyListState extends State<SynergyList> {
     );
   }
 
+  
+
   @override
   Widget build(context) {
+    traitCounts = Map.fromEntries(traitCounts.entries.toList()..sort((e1, e2) => e1.key.compareTo(e2.key)));
+
+
     return Container(
       color: AppColors.secondaryAccent,
       height: 60,
