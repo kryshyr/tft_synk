@@ -19,12 +19,12 @@ class HexagonGrid extends StatefulWidget {
   final ChampionRemovedCallback onChampionRemoved;
   final HexagonGridController controller;
 
-  const HexagonGrid(
-      {Key? key,
-      required this.onChampionDropped,
-      required this.onChampionRemoved,
-      required this.controller})
-      : super(key: key);
+  const HexagonGrid({
+    Key? key,
+    required this.onChampionDropped,
+    required this.onChampionRemoved,
+    required this.controller,
+  }) : super(key: key);
 
   // Global key for accessing the state of HexagonGrid
   static final GlobalKey<_HexagonGridState> hexagonGridKey =
@@ -65,7 +65,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                 rows: 4,
                 buildTile: (col, row) => HexagonWidgetBuilder(
                   color: (col == dropTargetCol && row == dropTargetRow)
-                      ? Color.fromARGB(255, 27, 158, 149).withOpacity(0.5)
+                      ? Color.fromARGB(255, 115, 255, 246).withOpacity(0.5)
                       : const Color.fromRGBO(10, 50, 60, 1),
                   elevation: 2,
                   padding: 2,
@@ -204,26 +204,6 @@ class _HexagonGridState extends State<HexagonGrid> {
       int? dropTargetRow, int? dropTargetCol, Champion champion) {
     setState(() {
       championsGrid[dropTargetRow!][dropTargetCol!] = champion;
-    });
-  }
-
-  // Method to clear the championsGrid list
-  void resetChampionsGrid() {
-    setState(() {
-      // Clear the champions grid
-      championsGrid = List.generate(
-        4,
-        (row) => List.generate(
-          7,
-          (col) => null,
-        ),
-      );
-
-      // Reset position variables
-      draggedFromCol = null;
-      draggedFromRow = null;
-      dropTargetCol = null;
-      dropTargetRow = null;
     });
   }
 }

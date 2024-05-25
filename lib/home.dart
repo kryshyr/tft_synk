@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
 import './firestore/firebase_service.dart';
 import './utils/champion.dart';
 import './utils/device_id.dart';
@@ -18,11 +19,12 @@ class HexagonGridController {
 class SynergyListController {
   void Function(String) incrementTraitCount = (trait) {};
   void Function(String) decrementTraitCount = (trait) {};
+  void Function() clearTraitCounts = () {};
 }
 
 class HomeTab extends StatefulWidget {
   final String? initialCompositionName;
-  
+
   const HomeTab({
     Key? key,
     this.initialCompositionName,
@@ -42,7 +44,8 @@ class _HomeTabState extends State<HomeTab> {
   // final SynergyList synergyList = SynergyList(controller: SynergyListController());
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
-  ChampionList championList = ChampionList(searchQuery: '', synergyFilter: 'Any Synergy');
+  ChampionList championList =
+      ChampionList(searchQuery: '', synergyFilter: 'Any Synergy');
 
   // Callback function to handle champion that is dropped onto the board
   void _handleChampionDropped(int? dropTargetRow, int? dropTargetCol,
@@ -76,9 +79,10 @@ class _HomeTabState extends State<HomeTab> {
       // Remove the champion from the previous position
       championsList.removeWhere((element) =>
           element.row == draggedFromRow && element.col == draggedFromCol);
-      
+
       // if the champion is no longer in the list
-      if (!championsList.any((element) => element.championName == previousChampionName)) {
+      if (!championsList
+          .any((element) => element.championName == previousChampionName)) {
         // decrement the trait count
         champion.traits.forEach((trait) {
           synergyListController.decrementTraitCount(trait);
@@ -171,7 +175,6 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
 
-
     _fetchTeamComps();
     initCompositionName();
   }
@@ -189,34 +192,40 @@ class _HomeTabState extends State<HomeTab> {
 
       if (compositionDocSnapshot.exists) {
         // The document data as a Map
-        Map<String, dynamic>? compositionData = compositionDocSnapshot.data() as Map<String, dynamic>?;
+        Map<String, dynamic>? compositionData =
+            compositionDocSnapshot.data() as Map<String, dynamic>?;
 
         if (compositionData != null) {
           // Do something with the composition data
           print('Composition Data: $compositionData');
           // championsList = compositionData['championPositions'];
-          List<dynamic> championPositions = compositionData['championPositions'];
+          List<dynamic> championPositions =
+              compositionData['championPositions'];
           List<String> championTraits = [];
           Champion? champion;
 
           for (var champion in championPositions) {
             // update trait count
             print('Champion: ${champion['championName']}');
-            print('Trait list: ${await getTraitListFromJson(champion['championName'])}');
-            
-            championTraits = await getTraitListFromJson(champion['championName']);
+            print(
+                'Trait list: ${await getTraitListFromJson(champion['championName'])}');
+
+            championTraits =
+                await getTraitListFromJson(champion['championName']);
 
             championTraits.forEach((trait) {
-              if (!championsList.any((element) => element.championName == champion['championName'])) {
+              if (!championsList.any((element) =>
+                  element.championName == champion['championName'])) {
                 synergyListController.incrementTraitCount(trait);
               }
             });
 
             // Add the champion to the list
-            championsList.add(ChampionPosition(
-                champion['championName'], int.parse(champion['row']), int.parse(champion['col'])));
+            championsList.add(ChampionPosition(champion['championName'],
+                int.parse(champion['row']), int.parse(champion['col'])));
 
-            // champion = champions.firstWhere((element) => element.name == champion['championName']);
+            champion = champions.firstWhere(
+                (element) => element.name == champion['championName']);
 
             // hexagonGridController.placeChampion(
             //     int.parse(champion['row']), int.parse(champion['col']), champion!) ;
@@ -224,7 +233,8 @@ class _HomeTabState extends State<HomeTab> {
 
           // Debugging purposes
           for (var champ in championsList) {
-            print('Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
+            print(
+                'Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
           }
           // print('Trais: ${synergyList.traitCounts}');
 
@@ -306,6 +316,8 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
+  UniqueKey hexagonGridKey = UniqueKey();
+
   String? synergyFilter = 'Any Synergy';
 
   @override
@@ -315,9 +327,14 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void resetPage() {
+    setState(() {
+      championsList.clear();
+      synergyFilter = 'Any Synergy';
       _compositionName = 'Name';
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => super.widget));
+      _compositionNameController.clear();
+      synergyListController.clearTraitCounts();
+      hexagonGridKey = UniqueKey(); // Update the key to rebuild HexagonGrid
+    });
   }
 
   @override
@@ -411,6 +428,7 @@ class _HomeTabState extends State<HomeTab> {
             height: MediaQuery.of(context).size.height / 3,
             child: Container(
               child: HexagonGrid(
+                key: hexagonGridKey,
                 onChampionDropped: _handleChampionDropped,
                 controller: hexagonGridController,
                 // Remove the champion from the list
@@ -467,11 +485,10 @@ class _HomeTabState extends State<HomeTab> {
           ),
           Expanded(
             child: Container(
-              child: championList = ChampionList(
-                searchQuery: searchQuery,
-                synergyFilter: synergyFilter!,
-              )
-            ),
+                child: championList = ChampionList(
+              searchQuery: searchQuery,
+              synergyFilter: synergyFilter!,
+            )),
           ),
         ],
       ),
