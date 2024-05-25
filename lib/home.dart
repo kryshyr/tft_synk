@@ -62,7 +62,7 @@ class HomeTabState extends State<HomeTab> {
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
   ChampionList championList =
-      ChampionList(searchQuery: '', synergyFilter: 'Any Synergy');
+      const ChampionList(searchQuery: '', synergyFilter: 'Any Synergy');
 
   // Callback function to handle champion that is dropped onto the board
   void _handleChampionDropped(int? dropTargetRow, int? dropTargetCol,
@@ -312,10 +312,10 @@ class HomeTabState extends State<HomeTab> {
   TextEditingController _compositionNameController = TextEditingController();
 
   // Define a variable to hold the current composition name
-  String _compositionName = 'Name';
+  String _compositionName = 'Team Planner';
 
   void initCompositionName() {
-    _compositionName = widget.initialCompositionName ?? 'Name';
+    _compositionName = widget.initialCompositionName ?? 'Team Planner';
   }
 
   // Function to show the dialog to edit the composition name
@@ -353,7 +353,7 @@ class HomeTabState extends State<HomeTab> {
                     _compositionName =
                         _compositionNameController.text.isNotEmpty
                             ? _compositionNameController.text
-                            : 'Name';
+                            : 'Team Planner';
                   });
                   Navigator.of(context).pop();
                 },
@@ -396,7 +396,7 @@ class HomeTabState extends State<HomeTab> {
     setState(() {
       championsList.clear();
       synergyFilter = 'Any Synergy';
-      _compositionName = 'Name';
+      _compositionName = 'Team Planner';
       _compositionNameController.clear();
       synergyListController.clearTraitCounts();
       hexagonGridKey = UniqueKey(); // Update the key to rebuild HexagonGrid
@@ -410,11 +410,11 @@ class HomeTabState extends State<HomeTab> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(10, 20, 40, 1),
+        backgroundColor: AppColors.background,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
           child: Container(
-            color: const Color.fromRGBO(200, 155, 60, 1),
+            color: AppColors.secondary,
             height: 1.0,
           ),
         ),
@@ -490,21 +490,26 @@ class HomeTabState extends State<HomeTab> {
       body: Column(
         children: [
           Container(
-            color: const Color.fromRGBO(10, 20, 40, 1),
+            color: AppColors.background,
             height: MediaQuery.of(context).size.height / 3,
-            child: Container(
-              child: HexagonGrid(
-                key: hexagonGridKey,
-                onChampionDropped: _handleChampionDropped,
-                controller: hexagonGridController,
-                // Remove the champion from the list
-                onChampionRemoved: _handleChampionRemoved,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Container(
+                child: HexagonGrid(
+                  key: hexagonGridKey,
+                  onChampionDropped: _handleChampionDropped,
+                  controller: hexagonGridController,
+                  // Remove the champion from the list
+                  onChampionRemoved: _handleChampionRemoved,
+                ),
               ),
             ),
           ),
+
+          // SEARCH BAR
           SynergyList(controller: synergyListController),
           Container(
-            color: const Color.fromARGB(255, 9, 137, 143),
+            color: AppColors.background,
             height: 60,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -512,30 +517,50 @@ class HomeTabState extends State<HomeTab> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: Container(
-                      child: TextField(
-                        onChanged: (value) {
-                          // Update the search query
-                          setState(() {
-                            searchQuery = value;
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          hintText: 'Search...',
-                          border: OutlineInputBorder(),
-                          hintStyle: TextStyle(fontSize: 13),
+                    child: TextField(
+                      onChanged: (value) {
+                        // Update the search query
+                        setState(() {
+                          searchQuery = value;
+                        });
+                      },
+                      style: AppTextStyles.bodyText6Spiegel,
+                      decoration: const InputDecoration(
+                        hintText: 'Search champions',
+                        hintStyle: TextStyle(
+                            color: AppColors.hintText,
+                            fontFamily: 'Spiegel',
+                            fontWeight: FontWeight.normal),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: AppColors.primary),
                         ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: AppColors.secondary),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.tertiaryAccent),
+                        ),
+                        prefixIcon:
+                            Icon(Icons.search, color: AppColors.secondary),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                       ),
                     ),
                   ),
                   const SizedBox(width: 20),
+
+                  // FILTER DROPDOWN
                   DropdownButton<String>(
                     value: synergyFilter,
+                    iconEnabledColor: AppColors.secondary,
                     items: traitBonuses.keys.toList().map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          value,
+                          style: AppTextStyles.bodyText6Spiegel,
+                        ),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
@@ -543,14 +568,20 @@ class HomeTabState extends State<HomeTab> {
                         synergyFilter = newValue!;
                       });
                     },
-                    hint: const Text('Any Synergy'),
+                    dropdownColor: AppColors.primary,
+                    hint: const Text(
+                      'Any Synergy',
+                      style: const TextStyle(color: AppColors.hintText),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
+
+          // CHAMPION LIST
           Expanded(
-            child: Container(
+            child: SizedBox(
                 child: championList = ChampionList(
               searchQuery: searchQuery,
               synergyFilter: synergyFilter!,
