@@ -81,7 +81,7 @@ class _ItemsPageState extends State<ItemsTab> {
                                 'assets/items/${item.image}',
                                 fit: BoxFit.cover,
                                 width: 60,
-                                height: 60, // Adjust the size as needed
+                                height: 60,
                               ),
                               const SizedBox(width: 10),
                               Expanded(
@@ -95,7 +95,7 @@ class _ItemsPageState extends State<ItemsTab> {
                           const SizedBox(height: 10),
                           Text(
                             item.description,
-                            style: AppTextStyles.bodyText1Spiegel,
+                            style: AppTextStyles.bodyText5Spiegel,
                           ),
                           const SizedBox(height: 10),
                           Align(
