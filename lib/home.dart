@@ -15,6 +15,21 @@ class HexagonGridController {
     HexagonGrid.hexagonGridKey.currentState
         ?.placeChampion(dropTargetRow!, dropTargetCol!, champion);
   }
+
+  void placeChampionInGrid(int row, int col, Champion champion) {
+    // Place the champion in the specified row and column of the grid
+    championsGrid[row][col] = champion;
+  }
+
+}
+
+void clearHexagonGrid() {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 7; j++) {
+      championsGrid[i][j] = null;
+    }
+  }
+
 }
 
 class SynergyListController {
@@ -25,20 +40,21 @@ class SynergyListController {
 
 class HomeTab extends StatefulWidget {
   final String? initialCompositionName;
+  final GlobalKey<HomeTabState> key;
 
   const HomeTab({
-    Key? key,
+    required this.key,
     this.initialCompositionName,
   }) : super(key: key);
 
   // Global key for accessing the state of HomeTab
-  static final GlobalKey<_HomeTabState> homeTabKey = GlobalKey<_HomeTabState>();
+  static final GlobalKey<HomeTabState> homeTabKey = GlobalKey<HomeTabState>();
 
   @override
-  _HomeTabState createState() => _HomeTabState();
+  HomeTabState createState() => HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
+class HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
   final HexagonGridController hexagonGridController = HexagonGridController();
   final SynergyListController synergyListController = SynergyListController();
@@ -176,8 +192,12 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
 
-    _fetchTeamComps();
-    initCompositionName();
+    if (widget.initialCompositionName != null) {
+      _fetchTeamComps();
+      initCompositionName();
+    }
+
+    clearHexagonGrid();
   }
 
   Future<void> _fetchTeamComps() async {
@@ -203,7 +223,7 @@ class _HomeTabState extends State<HomeTab> {
           List<dynamic> championPositions =
               compositionData['championPositions'];
           List<String> championTraits = [];
-          Champion? champion;
+          Champion? championToAdd;
 
           for (var champion in championPositions) {
             // update trait count
@@ -225,11 +245,26 @@ class _HomeTabState extends State<HomeTab> {
             championsList.add(ChampionPosition(champion['championName'],
                 int.parse(champion['row']), int.parse(champion['col'])));
 
-            champion = champions.firstWhere(
-                (element) => element.name == champion['championName']);
+            // championToAdd = champions.firstWhere(
+            //     (element) => element.name == champion['championName']);
 
-            // hexagonGridController.placeChampion(
-            //     int.parse(champion['row']), int.parse(champion['col']), champion!) ;
+            championToAdd = await getChampionByName(champion['championName']);
+            print('name: ${championToAdd.name}');
+            print('tier: ${championToAdd.tier}');
+            print('image: ${championToAdd.image}');
+            print('traits: ${championToAdd.traits}');
+            print('description: ${championToAdd.description}');
+
+            // TO-DO: place the champion in the championsGrid
+            setState(() {
+              hexagonGridController.placeChampionInGrid(
+                  int.parse(champion['row']),
+                  int.parse(champion['col']),
+                  championToAdd!);
+            });
+
+            print(
+                'Champion ${championToAdd.name} placed at row: ${champion['row']}, col: ${champion['col']})');
           }
 
           // Debugging purposes
@@ -271,6 +306,9 @@ class _HomeTabState extends State<HomeTab> {
         context, deviceId, _compositionName, championPositions);
 
     print('Team composition saved!');
+    if (widget.initialCompositionName == null) {
+      resetPage();
+    }
   }
 
   TextEditingController _compositionNameController = TextEditingController();
@@ -356,7 +394,7 @@ class _HomeTabState extends State<HomeTab> {
     super.dispose();
   }
 
-  void resetPage() {
+  void resetPage() {  
     setState(() {
       championsList.clear();
       synergyFilter = 'Any Synergy';
@@ -364,6 +402,7 @@ class _HomeTabState extends State<HomeTab> {
       _compositionNameController.clear();
       synergyListController.clearTraitCounts();
       hexagonGridKey = UniqueKey(); // Update the key to rebuild HexagonGrid
+      clearHexagonGrid();
     });
   }
 

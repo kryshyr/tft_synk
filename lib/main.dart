@@ -49,14 +49,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  final GlobalKey<HomeTabState> homeTabKey = GlobalKey<HomeTabState>();
 
-  // Tab Pages
-  static final List<Widget> _pages = <Widget>[
-    HomeTab(),
-    CompViewTab(),
-    // DatabaseTab(),
-    TabbedScreen()
-  ];
+  // // Tab Pages
+  // static final List<Widget> _pages = <Widget>[
+  //   HomeTab(key: HomeTab.homeTabKey),
+  //   CompViewTab(),
+  //   // DatabaseTab(),
+  //   TabbedScreen()
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: IndexedStack(
             index: _selectedIndex,
-            children: _pages,
+            children: [ // _pages
+              HomeTab(key: homeTabKey),
+              CompViewTab(),
+              // DatabaseTab(),
+              TabbedScreen()
+            ],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -101,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      homeTabKey.currentState?.resetPage();
     });
   }
 }
