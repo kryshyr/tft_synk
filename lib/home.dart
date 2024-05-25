@@ -40,20 +40,21 @@ class SynergyListController {
 
 class HomeTab extends StatefulWidget {
   final String? initialCompositionName;
+  final GlobalKey<HomeTabState> key;
 
   const HomeTab({
-    Key? key,
+    required this.key,
     this.initialCompositionName,
   }) : super(key: key);
 
   // Global key for accessing the state of HomeTab
-  static final GlobalKey<_HomeTabState> homeTabKey = GlobalKey<_HomeTabState>();
+  static final GlobalKey<HomeTabState> homeTabKey = GlobalKey<HomeTabState>();
 
   @override
-  _HomeTabState createState() => _HomeTabState();
+  HomeTabState createState() => HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
+class HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
   final HexagonGridController hexagonGridController = HexagonGridController();
   final SynergyListController synergyListController = SynergyListController();
@@ -390,7 +391,7 @@ class _HomeTabState extends State<HomeTab> {
     super.dispose();
   }
 
-  void resetPage() {
+  void resetPage() {  
     setState(() {
       championsList.clear();
       synergyFilter = 'Any Synergy';
