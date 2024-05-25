@@ -26,7 +26,7 @@ Map<String, List<int>> traitBonuses = {
   "Reaper": [2, 4],
   "Sage": [2, 3, 4, 5],
   "Sniper": [2, 4, 6],
-  "Spiritwalker": [1],
+  "Spirit Walker": [1],
   "Storyweaver": [3, 5, 7, 10],
   "Trickshot": [2, 4],
   "Umbral": [2, 4, 6, 8],
@@ -111,12 +111,10 @@ class _SynergyListState extends State<SynergyList> {
     );
   }
 
-  
-
   @override
   Widget build(context) {
-    traitCounts = Map.fromEntries(traitCounts.entries.toList()..sort((e1, e2) => e1.key.compareTo(e2.key)));
-
+    traitCounts = Map.fromEntries(traitCounts.entries.toList()
+      ..sort((e1, e2) => e1.key.compareTo(e2.key)));
 
     return Container(
       color: AppColors.secondaryAccent,
