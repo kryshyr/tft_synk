@@ -64,8 +64,7 @@ class ChampionList extends StatelessWidget {
                                             champion.traits
                                                 .contains(synergyFilter)))
                                       LongPressDraggable<Champion>(
-                                        delay:
-                                            const Duration(milliseconds: 100),
+                                        delay: const Duration(milliseconds: 70),
                                         data: champion,
                                         feedback: Image.asset(
                                           'assets/champions/${champion.image}',
