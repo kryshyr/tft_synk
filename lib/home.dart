@@ -306,6 +306,7 @@ class HomeTabState extends State<HomeTab> {
         context, deviceId, _compositionName, championPositions);
 
     print('Team composition saved!');
+    resetPage();
   }
 
   TextEditingController _compositionNameController = TextEditingController();
