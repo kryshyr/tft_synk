@@ -42,6 +42,7 @@ class _HomeTabState extends State<HomeTab> {
   // final SynergyList synergyList = SynergyList(controller: SynergyListController());
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
+  ChampionList championList = ChampionList(searchQuery: '', synergyFilter: 'Any Synergy');
 
   // Callback function to handle champion that is dropped onto the board
   void _handleChampionDropped(int? dropTargetRow, int? dropTargetCol,
@@ -169,7 +170,10 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
+
+
     _fetchTeamComps();
+    initCompositionName();
   }
 
   Future<void> _fetchTeamComps() async {
@@ -193,6 +197,7 @@ class _HomeTabState extends State<HomeTab> {
           // championsList = compositionData['championPositions'];
           List<dynamic> championPositions = compositionData['championPositions'];
           List<String> championTraits = [];
+          Champion? champion;
 
           for (var champion in championPositions) {
             // update trait count
@@ -210,6 +215,11 @@ class _HomeTabState extends State<HomeTab> {
             // Add the champion to the list
             championsList.add(ChampionPosition(
                 champion['championName'], int.parse(champion['row']), int.parse(champion['col'])));
+
+            // champion = champions.firstWhere((element) => element.name == champion['championName']);
+
+            // hexagonGridController.placeChampion(
+            //     int.parse(champion['row']), int.parse(champion['col']), champion!) ;
           }
 
           // Debugging purposes
@@ -312,7 +322,6 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    initCompositionName();
     print('Composition name: $_compositionName');
 
     return Scaffold(
@@ -458,8 +467,10 @@ class _HomeTabState extends State<HomeTab> {
           ),
           Expanded(
             child: Container(
-              child: ChampionList(
-                  searchQuery: searchQuery, synergyFilter: synergyFilter ?? ''),
+              child: championList = ChampionList(
+                searchQuery: searchQuery,
+                synergyFilter: synergyFilter!,
+              )
             ),
           ),
         ],
