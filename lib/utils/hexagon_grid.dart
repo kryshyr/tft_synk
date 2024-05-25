@@ -11,7 +11,7 @@ typedef ChampionDroppedCallback = void Function(
     int? draggedFromCol,
     Champion champion);
 
-typedef ChampionRemovedCallback = void Function(Champion champion);
+typedef ChampionRemovedCallback = void Function(int? row, int? col, Champion champion);
 
 class HexagonGrid extends StatefulWidget {
   final ChampionDroppedCallback onChampionDropped;
@@ -103,7 +103,7 @@ class _HexagonGridState extends State<HexagonGrid> {
 
                             if (championToRemove != null) {
                               widget.onChampionRemoved(
-                                  championToRemove); // Remove from list if destination is not valid
+                                  draggedFromRow,draggedFromCol,championToRemove); // Remove from list if destination is not valid
                             }
                           }
                           draggedFromCol = null;

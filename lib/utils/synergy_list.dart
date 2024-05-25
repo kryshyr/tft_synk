@@ -2,6 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:tft_synk/app_constants.dart';
 import 'package:tft_synk/home.dart' show SynergyListController;
 
+Map<String, List<int>> traitBonuses = {
+  "Any Synergy": [],
+  "Altruist": [2, 3, 4],
+  "Arcanist": [2, 4, 6, 8],
+  "Artist": [1],
+  "Behemoth": [2, 4, 6],
+  "Bruiser": [2, 4, 6, 8],
+  "Dragonlord": [2, 3, 4, 5],
+  "Dryad": [2, 4, 6],
+  "Duelist": [2, 4, 6, 8],
+  "Exalted": [3, 5],
+  "Fated": [3, 5, 7, 10],
+  "Fortune": [3, 5, 7],
+  "Ghostly": [2, 4, 6, 8],
+  "Great": [1],
+  "Heavenly": [2, 3, 4, 5, 6, 7],
+  "Inkshadow": [3, 5, 7],
+  "Invoker": [2, 4, 6],
+  "Lovers": [1],
+  "Mythic": [3, 5, 7, 10],
+  "Porcelain": [2, 4, 6],
+  "Reaper": [2, 4],
+  "Sage": [2, 3, 4, 5],
+  "Sniper": [2, 4, 6],
+  "Spiritwalker": [1],
+  "Storyweaver": [3, 5, 7, 10],
+  "Trickshot": [2, 4],
+  "Umbral": [2, 4, 6, 8],
+  "Warden": [2, 4, 6],
+};
 
 class SynergyList extends StatefulWidget {
   final SynergyListController controller;
@@ -26,36 +56,6 @@ class _SynergyListState extends State<SynergyList> {
     controller.incrementTraitCount = incrementTraitCount;
     controller.decrementTraitCount = decrementTraitCount;
   }
-
-  Map<String, List<int>> traitBonuses = {
-    "Dragonlord": [2, 3, 4, 5],
-    "Dryad": [2, 4, 6],
-    "Fated": [3, 5, 7, 10],
-    "Fortune": [3, 5, 7],
-    "Ghostly": [2, 4, 6, 8],
-    "Heavenly": [2, 3, 4, 5, 6, 7],
-    "Inkshadow": [3, 5, 7],
-    "Mythic": [3, 5, 7, 10],
-    "Porcelain": [2, 4, 6],
-    "Storyweaver": [3, 5, 7, 10],
-    "Umbral": [2, 4, 6, 8],
-    "Altruist": [2, 3, 4],
-    "Arcanist": [2, 4, 6, 8],
-    "Artist": [1],
-    "Behemoth": [2, 4, 6],
-    "Bruiser": [2, 4, 6, 8],
-    "Duelist": [2, 4, 6, 8],
-    "Exalted": [3, 5],
-    "Great": [1],
-    "Invoker": [2, 4, 6],
-    "Lovers": [1],
-    "Reaper": [2, 4],
-    "Sage": [2, 3, 4, 5],
-    "Sniper": [2, 4, 6],
-    "Spiritwalker": [1],
-    "Trickshot": [2, 4],
-    "Warden": [2, 4, 6],
-  };
 
   String getSynergyIcon(String trait) {
     return 'assets/traits/Trait_Icon_11_$trait.TFT_Set11.png';
