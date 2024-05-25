@@ -72,7 +72,10 @@ flutter:
     - assets/champions/
     - assets/unit_champions/
     - assets/items/
+    - assets/components/
     - assets/data/champions.json
+    - assets/data/items.json
+    - assets/data/traits.json
     - assets/fonts/
   fonts:
     - family: BeaufortforLOL

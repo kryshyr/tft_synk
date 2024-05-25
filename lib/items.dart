@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:tft_synk/app_constants.dart';
 
-// item.dart
 class Item {
   final String id;
   final String name;
@@ -68,37 +66,69 @@ class _ItemsPageState extends State<ItemsTab> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final item = snapshot.data![index];
-                return Center(
+                return Container(
+                  margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: Card(
-                    color: AppColors.primaryAccent,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        ListTile(
-                          leading: Image.asset('assets/items/${item.image}'),
-                          title: Text(
-                            item.name,
+                    color: AppColors.primaryVariant,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/items/${item.image}',
+                                fit: BoxFit.cover,
+                                width: 60,
+                                height: 60, // Adjust the size as needed
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  item.name,
+                                  style: AppTextStyles.headline3BeaufortforLOL,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            item.description,
                             style: AppTextStyles.bodyText1Spiegel,
                           ),
-                          subtitle: Text(
-                            item.description,
-                            style: AppTextStyles.bodyText2Spiegel,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            for (final component in item.components)
-                              Row(
-                                children: [
-                                  Image.asset('assets/items/$component'),
-                                  const SizedBox(width: 8),
-                                  Text("+"),
+                          const SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                for (int i = 0;
+                                    i < item.components.length;
+                                    i++) ...[
+                                  SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: Image.asset(
+                                      'assets/components/${item.components[i]}.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  if (i < item.components.length - 1)
+                                    const Text(
+                                      " + ",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryText,
+                                      ),
+                                    ),
                                 ],
-                              ),
-                          ],
-                        ),
-                      ],
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
