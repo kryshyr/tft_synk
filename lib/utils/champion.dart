@@ -68,5 +68,25 @@ List<String> getTraitListByChampionName(String championName) {
       return champion.traits;
     }
   }
+  print('Champion not found: $championName');
+  return [];
+}
+
+Future<List<String>> getTraitListFromJson(String championName) async {
+  String jsonData = await rootBundle.loadString('assets/data/champions.json');
+  final Map<String, dynamic> data = json.decode(jsonData);
+
+  // Iterate through each tier in the data
+  for (var tier in data.values) {
+    // Iterate through each champion in the tier
+    for (var champion in tier) {
+      // Check if the champion's name matches the given name
+      if (champion['name'] == championName) {
+        // Return the traits of the champion
+        return List<String>.from(champion['traits']);
+      }
+    }
+  }
+  // Return null if the champion is not found
   return [];
 }

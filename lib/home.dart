@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import './firestore/firebase_service.dart';
 import './utils/champion.dart';
 import './utils/device_id.dart';
@@ -39,6 +39,7 @@ class _HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
   final HexagonGridController hexagonGridController = HexagonGridController();
   final SynergyListController synergyListController = SynergyListController();
+  // final SynergyList synergyList = SynergyList(controller: SynergyListController());
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
 
@@ -162,6 +163,70 @@ class _HomeTabState extends State<HomeTab> {
       champion.traits.forEach((trait) {
         synergyListController.decrementTraitCount(trait);
       });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTeamComps();
+  }
+
+  Future<void> _fetchTeamComps() async {
+    String deviceId = await getDeviceID();
+    DocumentReference documentReference = _firebaseService.firestore
+        .collection('team_comps')
+        .doc(deviceId)
+        .collection('compositions')
+        .doc(widget.initialCompositionName);
+    try {
+      // Fetch the document snapshot
+      DocumentSnapshot compositionDocSnapshot = await documentReference.get();
+
+      if (compositionDocSnapshot.exists) {
+        // The document data as a Map
+        Map<String, dynamic>? compositionData = compositionDocSnapshot.data() as Map<String, dynamic>?;
+
+        if (compositionData != null) {
+          // Do something with the composition data
+          print('Composition Data: $compositionData');
+          // championsList = compositionData['championPositions'];
+          List<dynamic> championPositions = compositionData['championPositions'];
+          List<String> championTraits = [];
+
+          for (var champion in championPositions) {
+            // update trait count
+            print('Champion: ${champion['championName']}');
+            print('Trait list: ${await getTraitListFromJson(champion['championName'])}');
+            
+            championTraits = await getTraitListFromJson(champion['championName']);
+
+            championTraits.forEach((trait) {
+              if (!championsList.any((element) => element.championName == champion['championName'])) {
+                synergyListController.incrementTraitCount(trait);
+              }
+            });
+
+            // Add the champion to the list
+            championsList.add(ChampionPosition(
+                champion['championName'], int.parse(champion['row']), int.parse(champion['col'])));
+          }
+
+          // Debugging purposes
+          for (var champ in championsList) {
+            print('Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
+          }
+          // print('Trais: ${synergyList.traitCounts}');
+
+          // print(synergylist.trait)
+        } else {
+          print('No data found in the document');
+        }
+      } else {
+        print('Composition document does not exist');
+      }
+    } catch (e) {
+      print('Error getting composition document: $e');
     }
   }
 
