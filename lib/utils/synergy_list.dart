@@ -55,6 +55,7 @@ class _SynergyListState extends State<SynergyList> {
   _SynergyListState(SynergyListController controller) {
     controller.incrementTraitCount = incrementTraitCount;
     controller.decrementTraitCount = decrementTraitCount;
+    controller.clearTraitCounts = clearTraitCounts;
   }
 
   String getSynergyIcon(String trait) {
@@ -79,6 +80,12 @@ class _SynergyListState extends State<SynergyList> {
     }
 
     return numerator + " / " + denominator;
+  }
+
+  void clearTraitCounts() {
+    setState(() {
+      traitCounts = {};
+    });
   }
 
   void incrementTraitCount(String trait) {

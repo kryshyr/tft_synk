@@ -68,13 +68,13 @@ class ChampionList extends StatelessWidget {
                                         data: champion,
                                         feedback: Image.asset(
                                           'assets/champions/${champion.image}',
-                                          width: 60,
-                                          height: 60,
+                                          width: 35,
+                                          height: 35,
                                         ),
                                         child: Image.asset(
                                           'assets/champions/${champion.image}',
-                                          width: 60,
-                                          height: 60,
+                                          width: 50,
+                                          height: 50,
                                         ),
                                       ),
                                 ],
