@@ -14,6 +14,11 @@ class HexagonGridController {
     HexagonGrid.hexagonGridKey.currentState
         ?.placeChampion(dropTargetRow!, dropTargetCol!, champion);
   }
+
+  void placeChampionInGrid(int row, int col, Champion champion) {
+    // Place the champion in the specified row and column of the grid
+    championsGrid[row][col] = champion;
+  }
 }
 
 class SynergyListController {
@@ -234,11 +239,16 @@ class _HomeTabState extends State<HomeTab> {
             print('traits: ${championToAdd.traits}');
             print('description: ${championToAdd.description}');
 
+            // TO-DO: place the champion in the championsGrid
             setState(() {
-              hexagonGridController.placeChampion(
-                  int.parse(champion['row']), int.parse(champion['col']), championToAdd!) ;
+              hexagonGridController.placeChampionInGrid(
+                  int.parse(champion['row']),
+                  int.parse(champion['col']),
+                  championToAdd!);
             });
 
+            print(
+                'Champion ${championToAdd.name} placed at row: ${champion['row']}, col: ${champion['col']})');
           }
 
           // Debugging purposes
