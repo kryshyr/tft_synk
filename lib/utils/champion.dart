@@ -51,7 +51,7 @@ Future<Map<int, List<Champion>>> parseChampionsFromJson() async {
   data.forEach((tier, championList) {
     int tierNumber =
         int.tryParse(tier) ?? 0; // Parse tier number or default to 0
-    List<Champion> champions = [];
+    champions = [];
     for (var champData in championList) {
       champions.add(Champion.fromJson(champData));
     }
@@ -89,4 +89,58 @@ Future<List<String>> getTraitListFromJson(String championName) async {
   }
   // Return null if the champion is not found
   return [];
+}
+
+// get champion by name, from json
+Future<Champion> getChampionByName(String championName) async {
+  String jsonData = await rootBundle.loadString('assets/data/champions.json');
+  final Map<String, dynamic> data = json.decode(jsonData);
+
+  // // Iterate through each tier in the data
+  // for (var tier in data.values) {
+  //   // Iterate through each champion in the tier
+  //   for (var champion in tier) {
+  //     // Check if the champion's name matches the given name
+  //     if (champion['name'] == championName) {
+  //       // Return the traits of the champion
+  //       print('Champion found: $championName');
+  //       return Champion.fromJson(champion);
+  //     }
+  //   }
+  // }
+
+  // data.forEach((tier, championList) {
+  //   for (var champData in championList) {
+  //     if (champData['name'] == championName) {
+  //       print('Champion found: $championName');
+  //       return Champion.fromJson(champData);
+  //     }
+  //   }
+  // });
+
+  for (var tier in data.values) {
+    for (var champData in tier) {
+      if (champData['name'] == championName) {
+        // print('id: ${champData['id']}');
+        // print('name: ${champData['name']}');
+        // print('tier: ${champData['tier']}');
+        // print('image: ${champData['image']}');
+        // print('traits: ${champData['traits']}');
+        // print('description: ${champData['description']}');
+        return Champion.fromJson(champData);
+      }
+    }
+  }
+
+  // Return null if the champion is not found
+  print('Champion not found: $championName');
+  
+  return Champion(
+    id: '',
+    name: '',
+    tier: 0,
+    image: '',
+    traits: [],
+    description: '',
+  );
 }
