@@ -74,10 +74,14 @@ class _HomeTabState extends State<HomeTab> {
       // Remove the champion from the previous position
       championsList.removeWhere((element) =>
           element.row == draggedFromRow && element.col == draggedFromCol);
-      // decrement the trait count if the champion is no longer in the list
-      champion.traits.forEach((trait) {
-        synergyListController.decrementTraitCount(trait);
-      });
+      
+      // if the champion is no longer in the list
+      if (!championsList.any((element) => element.championName == previousChampionName)) {
+        // decrement the trait count
+        champion.traits.forEach((trait) {
+          synergyListController.decrementTraitCount(trait);
+        });
+      }
     }
 
     // If not dragged from a hexagon and the target is occupied
