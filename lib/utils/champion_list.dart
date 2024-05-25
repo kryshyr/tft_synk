@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/champion.dart';
 
 class ChampionList extends StatelessWidget {
@@ -6,7 +7,7 @@ class ChampionList extends StatelessWidget {
   final String synergyFilter;
 
   const ChampionList({
-    Key? key, 
+    Key? key,
     required this.searchQuery,
     required this.synergyFilter,
   }) : super(key: key);
@@ -32,13 +33,12 @@ class ChampionList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       for (var tier in tieredChampions.keys)
-                        if (tieredChampions[tier]!.any((champion) => champion
-                              .name
-                              .toLowerCase()
-                              .contains(searchQuery.toLowerCase()
-                              .trim()) 
-                            && (synergyFilter == 'Any Synergy' || champion.traits.contains(synergyFilter)
-                          )))
+                        if (tieredChampions[tier]!.any((champion) =>
+                            champion.name
+                                .toLowerCase()
+                                .contains(searchQuery.toLowerCase().trim()) &&
+                            (synergyFilter == 'Any Synergy' ||
+                                champion.traits.contains(synergyFilter))))
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -58,11 +58,14 @@ class ChampionList extends StatelessWidget {
                                 children: [
                                   for (var champion in tieredChampions[tier]!)
                                     if (champion.name
-                                          .toLowerCase()
-                                          .contains(searchQuery)
-                                        && (synergyFilter == 'Any Synergy' ||
-                                            champion.traits.contains(synergyFilter)))
+                                            .toLowerCase()
+                                            .contains(searchQuery) &&
+                                        (synergyFilter == 'Any Synergy' ||
+                                            champion.traits
+                                                .contains(synergyFilter)))
                                       LongPressDraggable<Champion>(
+                                        delay:
+                                            const Duration(milliseconds: 100),
                                         data: champion,
                                         feedback: Image.asset(
                                           'assets/champions/${champion.image}',
