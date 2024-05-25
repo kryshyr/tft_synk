@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tft_synk/app_constants.dart';
 
 import './firestore/firebase_service.dart';
 import './utils/champion.dart';
@@ -307,28 +308,57 @@ class _HomeTabState extends State<HomeTab> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Team Comp Name"),
+          backgroundColor: AppColors.primaryVariant,
+          title: const Text(
+            "Team Comp Name",
+            style: AppTextStyles.headline1BeaufortforLOL,
+          ),
           content: TextField(
             controller: _compositionNameController,
-            decoration: InputDecoration(hintText: "Enter new composition name"),
+            decoration: const InputDecoration(
+              hintText: "Enter composition name",
+              hintStyle: AppTextStyles.bodyText6Spiegel,
+            ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text("Save"),
-              onPressed: () {
-                setState(() {
-                  _compositionName = _compositionNameController.text.isNotEmpty
-                      ? _compositionNameController.text
-                      : 'Name';
-                });
-                Navigator.of(context).pop();
-              },
+            Container(
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 8, 40, 48),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: TextButton(
+                child: const Text(
+                  "Save",
+                  style: AppTextStyles.headline5BeaufortforLOL,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _compositionName =
+                        _compositionNameController.text.isNotEmpty
+                            ? _compositionNameController.text
+                            : 'Name';
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
             ),
-            TextButton(
-              child: Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            const SizedBox(width: 2),
+            Container(
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 8, 40, 48),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: TextButton(
+                child: const Text(
+                  "Cancel",
+                  style: AppTextStyles.headline5BeaufortforLOL,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
             ),
           ],
         );
@@ -363,11 +393,11 @@ class _HomeTabState extends State<HomeTab> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(10, 20, 40, 1),
+        backgroundColor: const Color.fromRGBO(10, 20, 40, 1),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
           child: Container(
-            color: Color.fromRGBO(200, 155, 60, 1),
+            color: const Color.fromRGBO(200, 155, 60, 1),
             height: 1.0,
           ),
         ),
@@ -379,8 +409,7 @@ class _HomeTabState extends State<HomeTab> {
               fit: BoxFit.scaleDown,
               child: Text(
                 _compositionName,
-                style: const TextStyle(
-                    fontSize: 16, color: Color.fromRGBO(200, 155, 60, 1)),
+                style: AppTextStyles.headline3BeaufortforLOL,
               ),
             ),
 
@@ -444,7 +473,7 @@ class _HomeTabState extends State<HomeTab> {
       body: Column(
         children: [
           Container(
-            color: Color.fromRGBO(10, 20, 40, 1),
+            color: const Color.fromRGBO(10, 20, 40, 1),
             height: MediaQuery.of(context).size.height / 3,
             child: Container(
               child: HexagonGrid(
@@ -497,7 +526,7 @@ class _HomeTabState extends State<HomeTab> {
                         synergyFilter = newValue!;
                       });
                     },
-                    hint: Text('Any Synergy'),
+                    hint: const Text('Any Synergy'),
                   ),
                 ],
               ),
