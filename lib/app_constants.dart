@@ -40,6 +40,12 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.primaryText,
   );
+  static const TextStyle headline3BeaufortforLOL = TextStyle(
+    fontFamily: 'BeaufortforLOL',
+    fontSize: 20.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.secondaryText,
+  );
   static const TextStyle bodyText1BeaufortforLOL = TextStyle(
     fontFamily: 'BeaufortforLOL',
     fontSize: 16.0,

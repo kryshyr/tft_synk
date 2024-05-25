@@ -233,7 +233,7 @@
     {
         "id": "tactician's-crown",
         "name": "Tactician's Crown",
-        "image":"tactician's-crown.png",
+        "image":"tactician-crown.png",
         "description": "Your team gains +1 maximum team size.",
         "components": ["spatula","spatula"]
     },
@@ -247,14 +247,14 @@
     {
         "id": "titan's-resolve",
         "name": "Titan's Resolve",
-        "image":"titan's-resolve.png",
+        "image":"titans-resolve.png",
         "description": "Each round: Equip 2 random items.\n\n[Consumes 3 item slots.]",
         "components": ["chain-vest","recurve-bow"]
     },
     {
         "id": "warmog's-armor",
         "name": "Warmog's Armor",
-        "image":"warmog's-armor.png",
+        "image":"warmogs-armor.png",
         "description": "Gain 7% max health.",
         "components": ["giants-belt","giants-belt"]
     },
