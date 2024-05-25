@@ -101,6 +101,13 @@ class _HomeTabState extends State<HomeTab> {
         championsList.removeWhere((element) =>
             element.row == draggedFromRow && element.col == draggedFromCol);
 
+        // Do not decrement trait if champion has duplicate
+        if (!championsList.any((element) => element.championName == champion.name)) {
+          champion.traits.forEach((trait) {
+            synergyListController.decrementTraitCount(trait);
+          });
+        }
+
         // Remove the champion from the target position
         championsList.removeWhere((element) =>
             element.row == dropTargetRow && element.col == dropTargetCol);
