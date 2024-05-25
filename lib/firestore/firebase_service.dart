@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> saveTeamComp(
-      BuildContext context,
-      String deviceId,
-      String compName,
-      List<String> champions,
-      List<Map<String, int>> positions) async {
+  FirebaseFirestore get firestore => _firestore; // Add this getter
+
+  Future<void> saveTeamComp(BuildContext context, String deviceId,
+      String compName, List<Map<String, String>> championPositions) async {
     // Reference to the collection
     CollectionReference teamComps = _firestore.collection('team_comps');
     //New document ID
@@ -65,8 +63,7 @@ class FirebaseService {
 
     // Save the team composition
     await deviceDocRef.collection('compositions').doc(compName).set({
-      'champions': champions,
-      'positions': positions,
+      'championPositions': championPositions,
       'timestamp': FieldValue.serverTimestamp(), // timestamp
     });
 

@@ -3,8 +3,32 @@ import 'package:flutter/material.dart';
 import './firestore/firebase_service.dart';
 import './utils/champion.dart';
 import './utils/device_id.dart';
+import './utils/synergy_list.dart';
 import 'utils/champion_list.dart';
 import 'utils/hexagon_grid.dart';
+
+class HexagonGridController {
+  void placeChampion(
+      int? dropTargetRow, int? dropTargetCol, Champion champion) {
+    HexagonGrid.hexagonGridKey.currentState
+        ?.placeChampion(dropTargetRow!, dropTargetCol!, champion);
+  }
+}
+
+class SynergyListController {
+  // void incrementTraitCount(String trait) {
+  //   SynergyList.synergyListKey.currentState
+  //       ?.incrementTraitCount(trait);
+  // }
+
+  // void decrementTraitCount(String trait) {
+  //   SynergyList.synergyListKey.currentState
+  //       ?.decrementTraitCount(trait);
+  // }
+
+  void Function(String) incrementTraitCount = (trait) {};
+  void Function(String) decrementTraitCount = (trait) {};
+}
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -18,42 +42,119 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
+  final HexagonGridController hexagonGridController = HexagonGridController();
+  final SynergyListController synergyListController = SynergyListController();
   String searchQuery = ''; // To store the search query
-  List<Champion> championsList = []; // List to store the champions
-  Map<String, ChampionPosition> championPositions = {};
+  List<ChampionPosition> championsList = [];
 
   // Callback function to handle champion that is dropped onto the board
-  void _handleChampionDropped(int row, int col, Champion champion) {
-    // To check if the champion already exists in the list
-    bool championExists = championsList
-        .any((existingChampion) => existingChampion.name == champion.name);
+  void _handleChampionDropped(int? dropTargetRow, int? dropTargetCol,
+      int? draggedFromRow, int? draggedFromCol, Champion champion) {
+    bool isDraggedFromHexagon =
+        (draggedFromCol != null && draggedFromRow != null);
+    bool targetHexagonOccupied = championsList.any((element) =>
+        element.row == dropTargetRow && element.col == dropTargetCol);
+    bool isSameHexagon =
+        (draggedFromRow == dropTargetRow && draggedFromCol == dropTargetCol);
 
-    setState(() {
-      if (championExists) {
-        // Update the position of the existing champion
-        var existingChampionIndex = championsList.indexWhere(
-            (existingChampion) => existingChampion.name == champion.name);
-        championsList[existingChampionIndex] = champion;
-      } else {
-        // Add the dropped champion to the list
-        championsList.add(champion);
-      }
+    // Champion? previousChampion;
+    String? previousChampionName;
+    List<String>? previousChampionTraits;
 
-      // Store the position of the champion
-      championPositions[champion.name] = ChampionPosition(row, col);
+    // If the champion is dropped on the same hexagon
+    if (isSameHexagon) {
+      return;
+    }
+
+    // If dragged from a hexagon and the target has no champion
+    if (isDraggedFromHexagon && !targetHexagonOccupied) {
+      // Remove the champion from the previous position
+      championsList.removeWhere((element) =>
+          element.row == draggedFromRow && element.col == draggedFromCol);
+          // decrement the trait count
+      champion.traits.forEach((trait) {
+        synergyListController.decrementTraitCount(trait);
+      });
+    }
+
+    // If not dragged from a hexagon and the target is occupied
+    if (!isDraggedFromHexagon && targetHexagonOccupied) {
+      // Remove the champion from the target position
+      setState(() {
+        previousChampionName = championsList
+            .firstWhere((element) =>
+                element.row == dropTargetRow && element.col == dropTargetCol)
+            .championName;
+        previousChampionTraits = getTraitListByChampionName(previousChampionName!);
+        
+        championsList.removeWhere((element) =>
+            element.row == dropTargetRow && element.col == dropTargetCol);
+
+        // check if the champion is no longer in the list
+        if (!championsList.any((element) => element.championName == champion.name)) {
+          // decrement the trait count
+          previousChampionTraits!.forEach((trait) {
+            synergyListController.decrementTraitCount(trait);
+          });
+        }
+      });
+    }
+
+    // If dragged from a hexagon and the target has a champion
+    if (isDraggedFromHexagon && targetHexagonOccupied) {
+      // Swap them
+      setState(() {
+        // // Save name of the champion in the target position
+        // previousChampion = championsList.firstWhere((element) =>
+        //     element.row == dropTargetRow && element.col == dropTargetCol).championName;
+        previousChampionName = championsList
+            .firstWhere((element) =>
+                element.row == dropTargetRow && element.col == dropTargetCol)
+            .championName;
+
+        // Remove the champion from the previous position
+        championsList.removeWhere((element) =>
+            element.row == draggedFromRow && element.col == draggedFromCol);
+
+        // Remove the champion from the target position
+        championsList.removeWhere((element) =>
+            element.row == dropTargetRow && element.col == dropTargetCol);
+
+        // Add the champion from the target position to the previous position
+        championsList.add(ChampionPosition(
+            previousChampionName!, draggedFromRow, draggedFromCol));
+      });
+    }
+
+    // Add the champion to the list
+    championsList
+        .add(ChampionPosition(champion.name, dropTargetRow!, dropTargetCol!));
+
+    // Increment the trait count
+    champion.traits.forEach((trait) {
+      synergyListController.incrementTraitCount(trait);
     });
+
+    // Debugging purposes
+    print(
+        'Champion ${champion.name} dropped at row: $dropTargetRow, col: $dropTargetCol');
+    for (var champ in championsList) {
+      print(
+          'Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
+    }
+    print('\n');
   }
 
   Future<void> saveTeamCompToFirestore() async {
-    // Gettin the names of the champions from the championsList
-    List<String> champions =
-        championsList.map((champion) => champion.name).toList();
+    List<Map<String, String>> championPositions = [];
 
-    // Getting the positions of champions from the championPositions map
-    List<Map<String, int>> positions = [];
-    for (var champion in championsList) {
-      ChampionPosition position = championPositions[champion.name]!;
-      positions.add({'row': position.row, 'col': position.col});
+    // Get the names and positions in championsList
+    for (var position in championsList) {
+      championPositions.add({
+        'championName': position.championName,
+        'row': position.row.toString(),
+        'col': position.col.toString(),
+      });
     }
 
     // GET DEVICE ID
@@ -61,7 +162,7 @@ class _HomeTabState extends State<HomeTab> {
 
     // SAVE TEAM COMP
     await _firebaseService.saveTeamComp(
-        context, deviceId, _compositionName, champions, positions);
+        context, deviceId, _compositionName, championPositions);
 
     print('Team composition saved!');
 
@@ -120,7 +221,7 @@ class _HomeTabState extends State<HomeTab> {
     setState(() {
       // To clear the champions list and positions map
       championsList.clear();
-      championPositions.clear();
+      // championPositions.clear();
       // To reset the composition name
       _compositionName = 'Name';
     });
@@ -215,30 +316,19 @@ class _HomeTabState extends State<HomeTab> {
             child: Container(
               child: HexagonGrid(
                 onChampionDropped: _handleChampionDropped,
+                controller: hexagonGridController,
+                // Remove the champion from the list
+                onChampionRemoved: (champion) {
+                  championsList.removeWhere(
+                      (element) => element.championName == champion.name);
+                  champion.traits.forEach((trait) {
+                    synergyListController.decrementTraitCount(trait);
+                  });
+                },
               ),
             ),
           ),
-          Container(
-            color: Colors.deepPurple,
-            height: 60,
-            child: Center(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    for (int i = 0; i < 15; i++)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Image.asset(
-                          'assets/traits/Trait_Icon_11_Sage.TFT_Set11.png',
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          SynergyList(controller: synergyListController),
           Container(
             color: const Color.fromARGB(255, 9, 137, 143),
             height: 60,
@@ -285,7 +375,11 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
           ),
-          Container(child: ChampionList(searchQuery: searchQuery))
+          Expanded(
+            child: Container(
+              child: ChampionList(searchQuery: searchQuery),
+            ),
+          ),
         ],
       ),
     );
