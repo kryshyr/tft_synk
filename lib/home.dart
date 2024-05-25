@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import './firestore/firebase_service.dart';
 import './utils/champion.dart';
 import './utils/device_id.dart';
@@ -21,7 +21,12 @@ class SynergyListController {
 }
 
 class HomeTab extends StatefulWidget {
-  const HomeTab({Key? key}) : super(key: key);
+  final String? initialCompositionName;
+  
+  const HomeTab({
+    Key? key,
+    this.initialCompositionName,
+  }) : super(key: key);
 
   // Global key for accessing the state of HomeTab
   static final GlobalKey<_HomeTabState> homeTabKey = GlobalKey<_HomeTabState>();
@@ -34,8 +39,10 @@ class _HomeTabState extends State<HomeTab> {
   final FirebaseService _firebaseService = FirebaseService();
   final HexagonGridController hexagonGridController = HexagonGridController();
   final SynergyListController synergyListController = SynergyListController();
+  // final SynergyList synergyList = SynergyList(controller: SynergyListController());
   String searchQuery = ''; // To store the search query
   List<ChampionPosition> championsList = [];
+  ChampionList championList = ChampionList(searchQuery: '', synergyFilter: 'Any Synergy');
 
   // Callback function to handle champion that is dropped onto the board
   void _handleChampionDropped(int? dropTargetRow, int? dropTargetCol,
@@ -69,10 +76,14 @@ class _HomeTabState extends State<HomeTab> {
       // Remove the champion from the previous position
       championsList.removeWhere((element) =>
           element.row == draggedFromRow && element.col == draggedFromCol);
-      // decrement the trait count if the champion is no longer in the list
-      champion.traits.forEach((trait) {
-        synergyListController.decrementTraitCount(trait);
-      });
+      
+      // if the champion is no longer in the list
+      if (!championsList.any((element) => element.championName == previousChampionName)) {
+        // decrement the trait count
+        champion.traits.forEach((trait) {
+          synergyListController.decrementTraitCount(trait);
+        });
+      }
     }
 
     // If not dragged from a hexagon and the target is occupied
@@ -156,6 +167,79 @@ class _HomeTabState extends State<HomeTab> {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+
+
+    _fetchTeamComps();
+    initCompositionName();
+  }
+
+  Future<void> _fetchTeamComps() async {
+    String deviceId = await getDeviceID();
+    DocumentReference documentReference = _firebaseService.firestore
+        .collection('team_comps')
+        .doc(deviceId)
+        .collection('compositions')
+        .doc(widget.initialCompositionName);
+    try {
+      // Fetch the document snapshot
+      DocumentSnapshot compositionDocSnapshot = await documentReference.get();
+
+      if (compositionDocSnapshot.exists) {
+        // The document data as a Map
+        Map<String, dynamic>? compositionData = compositionDocSnapshot.data() as Map<String, dynamic>?;
+
+        if (compositionData != null) {
+          // Do something with the composition data
+          print('Composition Data: $compositionData');
+          // championsList = compositionData['championPositions'];
+          List<dynamic> championPositions = compositionData['championPositions'];
+          List<String> championTraits = [];
+          Champion? champion;
+
+          for (var champion in championPositions) {
+            // update trait count
+            print('Champion: ${champion['championName']}');
+            print('Trait list: ${await getTraitListFromJson(champion['championName'])}');
+            
+            championTraits = await getTraitListFromJson(champion['championName']);
+
+            championTraits.forEach((trait) {
+              if (!championsList.any((element) => element.championName == champion['championName'])) {
+                synergyListController.incrementTraitCount(trait);
+              }
+            });
+
+            // Add the champion to the list
+            championsList.add(ChampionPosition(
+                champion['championName'], int.parse(champion['row']), int.parse(champion['col'])));
+
+            // champion = champions.firstWhere((element) => element.name == champion['championName']);
+
+            // hexagonGridController.placeChampion(
+            //     int.parse(champion['row']), int.parse(champion['col']), champion!) ;
+          }
+
+          // Debugging purposes
+          for (var champ in championsList) {
+            print('Champion: ${champ.championName}, row: ${champ.row}, col: ${champ.col}');
+          }
+          // print('Trais: ${synergyList.traitCounts}');
+
+          // print(synergylist.trait)
+        } else {
+          print('No data found in the document');
+        }
+      } else {
+        print('Composition document does not exist');
+      }
+    } catch (e) {
+      print('Error getting composition document: $e');
+    }
+  }
+
   Future<void> saveTeamCompToFirestore() async {
     List<Map<String, String>> championPositions = [];
 
@@ -182,6 +266,10 @@ class _HomeTabState extends State<HomeTab> {
 
   // Define a variable to hold the current composition name
   String _compositionName = 'Name';
+
+  void initCompositionName() {
+    _compositionName = widget.initialCompositionName ?? 'Name';
+  }
 
   // Function to show the dialog to edit the composition name
   Future<void> _showEditCompositionNameDialog() async {
@@ -227,12 +315,15 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void resetPage() {
+      _compositionName = 'Name';
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => super.widget));
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Composition name: $_compositionName');
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(10, 20, 40, 1),
@@ -376,8 +467,10 @@ class _HomeTabState extends State<HomeTab> {
           ),
           Expanded(
             child: Container(
-              child: ChampionList(
-                  searchQuery: searchQuery, synergyFilter: synergyFilter ?? ''),
+              child: championList = ChampionList(
+                searchQuery: searchQuery,
+                synergyFilter: synergyFilter!,
+              )
             ),
           ),
         ],

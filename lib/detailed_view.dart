@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
+import 'package:tft_synk/home.dart';
 
 import './utils/device_id.dart';
 import 'app_constants.dart';
@@ -53,6 +54,13 @@ class DetailedViewPage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         print("Edit icon clicked");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                HomeTab(initialCompositionName: title),
+                          ),
+                        );
                       },
                       child: Image.asset(
                         'assets/icons/edit-icon.png',

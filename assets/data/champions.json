@@ -652,7 +652,8 @@
             "traits": [
                 "Behemoth",
                 "Inkshadow",
-                "Spirit Walker"
+                "Spirit",
+                "Walker"
             ],
             "description": "Stance swapping: Fire cone and shredder modes"
         },
@@ -662,9 +663,8 @@
             "tier": 5,
             "image": "Wukong.png",
             "traits": [
-                "Great",
-                "Heavenly",
-                "Sage"
+                "Great Sage",
+                "Heavenly"
             ],
             "description": "Legendary Prowess: Cycles-empowered attacks"
         },
