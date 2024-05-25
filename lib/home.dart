@@ -21,7 +21,12 @@ class SynergyListController {
 }
 
 class HomeTab extends StatefulWidget {
-  const HomeTab({Key? key}) : super(key: key);
+  final String? initialCompositionName;
+  
+  const HomeTab({
+    Key? key,
+    this.initialCompositionName,
+  }) : super(key: key);
 
   // Global key for accessing the state of HomeTab
   static final GlobalKey<_HomeTabState> homeTabKey = GlobalKey<_HomeTabState>();
@@ -231,7 +236,7 @@ class _HomeTabState extends State<HomeTab> {
       championsList.clear();
       // championPositions.clear();
       // To reset the composition name
-      _compositionName = 'Name';
+      _compositionName = widget.initialCompositionName ?? 'Name';
     });
   }
 

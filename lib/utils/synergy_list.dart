@@ -58,6 +58,10 @@ class _SynergyListState extends State<SynergyList> {
   }
 
   String getSynergyIcon(String trait) {
+    if (trait == "Inkshadow") {
+      trait = "Ink Shadow";
+    }
+
     return 'assets/traits/Trait_Icon_11_$trait.TFT_Set11.png';
   }
 
