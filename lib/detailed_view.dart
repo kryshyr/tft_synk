@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
 
 import './utils/device_id.dart';
+import 'app_constants.dart';
 
 class DetailedViewPage extends StatelessWidget {
   final String title;
@@ -39,8 +40,27 @@ class DetailedViewPage extends StatelessWidget {
           String deviceID = snapshot.data!;
           return Scaffold(
             appBar: AppBar(
-              title: Text(title),
-            ),
+                backgroundColor: AppColors.primary,
+                title: Row(
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(width: 15),
+
+                    // EDIT BUTTON
+                    GestureDetector(
+                      onTap: () {
+                        print("Edit icon clicked");
+                      },
+                      child: Image.asset(
+                        'assets/icons/edit-icon.png',
+                        height: 20,
+                      ),
+                    ),
+                  ],
+                )),
             body: StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('team_comps')

@@ -5,6 +5,7 @@ import 'package:vertical_card_pager/vertical_card_pager.dart';
 import './detailed_view.dart';
 import './firestore/firebase_service.dart';
 import './utils/device_id.dart';
+import 'app_constants.dart';
 
 class CompViewTab extends StatefulWidget {
   @override
@@ -37,8 +38,9 @@ class _CompViewTabState extends State<CompViewTab> {
         snapshot.docs.length,
         (index) => Container(
           decoration: BoxDecoration(
-            color: Colors.blueGrey,
+            color: AppColors.primaryVariant,
             borderRadius: BorderRadius.all(Radius.circular(10)),
+            border: Border.all(color: AppColors.primaryAccent, width: 2),
           ),
         ),
       );
@@ -49,7 +51,7 @@ class _CompViewTabState extends State<CompViewTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(10, 20, 40, 1),
+        backgroundColor: AppColors.background,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
           child: Container(
@@ -59,25 +61,21 @@ class _CompViewTabState extends State<CompViewTab> {
         ),
         title: Row(
           children: [
-            FittedBox(
+            const FittedBox(
               fit: BoxFit.scaleDown,
-              child: Text(
-                'MY COMPS',
-                style: const TextStyle(
-                    fontSize: 16, color: Color.fromRGBO(200, 155, 60, 1)),
-              ),
+              child: Text('MY COMPS',
+                  style: AppTextStyles.headline1BeaufortforLOL),
             ),
-            const SizedBox(width: 15),
           ],
         ),
       ),
       body: SafeArea(
         child: titles.isEmpty
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Container(
                 child: VerticalCardPager(
-                  textStyle: TextStyle(
-                    color: Colors.white,
+                  textStyle: const TextStyle(
+                    color: AppColors.primaryText,
                     fontWeight: FontWeight.bold,
                   ),
                   titles: titles,
