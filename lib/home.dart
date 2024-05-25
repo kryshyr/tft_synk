@@ -192,6 +192,10 @@ class _HomeTabState extends State<HomeTab> {
   // Define a variable to hold the current composition name
   String _compositionName = 'Name';
 
+  void initCompositionName() {
+    _compositionName = widget.initialCompositionName ?? 'Name';
+  }
+
   // Function to show the dialog to edit the composition name
   Future<void> _showEditCompositionNameDialog() async {
     return showDialog(
@@ -236,13 +240,16 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void resetPage() {
-      _compositionName = widget.initialCompositionName ?? 'Name';
+      _compositionName = 'Name';
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => super.widget));
   }
 
   @override
   Widget build(BuildContext context) {
+    initCompositionName();
+    print('Composition name: $_compositionName');
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(10, 20, 40, 1),

@@ -58,7 +58,7 @@ class DetailedViewPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                HomeTab(),
+                                HomeTab(initialCompositionName: title),
                           ),
                         );
                       },
