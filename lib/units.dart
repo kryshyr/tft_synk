@@ -36,8 +36,7 @@ class _UnitTabState extends State<UnitTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 8), // Add some space (padding
-
+        const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -49,25 +48,19 @@ class _UnitTabState extends State<UnitTab> {
                     hintStyle: TextStyle(
                         color: AppColors.hintText,
                         fontFamily: 'Spiegel',
-                        fontWeight:
-                            FontWeight.normal), // Change hint text color
+                        fontWeight: FontWeight.normal),
                     border: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: AppColors.primary), // Outline color
+                      borderSide: BorderSide(color: AppColors.primary),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: AppColors
-                              .secondary), // Outline color when enabled
+                      borderSide: BorderSide(color: AppColors.secondary),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: AppColors
-                              .tertiaryAccent), // Outline color when focused
+                      borderSide: BorderSide(color: AppColors.tertiaryAccent),
                     ),
                     prefixIcon: Icon(Icons.search, color: AppColors.secondary),
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: 8, horizontal: 10), // Adjust height
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                   ),
                   style: const TextStyle(
                     color: AppColors.hintText,
@@ -85,11 +78,9 @@ class _UnitTabState extends State<UnitTab> {
               const SizedBox(width: 8),
               DropdownButton<String>(
                 value: selectedFilter,
-                dropdownColor:
-                    AppColors.primaryVariant, // Dropdown background color
-                style: const TextStyle(
-                    color: AppColors.hintText), // Dropdown text color
-                iconEnabledColor: AppColors.secondary, // Icon color
+                dropdownColor: AppColors.primaryVariant,
+                style: const TextStyle(color: AppColors.hintText),
+                iconEnabledColor: AppColors.secondary,
                 items: ['All', ...traits].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -128,7 +119,7 @@ class _UnitTabState extends State<UnitTab> {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 1.25, // Adjust as needed
+                      childAspectRatio: 1.25,
                     ),
                     itemCount: championsInTier.length,
                     itemBuilder: (context, championIndex) {
@@ -140,7 +131,7 @@ class _UnitTabState extends State<UnitTab> {
                           border: Border.all(
                             color: AppColors.secondary,
                             width: 2,
-                          ), // Gold outline
+                          ),
                           borderRadius: BorderRadius.circular(7),
                         ),
                         child: Card(
