@@ -11,7 +11,8 @@ typedef ChampionDroppedCallback = void Function(
     int? draggedFromCol,
     Champion champion);
 
-typedef ChampionRemovedCallback = void Function(int? row, int? col, Champion champion);
+typedef ChampionRemovedCallback = void Function(
+    int? row, int? col, Champion champion);
 
 class HexagonGrid extends StatefulWidget {
   final ChampionDroppedCallback onChampionDropped;
@@ -76,6 +77,7 @@ class _HexagonGridState extends State<HexagonGrid> {
                   if (champion != null) {
                     // If a champion has been dropped
                     dragTargetChild = LongPressDraggable<Champion>(
+                      delay: const Duration(milliseconds: 20),
                       data: champion,
                       feedback: Image.asset(
                         'assets/champions/${champion.image}',
@@ -103,7 +105,9 @@ class _HexagonGridState extends State<HexagonGrid> {
 
                             if (championToRemove != null) {
                               widget.onChampionRemoved(
-                                  draggedFromRow,draggedFromCol,championToRemove); // Remove from list if destination is not valid
+                                  draggedFromRow,
+                                  draggedFromCol,
+                                  championToRemove); // Remove from list if destination is not valid
                             }
                           }
                           draggedFromCol = null;
