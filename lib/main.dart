@@ -1,28 +1,31 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tft_synk/custom_icons/my_flutter_app_icons.dart';
 
 import 'app_constants.dart';
-import 'firebase_options.dart';
-
 import 'comp_view.dart';
-import 'database.dart';
+import 'firebase_options.dart';
 import 'home.dart';
+import 'onboarding.dart';
 import 'widgets/tabbed_screen.dart';
-import 'custom_icons/my_flutter_app_icons.dart';
 
 Future<void> main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  final prefs = await SharedPreferences.getInstance();
+  final bool seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+
+  runApp(MyApp(seenOnboarding: seenOnboarding));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool seenOnboarding;
+
+  const MyApp({super.key, required this.seenOnboarding});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,69 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
           useMaterial3: true,
           scaffoldBackgroundColor: AppColors.background),
-      home: const MyHomePage(title: 'Synk'),
+      home: seenOnboarding
+          ? const MyHomePage(title: 'Synk')
+          : const OnboardingScreen(
+              pages: [
+                OnboardingPage(
+                  title: 'Hello Tactician!',
+                  description:
+                      'Welcome to TFT Synk. Your ultimate tool for creating winning team compositions in Teamfight Tactics.',
+                  imagePath: 'assets/images/logo.png',
+                ),
+                OnboardingPage(
+                  title: 'Build Compositions',
+                  description:
+                      'Welcome to TFT Synk. Your ultimate tool for creating winning team compositions in Teamfight Tactics.',
+                  imagePath: 'assets/images/onboarding_1.png',
+                ),
+                OnboardingPage(
+                  title: 'Easy Synergy Formation',
+                  description: 'This is the description for the second screen.',
+                  imagePath: 'assets/images/onboarding_2.png',
+                ),
+                OnboardingPage(
+                  title: 'Drag and Drop',
+                  description: 'This is the description for the third screen.',
+                  imagePath: 'assets/images/onboarding_3.png',
+                ),
+                OnboardingPage(
+                  title: 'Costumize Comp Names',
+                  description: 'This is the description for the third screen.',
+                  imagePath: 'assets/images/onboarding_4.png',
+                ),
+                OnboardingPage(
+                  title: 'View Existing Comps',
+                  description: 'This is the description for the third screen.',
+                  imagePath: 'assets/images/onboarding_5.png',
+                ),
+                OnboardingPage(
+                  title: 'Champions Information Database',
+                  description: 'This is the description for the third screen.',
+                  imagePath: 'assets/images/onboarding_6.png',
+                ),
+                OnboardingPage(
+                  title: 'Search Champions by Type',
+                  description: 'This is the description for the third screen.',
+                  imagePath: 'assets/images/onboarding_7.png',
+                ),
+                OnboardingPage(
+                  title: 'Traits Information Database',
+                  description: 'This is the description for the third screen.',
+                  imagePath: 'assets/images/onboarding_8.png',
+                ),
+                OnboardingPage(
+                  title: 'Items Information Database.',
+                  description: 'This is the description for the third screen.',
+                  imagePath: 'assets/images/onboarding_9.png',
+                ),
+                OnboardingPage(
+                  title: 'Buil Your Own Compositions Now!',
+                  description: 'This is the description for the third screen.',
+                  imagePath: 'assets/images/logo.png',
+                ),
+              ],
+            ),
     );
   }
 }
@@ -66,7 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: IndexedStack(
             index: _selectedIndex,
-            children: [ // _pages
+            children: [
+              // _pages
               HomeTab(key: homeTabKey),
               CompViewTab(),
               // DatabaseTab(),
@@ -94,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
           iconSize: 25,
           backgroundColor: AppColors.primaryVariant,
           selectedIconTheme:
-              IconThemeData(color: AppColors.secondary, size: 30),
+              const IconThemeData(color: AppColors.secondary, size: 30),
           selectedItemColor: AppColors.secondary,
           showSelectedLabels: false,
           showUnselectedLabels: false,

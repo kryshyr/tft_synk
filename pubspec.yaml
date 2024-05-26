@@ -40,6 +40,7 @@ dependencies:
   provider: ^6.1.2
   hexagon: ^0.2.0
   device_info_plus: ^9.1.2
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,18 @@ flutter:
     - assets/data/items.json
     - assets/data/traits.json
     - assets/fonts/
+    - assets/images/
+    - assets/images/onboarding_1.png
+    - assets/images/onboarding_2.png
+    - assets/images/onboarding_3.png
+    - assets/images/onboarding_4.png
+    - assets/images/onboarding_5.png
+    - assets/images/onboarding_6.png
+    - assets/images/onboarding_7.png
+    - assets/images/onboarding_8.png
+    - assets/images/onboarding_9.png
+    - assets/images/logo.png
+    
   fonts:
     - family: BeaufortforLOL
       fonts:
