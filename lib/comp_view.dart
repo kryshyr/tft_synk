@@ -71,6 +71,7 @@ class _CompViewTabState extends State<CompViewTab> with RouteAware {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.background,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
@@ -79,9 +80,9 @@ class _CompViewTabState extends State<CompViewTab> with RouteAware {
             height: 1.0,
           ),
         ),
-        title: Row(
+        title: const Row(
           children: [
-            const FittedBox(
+            FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
                 'MY COMPS',
