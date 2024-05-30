@@ -302,7 +302,7 @@ class HomeTabState extends State<HomeTab> {
     String deviceId = await getDeviceID();
 
     // SAVE TEAM COMP
-    await _firebaseService.saveTeamComp(
+    await _firebaseService.attemptSaveTeamComp(
         context, deviceId, _compositionName, championPositions);
 
     print('Team composition saved!');
