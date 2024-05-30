@@ -1,4 +1,5 @@
 class Summoner {
+  // string variable to hold the summoner's PUUID
   String puuid;
 
   Summoner({required this.puuid});

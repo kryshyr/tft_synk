@@ -4,6 +4,7 @@ import 'package:tft_synk/home.dart' show HexagonGridController;
 
 import 'champion.dart';
 
+// typedef for callbacks when a champion is dropped or removed
 typedef ChampionDroppedCallback = void Function(
     int? dropTargetRow,
     int? dropTargetCol,
@@ -17,6 +18,7 @@ typedef ChampionRemovedCallback = void Function(
 class HexagonGrid extends StatefulWidget {
   final ChampionDroppedCallback onChampionDropped;
   final ChampionRemovedCallback onChampionRemoved;
+  // Controller for the hexagon grid
   final HexagonGridController controller;
 
   const HexagonGrid({
@@ -26,7 +28,7 @@ class HexagonGrid extends StatefulWidget {
     required this.controller,
   }) : super(key: key);
 
-  // Global key for accessing the state of HexagonGrid
+  // global key for accessing the state of HexagonGrid
   static final GlobalKey<_HexagonGridState> hexagonGridKey =
       GlobalKey<_HexagonGridState>();
 
@@ -34,29 +36,22 @@ class HexagonGrid extends StatefulWidget {
   _HexagonGridState createState() => _HexagonGridState();
 }
 
+// List to store the champions dropped on the hexagon grid
 List<List<Champion?>> championsGrid = List.generate(
-  4, // rows
+  4, // ROWS
   (row) => List.generate(
-    7, // columns
+    7, // COLUMNS
     (col) => null, // initially, no champion is dropped on any hexagon
   ),
 );
 
 class _HexagonGridState extends State<HexagonGrid> {
-  // 2D array to keep track of the champions dropped on each hexagon
-  // List<List<Champion?>> championsGrid = List.generate(
-  //   4, // rows
-  //   (row) => List.generate(
-  //     7, // columns
-  //     (col) => null, // initially, no champion is dropped on any hexagon
-  //   ),
-  // );
-
-  // Variables to store the position of the dragged champion
   int? draggedFromCol;
   int? draggedFromRow;
   int? dropTargetCol;
   int? dropTargetRow;
+
+  /* For each hexagon, a DragTarget widget is used to allow dropping champions on it */
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +63,7 @@ class _HexagonGridState extends State<HexagonGrid> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
+              // display a grid of hexagonal tiles
               child: HexagonOffsetGrid.oddPointy(
                 columns: 7,
                 rows: 4,
@@ -83,19 +79,19 @@ class _HexagonGridState extends State<HexagonGrid> {
                   Widget? dragTargetChild;
 
                   if (champion != null) {
-                    // If a champion has been dropped
+                    // If a champion is dropped on the hexagon
                     dragTargetChild = LongPressDraggable<Champion>(
                       delay: const Duration(milliseconds: 20),
                       data: champion,
                       feedback: Image.asset(
                         'assets/champions/${champion.image}',
-                        width: 40, // Adjust size as needed
+                        width: 40,
                         height: 40,
                       ),
                       childWhenDragging:
-                          Container(), // Empty container when dragging
+                          Container(), // Hide the original image when dragging
                       onDragStarted: () {
-                        // Store the position from which the champion is dragged
+                        // To store the position from which the champion is dragged
                         setState(() {
                           draggedFromCol = col;
                           draggedFromRow = row;
@@ -171,6 +167,7 @@ class _HexagonGridState extends State<HexagonGrid> {
     );
   }
 
+  //  UPDATE CHAMPION
   void updateChampion(int? dropTargetRow, int? dropTargetCol,
       int? draggedFromRow, int? draggedFromCol, Champion champion) {
     // Notify the parent widget (HomeTab) about the dropped champion
@@ -207,7 +204,7 @@ class _HexagonGridState extends State<HexagonGrid> {
     });
   }
 
-  // Places a champion on a specific hexagon
+  // PLACE CHAMPION ON HEXAGON
   void placeChampion(
       int? dropTargetRow, int? dropTargetCol, Champion champion) {
     setState(() {
@@ -215,6 +212,7 @@ class _HexagonGridState extends State<HexagonGrid> {
     });
   }
 
+  // PLACE CHAMPION ON GRID
   void placeChampionInGrid(int row, int col, Champion champion) {
     setState(() {
       // Place the champion in the specified row and column of the grid
