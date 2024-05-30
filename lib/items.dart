@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:tft_synk/app_constants.dart';
 
+// Define the Item class
 class Item {
   final String id;
   final String name;
@@ -18,6 +19,7 @@ class Item {
     required this.components,
   });
 
+// Add a factory constructor to parse JSON data
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
       id: json['id'],
@@ -29,6 +31,7 @@ class Item {
   }
 }
 
+// Load items from JSON file
 Future<List<Item>> loadItems() async {
   final jsonString = await rootBundle.loadString('assets/data/items.json');
   final List<dynamic> jsonResponse = json.decode(jsonString);
@@ -40,6 +43,7 @@ class ItemsTab extends StatefulWidget {
   _ItemsPageState createState() => _ItemsPageState();
 }
 
+// Future to hold the list of items
 class _ItemsPageState extends State<ItemsTab> {
   late Future<List<Item>> items;
 
@@ -55,12 +59,17 @@ class _ItemsPageState extends State<ItemsTab> {
       body: FutureBuilder<List<Item>>(
         future: items,
         builder: (context, snapshot) {
+          // loading state
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
+
+            // error state
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text('No items found'));
+
+            // data loaded
           } else {
             return ListView.builder(
               itemCount: snapshot.data!.length,

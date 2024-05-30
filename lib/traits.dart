@@ -41,6 +41,7 @@ class _TraitsTabState extends State<TraitsTab> {
     loadTraits();
   }
 
+// Function to load traits data from JSON
   Future<void> loadTraits() async {
     final jsonString = await rootBundle.loadString('assets/data/traits.json');
     final List<dynamic> jsonResponse = json.decode(jsonString);
@@ -61,6 +62,7 @@ class _TraitsTabState extends State<TraitsTab> {
               childAspectRatio: 0.58,
             ),
             itemBuilder: (context, index) {
+              // Get the trait at the current index
               final trait = traits[index];
               return SizedBox(
                 height: 150,
