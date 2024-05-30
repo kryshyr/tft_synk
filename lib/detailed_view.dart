@@ -179,10 +179,21 @@ class HexagonGridView extends StatelessWidget {
                   },
                 ),
               ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: SynergyListMini(championsList: championPositions.map((champion) => champion['championName'].toString()).toList()),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      SynergyListMini(
+                        championsList: championPositions
+                            .map((champion) =>
+                                champion['championName'].toString())
+                            .toList(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

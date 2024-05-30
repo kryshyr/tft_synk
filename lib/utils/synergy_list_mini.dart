@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tft_synk/app_constants.dart';
 import 'package:tft_synk/utils/synergy_list.dart';
 import 'package:tft_synk/utils/champion.dart';
 
@@ -38,16 +39,25 @@ class _SynergyListMiniState extends State<SynergyListMini> {
     }
 
     // alphabetize traitlist by key
-    traitList = Map.fromEntries(traitList.entries.toList()..sort((e1, e2) => e1.key.compareTo(e2.key)));
+    traitList = Map.fromEntries(
+        traitList.entries.toList()..sort((e1, e2) => e1.key.compareTo(e2.key)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         for (String trait in traitList.keys) ...[
-          buildSynergyIcon(trait),
-          Text(traitList[trait]!.toString()),
+          Column(
+            children: [
+              buildSynergyIcon(trait),
+              Text(
+                traitList[trait]!.toString(),
+                style: AppTextStyles.bodyText6Spiegel,
+              ),
+            ],
+          )
         ],
       ],
     );
