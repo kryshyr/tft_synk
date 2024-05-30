@@ -339,6 +339,7 @@ class HomeTabState extends State<HomeTab> {
             style: AppTextStyles.headline1BeaufortforLOL,
           ),
           content: TextField(
+            style: AppTextStyles.bodyText6Spiegel,
             controller: _compositionNameController,
             decoration: const InputDecoration(
               hintText: "Enter composition name",

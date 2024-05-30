@@ -8,7 +8,8 @@ class FirebaseService {
 
   FirebaseFirestore get firestore => _firestore; // Add this getter
 
-  Future<bool> isCompExist(String compName, DocumentReference deviceDocRef) async {
+  Future<bool> isCompExist(
+      String compName, DocumentReference deviceDocRef) async {
     bool compExists = await deviceDocRef
         .collection('compositions')
         .doc(compName)
@@ -18,12 +19,8 @@ class FirebaseService {
     return compExists;
   }
 
-  Future<void> attemptDeleteTeamComp (
-      BuildContext context, 
-      String deviceId,
-      String compName
-    ) async {
-    
+  Future<void> attemptDeleteTeamComp(
+      BuildContext context, String deviceId, String compName) async {
     // Reference to the collection
     CollectionReference teamComps = _firestore.collection('team_comps');
     //New document ID
@@ -35,53 +32,53 @@ class FirebaseService {
     if (!compExists) {
       showFirebaseDialog(context, 'Team composition does not exist.');
       return;
-    } 
+    }
 
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: const Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                'Delete',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              'Delete',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            content: Padding(
-              padding: EdgeInsets.only(top: 4.0),
-              child: Text(
-                'Would you like to delete "$compName"?',
-                style: TextStyle(
-                  fontSize: 14.0,
-                ),
+          ),
+          content: Padding(
+            padding: EdgeInsets.only(top: 4.0),
+            child: Text(
+              'Would you like to delete "$compName"?',
+              style: TextStyle(
+                fontSize: 14.0,
               ),
             ),
-            actions: [
-              CupertinoDialogAction(
-                onPressed: () {
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                deleteTeamComp(compName, deviceDocRef);
+                for (int i = 0; i < 3; i++) {
                   Navigator.of(context).pop();
-                },
-                child: Text('Cancel'),
-              ),
-              CupertinoDialogAction(
-                onPressed: () {
-                  deleteTeamComp(compName, deviceDocRef);
-                  for (int i = 0; i < 3; i++) {
-                    Navigator.of(context).pop();
-                  }
-                  showFirebaseDialog(context, 'Team composition deleted successfully.');
-                },
-                child: Text('Delete'),
-              ),
-            ],
-          );
-        },
-      );
-
+                }
+                showFirebaseDialog(
+                    context, 'Team composition deleted successfully.');
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> attemptSaveTeamComp(BuildContext context, String deviceId,
@@ -99,40 +96,57 @@ class FirebaseService {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return CupertinoAlertDialog(
+          return AlertDialog(
+            backgroundColor: AppColors.primaryVariant,
             title: const Padding(
               padding: EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                'Warning',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child:
+                  Text('Warning', style: AppTextStyles.headline1BeaufortforLOL),
             ),
             content: Padding(
               padding: EdgeInsets.only(top: 4.0),
               child: Text(
-                'Team composition name already exists. Would you like to overwrite "$compName"?',
-                style: TextStyle(
-                  fontSize: 14.0,
-                ),
-              ),
+                  'Team composition name already exists. Would you like to overwrite "$compName"?',
+                  style: AppTextStyles.bodyText6Spiegel),
             ),
             actions: [
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Cancel'),
+              Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 8, 40, 48),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: AppTextStyles.headline5BeaufortforLOL,
+                  ),
+                ),
               ),
-              CupertinoDialogAction(
-                onPressed: () {
-                  updateTeampComp(compName, championPositions, deviceDocRef);
-                  Navigator.of(context).pop();
-                  showFirebaseDialog(context, 'Team composition saved successfully.');
-                },
-                child: Text('Overwrite'),
+              const SizedBox(
+                width: 2,
+              ),
+              Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 8, 40, 48),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: TextButton(
+                    onPressed: () {
+                      updateTeampComp(
+                          compName, championPositions, deviceDocRef);
+                      Navigator.of(context).pop();
+                      showFirebaseDialog(
+                          context, 'Team composition saved successfully.');
+                    },
+                    child: const Text(
+                      'Overwrite',
+                      style: AppTextStyles.headline5BeaufortforLOL,
+                    )),
               ),
             ],
           );
@@ -145,11 +159,9 @@ class FirebaseService {
   }
 
   Future<void> saveTeamComp(
-      String compName, 
-      List<Map<String, String>> championPositions, 
-      DocumentReference deviceDocRef
-    ) async {
-    
+      String compName,
+      List<Map<String, String>> championPositions,
+      DocumentReference deviceDocRef) async {
     // Save the team composition
     await deviceDocRef.collection('compositions').doc(compName).set({
       'championPositions': championPositions,
@@ -158,11 +170,9 @@ class FirebaseService {
   }
 
   Future<void> updateTeampComp(
-      String compName, 
-      List<Map<String, String>> championPositions, 
-      DocumentReference deviceDocRef
-    ) async {
-    
+      String compName,
+      List<Map<String, String>> championPositions,
+      DocumentReference deviceDocRef) async {
     // Update the team composition
     await deviceDocRef.collection('compositions').doc(compName).update({
       'championPositions': championPositions,
@@ -171,10 +181,7 @@ class FirebaseService {
   }
 
   Future<void> deleteTeamComp(
-      String compName, 
-      DocumentReference deviceDocRef
-    ) async {
-    
+      String compName, DocumentReference deviceDocRef) async {
     // Delete the team composition
     await deviceDocRef.collection('compositions').doc(compName).delete();
   }
@@ -183,28 +190,34 @@ class FirebaseService {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return CupertinoAlertDialog(
+        return AlertDialog(
+          backgroundColor: AppColors.primaryVariant,
           title: const Padding(
             padding: EdgeInsets.only(bottom: 8.0),
             child:
-                Text('Success', style: AppTextStyles.headline5BeaufortforLOL),
+                Text('Success', style: AppTextStyles.headline1BeaufortforLOL),
           ),
           content: Padding(
             padding: EdgeInsets.only(top: 4.0),
-            child: Text(
-              message,
-              style: TextStyle(
-                fontSize: 14.0,
-              ),
-            ),
+            child: Text(message, style: AppTextStyles.bodyText6Spiegel),
           ),
           actions: [
-            CupertinoDialogAction(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
+            Container(
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 8, 40, 48),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'OK',
+                  style: AppTextStyles.headline5BeaufortforLOL,
+                ),
+              ),
+            )
           ],
         );
       },
