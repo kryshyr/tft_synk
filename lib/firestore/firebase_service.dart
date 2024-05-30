@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tft_synk/app_constants.dart';
 
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -73,13 +74,8 @@ class FirebaseService {
         return CupertinoAlertDialog(
           title: const Padding(
             padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Success',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child:
+                Text('Success', style: AppTextStyles.headline5BeaufortforLOL),
           ),
           content: const Padding(
             padding: EdgeInsets.only(top: 4.0),

@@ -415,7 +415,7 @@ class _HomeTabState extends State<HomeTab> {
               print("Expand icon clicked");
             },
             child: Image.asset(
-              'assets/icons/expand-button.png',
+              'assets/icons/clear-button.png',
               width: 30,
               height: 30,
             ),
