@@ -20,7 +20,6 @@ class HexagonGridController {
     // Place the champion in the specified row and column of the grid
     championsGrid[row][col] = champion;
   }
-
 }
 
 void clearHexagonGrid() {
@@ -29,7 +28,6 @@ void clearHexagonGrid() {
       championsGrid[i][j] = null;
     }
   }
-
 }
 
 class SynergyListController {
@@ -394,7 +392,7 @@ class HomeTabState extends State<HomeTab> {
     super.dispose();
   }
 
-  void resetPage() {  
+  void resetPage() {
     setState(() {
       championsList.clear();
       synergyFilter = 'Any Synergy';

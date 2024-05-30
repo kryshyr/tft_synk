@@ -49,52 +49,31 @@ class MyApp extends StatelessWidget {
                 OnboardingPage(
                   title: 'Build Compositions',
                   description:
-                      'Welcome to TFT Synk. Your ultimate tool for creating winning team compositions in Teamfight Tactics.',
-                  imagePath: 'assets/images/onboarding_1.png',
+                      'With drag and drop feature, TFT Synk provides composition building which allows you to visualize your build just like in the game.',
+                  imagePath: 'assets/onboarding/onboarding_1.gif',
                 ),
                 OnboardingPage(
                   title: 'Easy Synergy Formation',
-                  description: 'This is the description for the second screen.',
-                  imagePath: 'assets/images/onboarding_2.png',
-                ),
-                OnboardingPage(
-                  title: 'Drag and Drop',
-                  description: 'This is the description for the third screen.',
-                  imagePath: 'assets/images/onboarding_3.png',
+                  description:
+                      'TFT Synk also allows easier synergy formation by searching champions based on their corresponding classes. With every drop on the arena, champion traits are displayed below to help tacticians strategize.',
+                  imagePath: 'assets/onboarding/onboarding_2.gif',
                 ),
                 OnboardingPage(
                   title: 'Costumize Comp Names',
-                  description: 'This is the description for the third screen.',
-                  imagePath: 'assets/images/onboarding_4.png',
-                ),
-                OnboardingPage(
-                  title: 'View Existing Comps',
-                  description: 'This is the description for the third screen.',
-                  imagePath: 'assets/images/onboarding_5.png',
+                  description:
+                      'As tacticians, we are fond of building powerful synergies by trying out different builds, synergies, and compositions. With TFT Synk, you can save and review your costumized comps in a few clicks.',
+                  imagePath: 'assets/onboarding/onboarding_3.gif',
                 ),
                 OnboardingPage(
                   title: 'Champions Information Database',
-                  description: 'This is the description for the third screen.',
-                  imagePath: 'assets/images/onboarding_6.png',
-                ),
-                OnboardingPage(
-                  title: 'Search Champions by Type',
-                  description: 'This is the description for the third screen.',
-                  imagePath: 'assets/images/onboarding_7.png',
-                ),
-                OnboardingPage(
-                  title: 'Traits Information Database',
-                  description: 'This is the description for the third screen.',
-                  imagePath: 'assets/images/onboarding_8.png',
-                ),
-                OnboardingPage(
-                  title: 'Items Information Database.',
-                  description: 'This is the description for the third screen.',
-                  imagePath: 'assets/images/onboarding_9.png',
+                  description:
+                      'With our database feature, we are now able to view and study different champions according to their classes, and view different traits and items at the same time.',
+                  imagePath: 'assets/onboarding/onboarding_4.gif',
                 ),
                 OnboardingPage(
                   title: 'Buil Your Own Compositions Now!',
-                  description: 'This is the description for the third screen.',
+                  description:
+                      'Now, are you ready to scale up your team composition and try out different synergies?',
                   imagePath: 'assets/images/logo.png',
                 ),
               ],
