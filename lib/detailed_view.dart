@@ -58,8 +58,9 @@ class DetailedViewPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                HomeTab(key: GlobalKey<HomeTabState>(), initialCompositionName: title),
+                            builder: (context) => HomeTab(
+                                key: GlobalKey<HomeTabState>(),
+                                initialCompositionName: title),
                           ),
                         );
                       },
