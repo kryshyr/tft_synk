@@ -5,6 +5,7 @@ import './detailed_view.dart';
 import './firestore/firebase_service.dart';
 import './utils/device_id.dart';
 import 'app_constants.dart';
+import 'player_page.dart';
 import 'route_observer.dart';
 
 class CompViewTab extends StatefulWidget {
@@ -82,8 +83,26 @@ class _CompViewTabState extends State<CompViewTab> with RouteAware {
           children: [
             const FittedBox(
               fit: BoxFit.scaleDown,
-              child: Text('MY COMPS',
-                  style: AppTextStyles.headline1BeaufortforLOL),
+              child: Text(
+                'MY COMPS',
+                style: AppTextStyles.headline1BeaufortforLOL,
+              ),
+            ),
+            Spacer(),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SummonerSearch(),
+                  ),
+                );
+              },
+              child: Image.asset(
+                'assets/icons/user-search.png',
+                width: 30,
+                height: 30,
+              ),
             ),
           ],
         ),
