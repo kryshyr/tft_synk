@@ -284,6 +284,15 @@ class HomeTabState extends State<HomeTab> {
     }
   }
 
+  Future<void> deleteTeamCompFromFirestore() async {
+    // GET DEVICE ID
+    String deviceId = await getDeviceID();
+
+    // DELETE TEAM COMP
+    await _firebaseService.attemptDeleteTeamComp(
+        context, deviceId, _compositionName);
+  }
+
   Future<void> saveTeamCompToFirestore() async {
     List<Map<String, String>> championPositions = [];
 
@@ -450,6 +459,7 @@ class HomeTabState extends State<HomeTab> {
           GestureDetector(
             onTap: () {
               print("Expand icon clicked");
+              resetPage();
             },
             child: Image.asset(
               'assets/icons/expand-button.png',
@@ -463,7 +473,7 @@ class HomeTabState extends State<HomeTab> {
           GestureDetector(
             onTap: () {
               print("Delete icon clicked");
-              resetPage();
+              deleteTeamCompFromFirestore();
             },
             child: Image.asset(
               'assets/icons/delete-icon.png',
