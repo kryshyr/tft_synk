@@ -34,15 +34,23 @@ class HexagonGrid extends StatefulWidget {
   _HexagonGridState createState() => _HexagonGridState();
 }
 
+List<List<Champion?>> championsGrid = List.generate(
+  4, // rows
+  (row) => List.generate(
+    7, // columns
+    (col) => null, // initially, no champion is dropped on any hexagon
+  ),
+);
+
 class _HexagonGridState extends State<HexagonGrid> {
   // 2D array to keep track of the champions dropped on each hexagon
-  List<List<Champion?>> championsGrid = List.generate(
-    4, // rows
-    (row) => List.generate(
-      7, // columns
-      (col) => null, // initially, no champion is dropped on any hexagon
-    ),
-  );
+  // List<List<Champion?>> championsGrid = List.generate(
+  //   4, // rows
+  //   (row) => List.generate(
+  //     7, // columns
+  //     (col) => null, // initially, no champion is dropped on any hexagon
+  //   ),
+  // );
 
   // Variables to store the position of the dragged champion
   int? draggedFromCol;
@@ -205,5 +213,16 @@ class _HexagonGridState extends State<HexagonGrid> {
     setState(() {
       championsGrid[dropTargetRow!][dropTargetCol!] = champion;
     });
+  }
+
+  void placeChampionInGrid(int row, int col, Champion champion) {
+    setState(() {
+      // Place the champion in the specified row and column of the grid
+      championsGrid[row][col] = champion;
+    });
+    // print championsGrid
+    for (var champ in championsGrid) {
+      print(champ);
+    }
   }
 }
