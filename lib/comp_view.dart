@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:vertical_card_pager/vertical_card_pager.dart';
 
 import './detailed_view.dart';
 import './firestore/firebase_service.dart';
@@ -14,8 +13,7 @@ class CompViewTab extends StatefulWidget {
 
 class _CompViewTabState extends State<CompViewTab> {
   final FirebaseService _firebaseService = FirebaseService();
-  List<String> titles = [];
-  List<Widget> images = [];
+  List<Composition> compositions = [];
 
   @override
   void initState() {
@@ -32,18 +30,20 @@ class _CompViewTabState extends State<CompViewTab> {
 
     QuerySnapshot snapshot = await compositionsRef.get();
 
+    List<Composition> fetchedCompositions = [];
+
+    for (var doc in snapshot.docs) {
+      var data = doc.data() as Map<String, dynamic>;
+      List<dynamic> championPositions = data['championPositions'] ?? [];
+      List<String> champions = championPositions.map((champion) {
+        return champion['championName'] as String;
+      }).toList();
+
+      fetchedCompositions.add(Composition(name: doc.id, champions: champions));
+    }
+
     setState(() {
-      titles = snapshot.docs.map((doc) => doc.id).toList();
-      images = List<Widget>.generate(
-        snapshot.docs.length,
-        (index) => Container(
-          decoration: BoxDecoration(
-            color: AppColors.primaryVariant,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            border: Border.all(color: AppColors.primaryAccent, width: 2),
-          ),
-        ),
-      );
+      compositions = fetchedCompositions;
     });
   }
 
@@ -70,31 +70,82 @@ class _CompViewTabState extends State<CompViewTab> {
         ),
       ),
       body: SafeArea(
-        child: titles.isEmpty
+        child: compositions.isEmpty
             ? const Center(child: CircularProgressIndicator())
-            : Container(
-                child: VerticalCardPager(
-                  textStyle: const TextStyle(
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  titles: titles,
-                  images: images,
-                  onPageChanged: (page) {},
-                  align: ALIGN.CENTER,
-                  onSelectedItem: (index) {
-                    print("Selected: ${titles[index]}");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DetailedViewPage(title: titles[index]),
+            : ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                itemCount: compositions.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailedViewPage(title: compositions[index].name),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                    );
-                  },
-                ),
+                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryVariant,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          border: Border.all(
+                              color: AppColors.primaryAccent, width: 2),
+                        ),
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              compositions[index].name.toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.hintText,
+                              ),
+                            ),
+                            const Divider(color: AppColors.secondary),
+                            SizedBox(height: 5),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: compositions[index]
+                                    .champions
+                                    .map((champion) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0),
+                                    child: Image.asset(
+                                      'assets/champions/${champion}.png', // Assuming you have the images named by champion name
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
       ),
     );
   }
+}
+
+class Composition {
+  final String name;
+  final List<String> champions;
+
+  Composition({required this.name, required this.champions});
 }
