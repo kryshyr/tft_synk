@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:flutter/services.dart'; // Import Services library for reading JSON file
+import 'package:flutter/services.dart';
 
 List<Champion> champions = [];
 Map<int, List<Champion>> tieredChampions = {};
@@ -87,7 +87,7 @@ Future<List<String>> getTraitListFromJson(String championName) async {
       }
     }
   }
-  // Return null if the champion is not found
+  // return null if the champion is not found
   return [];
 }
 
@@ -95,28 +95,6 @@ Future<List<String>> getTraitListFromJson(String championName) async {
 Future<Champion> getChampionByName(String championName) async {
   String jsonData = await rootBundle.loadString('assets/data/champions.json');
   final Map<String, dynamic> data = json.decode(jsonData);
-
-  // // Iterate through each tier in the data
-  // for (var tier in data.values) {
-  //   // Iterate through each champion in the tier
-  //   for (var champion in tier) {
-  //     // Check if the champion's name matches the given name
-  //     if (champion['name'] == championName) {
-  //       // Return the traits of the champion
-  //       print('Champion found: $championName');
-  //       return Champion.fromJson(champion);
-  //     }
-  //   }
-  // }
-
-  // data.forEach((tier, championList) {
-  //   for (var champData in championList) {
-  //     if (champData['name'] == championName) {
-  //       print('Champion found: $championName');
-  //       return Champion.fromJson(champData);
-  //     }
-  //   }
-  // });
 
   for (var tier in data.values) {
     for (var champData in tier) {
@@ -134,7 +112,7 @@ Future<Champion> getChampionByName(String championName) async {
 
   // Return null if the champion is not found
   print('Champion not found: $championName');
-  
+
   return Champion(
     id: '',
     name: '',
