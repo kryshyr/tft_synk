@@ -62,7 +62,7 @@ Future<Map<int, List<Champion>>> parseChampionsFromJson() async {
 }
 
 // get trait list by champion name
-List<String> getTraitListByChampionName(String championName) {
+List<String> getChampionTraitList(String championName) {
   for (var champion in champions) {
     if (champion.name == championName) {
       return champion.traits;

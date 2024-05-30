@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
@@ -21,9 +23,16 @@ class DetailedViewPage extends StatelessWidget {
           // While the future is loading, show a loading indicator
           return Scaffold(
             appBar: AppBar(
-              title: Text(title),
+              automaticallyImplyLeading: false,
+              title: Flexible(
+                child: Text(
+                  title,
+                  style: AppTextStyles.headline1BeaufortforLOL,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
-            body: Center(
+            body: const Center(
               child: CircularProgressIndicator(),
             ),
           );
@@ -31,7 +40,13 @@ class DetailedViewPage extends StatelessWidget {
           // If there's an error, show an error message
           return Scaffold(
             appBar: AppBar(
-              title: Text(title),
+              title: Flexible(
+                child: Text(
+                  title,
+                  style: AppTextStyles.headline1BeaufortforLOL,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
             body: Center(
               child: Text('Error: ${snapshot.error}'),
@@ -42,12 +57,15 @@ class DetailedViewPage extends StatelessWidget {
           String deviceID = snapshot.data!;
           return Scaffold(
             appBar: AppBar(
+                automaticallyImplyLeading: false,
                 backgroundColor: AppColors.primary,
                 title: Row(
                   children: [
-                    Text(
-                      title,
-                      style: TextStyle(color: Colors.white),
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: AppTextStyles.headline1BeaufortforLOL,
+                      ),
                     ),
                     const SizedBox(width: 15),
 
@@ -124,41 +142,44 @@ class HexagonGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              child: HexagonOffsetGrid.oddPointy(
-                columns: 7,
-                rows: 4,
-                buildTile: (col, row) {
-                  // To find the champion for the current row and column
-                  var champion = championPositions.firstWhere(
-                    (champion) =>
-                        champion['row'] == row.toString() &&
-                        champion['col'] == col.toString(),
-                    orElse: () => null,
-                  );
-                  return HexagonWidgetBuilder(
-                    color: const Color.fromRGBO(10, 50, 60, 1),
-                    elevation: 2,
-                    padding: 2,
-                    child: champion != null
-                        ? Image.asset(
-                            'assets/champions/${champion['championName']}.png',
-                            width: 60,
-                            height: 60,
-                          )
-                        : null,
-                  );
-                },
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Center(
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                child: HexagonOffsetGrid.oddPointy(
+                  columns: 7,
+                  rows: 4,
+                  buildTile: (col, row) {
+                    // To find the champion for the current row and column
+                    var champion = championPositions.firstWhere(
+                      (champion) =>
+                          champion['row'] == row.toString() &&
+                          champion['col'] == col.toString(),
+                      orElse: () => null,
+                    );
+                    return HexagonWidgetBuilder(
+                      color: const Color.fromRGBO(10, 50, 60, 1),
+                      elevation: 2,
+                      padding: 2,
+                      child: champion != null
+                          ? Image.asset(
+                              'assets/champions/${champion['championName']}.png',
+                              width: 60,
+                              height: 60,
+                            )
+                          : null,
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

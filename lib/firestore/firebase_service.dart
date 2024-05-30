@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tft_synk/app_constants.dart';
+
+import '../utils/loading_screen.dart';
 
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -72,14 +76,17 @@ class FirebaseService {
               ),
               child: TextButton(
                 onPressed: () {
-                  deleteTeamComp(compName, deviceDocRef);
-                  for (int i = 0; i < 3; i++) {
-                    Navigator.of(context).pop();
-                  }
-                  showFirebaseDialog(
-                      context, 'Team composition deleted successfully.');
+                  LoadingScreen.showLoadingScreen(context);
+                  Timer(const Duration(seconds: 2), () {
+                    deleteTeamComp(compName, deviceDocRef);
+                    for (int i = 0; i < 3; i++) {
+                      Navigator.of(context).pop();
+                    }
+                    showFirebaseDialog(
+                        context, 'Team composition deleted successfully.');
+                  });
                 },
-                child: Text(
+                child: const Text(
                   'Delete',
                   style: AppTextStyles.headline5BeaufortforLOL,
                 ),
@@ -105,6 +112,7 @@ class FirebaseService {
       // Debugging Purposes
       showDialog(
         context: context,
+        barrierColor: Colors.black.withOpacity(0.8),
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: AppColors.primaryVariant,
@@ -147,11 +155,14 @@ class FirebaseService {
                 ),
                 child: TextButton(
                     onPressed: () {
-                      updateTeampComp(
-                          compName, championPositions, deviceDocRef);
-                      Navigator.of(context).pop();
-                      showFirebaseDialog(
-                          context, 'Team composition saved successfully.');
+                      LoadingScreen.showLoadingScreen(context);
+                      Timer(const Duration(seconds: 2), () {
+                        updateTeampComp(
+                            compName, championPositions, deviceDocRef);
+                        Navigator.of(context).pop();
+                        showFirebaseDialog(
+                            context, 'Team composition saved successfully.');
+                      });
                     },
                     child: const Text(
                       'Overwrite',
@@ -163,8 +174,12 @@ class FirebaseService {
         },
       );
     } else {
-      saveTeamComp(compName, championPositions, deviceDocRef);
-      showFirebaseDialog(context, 'Team composition saved successfully.');
+      LoadingScreen.showLoadingScreen(context);
+      Timer(const Duration(seconds: 2), () {
+        saveTeamComp(compName, championPositions, deviceDocRef);
+
+        showFirebaseDialog(context, 'Team composition saved successfully.');
+      });
     }
   }
 
@@ -199,6 +214,7 @@ class FirebaseService {
   void showFirebaseDialog(BuildContext context, String message) {
     showDialog(
       context: context,
+      barrierColor: Colors.black.withOpacity(0.8),
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColors.primaryVariant,

@@ -33,6 +33,23 @@ Map<String, List<int>> traitBonuses = {
   "Warden": [2, 4, 6],
 };
 
+  String getSynergyIcon(String trait) {
+    if (trait == "Inkshadow") {
+      trait = "Ink Shadow";
+    }
+
+    return 'assets/traits/Trait_Icon_11_$trait.TFT_Set11.png';
+  }
+
+Widget buildSynergyIcon(String trait) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 12),
+    child: Image.asset(
+      getSynergyIcon(trait),
+    ),
+  );
+}
+
 class SynergyList extends StatefulWidget {
   final SynergyListController controller;
 
@@ -58,13 +75,7 @@ class _SynergyListState extends State<SynergyList> {
     controller.clearTraitCounts = clearTraitCounts;
   }
 
-  String getSynergyIcon(String trait) {
-    if (trait == "Inkshadow") {
-      trait = "Ink Shadow";
-    }
 
-    return 'assets/traits/Trait_Icon_11_$trait.TFT_Set11.png';
-  }
 
   String getFraction(String traitName, int count) {
     String numerator = count.toString();
@@ -113,14 +124,7 @@ class _SynergyListState extends State<SynergyList> {
     }
   }
 
-  Widget buildSynergyIcon(String trait) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Image.asset(
-        getSynergyIcon(trait),
-      ),
-    );
-  }
+
 
   @override
   Widget build(context) {

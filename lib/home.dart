@@ -81,7 +81,7 @@ class HomeTabState extends State<HomeTab> {
           .firstWhere((element) =>
               element.row == dropTargetRow && element.col == dropTargetCol)
           .championName;
-      previousChampionTraits = getTraitListByChampionName(previousChampionName);
+      previousChampionTraits = getChampionTraitList(previousChampionName);
     }
 
     // If the champion is dropped on the same hexagon
@@ -420,6 +420,7 @@ class HomeTabState extends State<HomeTab> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.background,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
@@ -432,14 +433,14 @@ class HomeTabState extends State<HomeTab> {
           children: [
             // TITLE
 
-            FittedBox(
-              fit: BoxFit.scaleDown,
+            Flexible(
               child: Text(
                 _compositionName,
                 style: AppTextStyles.headline3BeaufortforLOL,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ),
-
             const SizedBox(width: 15),
 
             // EDIT BUTTON
