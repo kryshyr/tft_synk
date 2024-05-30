@@ -310,11 +310,18 @@ class HomeTabState extends State<HomeTab> {
 
     // SAVE TEAM COMP
     await _firebaseService.attemptSaveTeamComp(
-        context, deviceId, _compositionName, championPositions);
+      context,
+      deviceId,
+      _compositionName,
+      championPositions,
+      () {
+        resetPage();
+      },
+    );
 
     print('Team composition saved!');
     if (widget.initialCompositionName == null) {
-      resetPage();
+      // resetPage();
     }
   }
 
@@ -457,10 +464,10 @@ class HomeTabState extends State<HomeTab> {
           ],
         ),
         actions: [
-          // EXPAND BUTTON
+          // CLEAR BUTTON
           GestureDetector(
             onTap: () {
-              print("Expand icon clicked");
+              print("Clear button clicked");
               resetPage();
             },
             child: Image.asset(

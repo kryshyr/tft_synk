@@ -98,8 +98,13 @@ class FirebaseService {
     );
   }
 
-  Future<void> attemptSaveTeamComp(BuildContext context, String deviceId,
-      String compName, List<Map<String, String>> championPositions) async {
+  Future<void> attemptSaveTeamComp(
+    BuildContext context,
+    String deviceId,
+    String compName,
+    List<Map<String, String>> championPositions,
+    VoidCallback onSuccessCallback,
+  ) async {
     // Reference to the collection
     CollectionReference teamComps = _firestore.collection('team_comps');
     //New document ID
@@ -162,6 +167,7 @@ class FirebaseService {
                         Navigator.of(context).pop();
                         showFirebaseDialog(
                             context, 'Team composition saved successfully.');
+                        onSuccessCallback();
                       });
                     },
                     child: const Text(
