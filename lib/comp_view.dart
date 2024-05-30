@@ -170,7 +170,7 @@ class _CompViewTabState extends State<CompViewTab> with RouteAware {
                                         );
                                       }).toList(),
                                     ),
-                                    SynergyListMini(champions: compositions[index].champions),
+                                    SynergyListMini(championsList: compositions[index].champions),
                                   ],
                                 )
                               ),
