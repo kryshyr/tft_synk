@@ -284,6 +284,15 @@ class HomeTabState extends State<HomeTab> {
     }
   }
 
+  Future<void> deleteTeamCompFromFirestore() async {
+    // GET DEVICE ID
+    String deviceId = await getDeviceID();
+
+    // DELETE TEAM COMP
+    await _firebaseService.attemptDeleteTeamComp(
+        context, deviceId, _compositionName);
+  }
+
   Future<void> saveTeamCompToFirestore() async {
     List<Map<String, String>> championPositions = [];
 
@@ -300,7 +309,7 @@ class HomeTabState extends State<HomeTab> {
     String deviceId = await getDeviceID();
 
     // SAVE TEAM COMP
-    await _firebaseService.saveTeamComp(
+    await _firebaseService.attemptSaveTeamComp(
         context, deviceId, _compositionName, championPositions);
 
     print('Team composition saved!');
@@ -330,6 +339,7 @@ class HomeTabState extends State<HomeTab> {
             style: AppTextStyles.headline1BeaufortforLOL,
           ),
           content: TextField(
+            style: AppTextStyles.bodyText6Spiegel,
             controller: _compositionNameController,
             decoration: const InputDecoration(
               hintText: "Enter composition name",
@@ -450,9 +460,10 @@ class HomeTabState extends State<HomeTab> {
           GestureDetector(
             onTap: () {
               print("Expand icon clicked");
+              resetPage();
             },
             child: Image.asset(
-              'assets/icons/expand-button.png',
+              'assets/icons/clear-button.png',
               width: 30,
               height: 30,
             ),
@@ -463,7 +474,7 @@ class HomeTabState extends State<HomeTab> {
           GestureDetector(
             onTap: () {
               print("Delete icon clicked");
-              resetPage();
+              deleteTeamCompFromFirestore();
             },
             child: Image.asset(
               'assets/icons/delete-icon.png',
