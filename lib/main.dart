@@ -16,14 +16,12 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  runApp(MyApp(seenOnboarding: null));
 }
 
 class MyApp extends StatelessWidget {
-  final bool seenOnboarding;
-
-  MyApp({super.key, required this.seenOnboarding});
-  const MyApp({super.key});
+  const MyApp({super.key, required this.seenOnboarding});
+  final bool? seenOnboarding;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +30,10 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [routeObserver],
       title: 'TFT SynK',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-          useMaterial3: true,
-          scaffoldBackgroundColor: AppColors.background),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.background,
+      ),
       home: SplashScreen(), // Always show splash screen first
     );
   }
