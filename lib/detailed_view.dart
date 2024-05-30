@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
 import 'package:tft_synk/home.dart';
+import 'package:tft_synk/utils/synergy_list_mini.dart';
 
 import './utils/device_id.dart';
 import 'app_constants.dart';
@@ -176,6 +177,12 @@ class HexagonGridView extends StatelessWidget {
                           : null,
                     );
                   },
+                ),
+              ),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: SynergyListMini(championsList: championPositions.map((champion) => champion['championName'].toString()).toList()),
                 ),
               ),
             ],
