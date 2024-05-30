@@ -7,7 +7,7 @@ class FirebaseService {
 
   FirebaseFirestore get firestore => _firestore; // Add this getter
 
-  Future<void> saveTeamComp(BuildContext context, String deviceId,
+  Future<void> attemptSaveTeamComp(BuildContext context, String deviceId,
       String compName, List<Map<String, String>> championPositions) async {
     // Reference to the collection
     CollectionReference teamComps = _firestore.collection('team_comps');
@@ -30,17 +30,17 @@ class FirebaseService {
             title: const Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Text(
-                'Error',
+                'Warning',
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            content: const Padding(
+            content: Padding(
               padding: EdgeInsets.only(top: 4.0),
               child: Text(
-                'Team composition name already exists.',
+                'Team composition name already exists. Would you like to overwrite "$compName"?',
                 style: TextStyle(
                   fontSize: 14.0,
                 ),
@@ -51,22 +51,53 @@ class FirebaseService {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('Cancel'),
+              ),
+              CupertinoDialogAction(
+                onPressed: () {
+                  updateTeampComp(compName, championPositions, deviceDocRef);
+                  Navigator.of(context).pop();
+                  showSuccessfulSaveDialog(context);
+                },
+                child: Text('Overwrite'),
               ),
             ],
           );
         },
       );
-
-      return;
+    } else {
+      saveTeamComp(compName, championPositions, deviceDocRef);
+      showSuccessfulSaveDialog(context);
     }
+  }
 
+  Future<void> saveTeamComp(
+      String compName, 
+      List<Map<String, String>> championPositions, 
+      DocumentReference deviceDocRef
+    ) async {
+    
     // Save the team composition
     await deviceDocRef.collection('compositions').doc(compName).set({
       'championPositions': championPositions,
       'timestamp': FieldValue.serverTimestamp(), // timestamp
     });
+  }
 
+  Future<void> updateTeampComp(
+      String compName, 
+      List<Map<String, String>> championPositions, 
+      DocumentReference deviceDocRef
+    ) async {
+    
+    // Update the team composition
+    await deviceDocRef.collection('compositions').doc(compName).update({
+      'championPositions': championPositions,
+      'timestamp': FieldValue.serverTimestamp(), // timestamp
+    });
+  }
+
+  void showSuccessfulSaveDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
