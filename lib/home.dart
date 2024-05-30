@@ -339,6 +339,7 @@ class HomeTabState extends State<HomeTab> {
             style: AppTextStyles.headline1BeaufortforLOL,
           ),
           content: TextField(
+            style: AppTextStyles.bodyText6Spiegel,
             controller: _compositionNameController,
             decoration: const InputDecoration(
               hintText: "Enter composition name",
@@ -462,7 +463,7 @@ class HomeTabState extends State<HomeTab> {
               resetPage();
             },
             child: Image.asset(
-              'assets/icons/expand-button.png',
+              'assets/icons/clear-button.png',
               width: 30,
               height: 30,
             ),
