@@ -148,64 +148,38 @@ class _CompViewTabState extends State<CompViewTab> with RouteAware {
                             color: AppColors.hintText,
                           ),
                         ),
-                        elevation: 5,
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.primaryVariant,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          padding: const EdgeInsets.all(16.0),
+                        SizedBox(height: 5),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                textAlign: TextAlign.left,
-                                compositions[index].name.toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.hintText,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: compositions[index]
+                                    .champions
+                                    .map((champion) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0),
+                                    child: Image.asset(
+                                      'assets/champions/${champion}.png',
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                  );
+                                }).toList(),
                               ),
-                              SizedBox(height: 5),
-                              SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: compositions[index]
-                                            .champions
-                                            .map((champion) {
-                                          return Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 1.0),
-                                            child: Image.asset(
-                                              'assets/champions/${champion}.png',
-                                              width: 40,
-                                              height: 40,
-                                            ),
-                                          );
-                                        }).toList(),
-                                      ),
-                                      SizedBox(height: 10),
-                                      SynergyListMini(
-                                          championsList:
-                                              compositions[index].champions),
-                                    ],
-                                  )),
+                              SizedBox(height: 10),
+                              SynergyListMini(
+                                championsList: compositions[index].champions,
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                    );
-                  },
-
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
