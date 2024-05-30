@@ -52,7 +52,7 @@ class FirebaseService {
             padding: EdgeInsets.only(top: 4.0),
             child: Text(
               'Would you like to delete "$compName"?',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14.0,
               ),
             ),
@@ -212,10 +212,8 @@ class FirebaseService {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text(
-                  'OK',
-                  style: AppTextStyles.headline5BeaufortforLOL,
-                ),
+                child: const Text('OK',
+                    style: AppTextStyles.headline5BeaufortforLOL),
               ),
             )
           ],
