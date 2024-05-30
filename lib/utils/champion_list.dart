@@ -43,7 +43,7 @@ class _ChampionListState extends State<ChampionList> {
     } else {
       return Expanded(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Container(
