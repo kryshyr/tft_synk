@@ -8,6 +8,7 @@ import 'comp_view.dart';
 import 'firebase_options.dart';
 import 'home.dart';
 import 'onboarding.dart';
+import 'route_observer.dart';
 import 'widgets/tabbed_screen.dart';
 
 Future<void> main() async {
@@ -25,12 +26,13 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   final bool seenOnboarding;
 
-  const MyApp({super.key, required this.seenOnboarding});
+  MyApp({super.key, required this.seenOnboarding});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [routeObserver],
       title: 'TFT SynK',
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
