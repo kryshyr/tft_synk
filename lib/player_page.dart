@@ -21,6 +21,7 @@ class _SummonerSearchState extends State<SummonerSearch> {
   String _errorMessage = '';
   String API_KEY = 'RGAPI-13a919d2-12bf-423e-b556-f600677e1519';
 
+// Search for a summoner and fetch data
   Future<void> _searchSummoner() async {
     setState(() {
       _isLoading = true;
@@ -127,12 +128,10 @@ class _SummonerSearchState extends State<SummonerSearch> {
               onPressed: _searchSummoner,
               style: ElevatedButton.styleFrom(
                 foregroundColor: AppColors.secondary,
-                backgroundColor: AppColors.primaryVariant, // Text color
+                backgroundColor: AppColors.primaryVariant,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
-                  side: BorderSide(
-                      color: AppColors.secondary,
-                      width: 2), // Border color and width
+                  side: BorderSide(color: AppColors.secondary, width: 2),
                 ),
               ),
               child: const Row(

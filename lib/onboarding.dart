@@ -24,10 +24,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
+// Skip to the next page
   void _skip() {
     _pageController.jumpToPage(widget.pages.length - 1);
   }
 
+// Navigate to the next page
   void _forward() {
     if (_pageController.page! < widget.pages.length - 1) {
       _pageController.nextPage(

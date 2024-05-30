@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tft_synk/app_constants.dart';
 
-import './utils/champion.dart'; // Import the Champion class and parseChampionsFromJson function
+import './utils/champion.dart';
 
 class UnitTab extends StatefulWidget {
   const UnitTab({super.key});
@@ -23,6 +23,7 @@ class _UnitTabState extends State<UnitTab> {
     _loadChampions();
   }
 
+// Function to load champions data from JSON
   Future<void> _loadChampions() async {
     Map<int, List<Champion>> data = await parseChampionsFromJson();
     setState(() {
@@ -41,6 +42,7 @@ class _UnitTabState extends State<UnitTab> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
+              // Search bar
               Expanded(
                 child: TextField(
                   decoration: const InputDecoration(
@@ -75,6 +77,8 @@ class _UnitTabState extends State<UnitTab> {
                   },
                 ),
               ),
+
+              // Dropdown filter
               const SizedBox(width: 8),
               DropdownButton<String>(
                 value: selectedFilter,
@@ -97,6 +101,8 @@ class _UnitTabState extends State<UnitTab> {
             ],
           ),
         ),
+
+        // List of champions
         Expanded(
           child: ListView.builder(
             itemCount: filteredChampions.length,
@@ -210,6 +216,7 @@ class _UnitTabState extends State<UnitTab> {
     );
   }
 
+// Function to filter champions based on search query and filter
   Map<int, List<Champion>> _filterChampions() {
     List<Champion> filteredList = allChampions.where((champion) {
       bool matchesQuery =
@@ -219,6 +226,7 @@ class _UnitTabState extends State<UnitTab> {
       return matchesQuery && matchesFilter;
     }).toList();
 
+// Group champions by tier
     Map<int, List<Champion>> tieredMap = {};
     for (var champion in filteredList) {
       if (!tieredMap.containsKey(champion.tier)) {
@@ -229,6 +237,7 @@ class _UnitTabState extends State<UnitTab> {
     return tieredMap;
   }
 
+// Function to get unique traits from all champions
   List<String> _getUniqueTraits() {
     Set<String> uniqueTraits = {};
     for (var champion in allChampions) {
