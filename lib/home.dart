@@ -81,7 +81,7 @@ class HomeTabState extends State<HomeTab> {
           .firstWhere((element) =>
               element.row == dropTargetRow && element.col == dropTargetCol)
           .championName;
-      previousChampionTraits = getTraitListByChampionName(previousChampionName);
+      previousChampionTraits = getChampionTraitList(previousChampionName);
     }
 
     // If the champion is dropped on the same hexagon
