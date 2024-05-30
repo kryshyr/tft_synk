@@ -8,6 +8,7 @@ import 'app_constants.dart';
 
 class DetailedViewPage extends StatelessWidget {
   final String title;
+  // final GlobalKey<HomeTabState> homeTabKey = ;
 
   const DetailedViewPage({Key? key, required this.title}) : super(key: key);
 
@@ -57,8 +58,9 @@ class DetailedViewPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                HomeTab(initialCompositionName: title),
+                            builder: (context) => HomeTab(
+                                key: GlobalKey<HomeTabState>(),
+                                initialCompositionName: title),
                           ),
                         );
                       },
