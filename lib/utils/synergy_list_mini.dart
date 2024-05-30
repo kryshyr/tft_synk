@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tft_synk/utils/synergy_list.dart';
 import 'package:tft_synk/utils/champion.dart';
+import 'package:tft_synk/route_observer.dart';
 
 class SynergyListMini extends StatefulWidget {
   final List<String> championsList;
@@ -14,7 +15,7 @@ class SynergyListMini extends StatefulWidget {
   _SynergyListMiniState createState() => _SynergyListMiniState();
 }
 
-class _SynergyListMiniState extends State<SynergyListMini> {
+class _SynergyListMiniState extends State<SynergyListMini> with RouteAware {
   Map<String, int> traitList = {};
 
   @override
@@ -23,7 +24,28 @@ class _SynergyListMiniState extends State<SynergyListMini> {
     _initializeTraitList();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(
+        this, ModalRoute.of(context)! as PageRoute<dynamic>);
+    _initializeTraitList();
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    _initializeTraitList();
+  }
+
   void _initializeTraitList() async {
+    traitList = {};
+
     for (String champion in widget.championsList) {
       List<String> traits = await getTraitListFromJson(champion);
       setState(() {
