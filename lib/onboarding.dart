@@ -24,9 +24,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
+  void _skip() {
+    _pageController.jumpToPage(widget.pages.length - 1);
+  }
+
+  void _forward() {
+    if (_pageController.page! < widget.pages.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        actions: [
+          TextButton(
+            onPressed: _skip,
+            child: const Text(
+              'Skip',
+              style: TextStyle(color: AppColors.secondary),
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
@@ -53,11 +78,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 dotHeight: 16.0,
                 paintStyle: PaintingStyle.stroke,
                 strokeWidth: 1.5,
-                dotColor: AppColors.primary,
+                dotColor: AppColors.secondary,
                 activeDotColor: AppColors.primaryVariant,
-              ), // You can choose different effects
+              ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox.shrink(), // Placeholder to keep the buttons centered
+                IconButton(
+                  icon: const Icon(Icons.arrow_forward,
+                      color: AppColors.secondary),
+                  onPressed: _forward,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16.0),
         ],
       ),
     );
@@ -87,13 +127,13 @@ class OnboardingPage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               border: Border.all(
-                color: AppColors.secondary, // Change the color as needed
-                width: 2.0, // Border width
+                color: AppColors.secondary,
+                width: 2.0,
               ),
             ),
             child: Image.asset(
               imagePath,
-              height: 500.0,
+              height: 400.0,
             ),
           ),
           const SizedBox(height: 30.0),
@@ -102,11 +142,14 @@ class OnboardingPage extends StatelessWidget {
             style: AppTextStyles.headline1BeaufortforLOL,
           ).animate().slide().fade(),
           const SizedBox(height: 16.0),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.bodyText1Spiegel,
-          ).animate().slide().fade(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+            child: Text(
+              description,
+              textAlign: TextAlign.justify,
+              style: AppTextStyles.bodyText6Spiegel,
+            ).animate().slide().fade(),
+          ),
           const SizedBox(height: 32.0),
         ],
       ),
@@ -131,7 +174,7 @@ class OnboardingLastPage extends StatelessWidget {
           const SizedBox(height: 16.0),
           Text(page.description,
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyText1Spiegel),
+              style: AppTextStyles.bodyText6Spiegel),
           const SizedBox(height: 32.0),
           Image.asset(
             page.imagePath,

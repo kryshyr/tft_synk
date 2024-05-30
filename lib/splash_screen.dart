@@ -55,9 +55,9 @@ class _SplashScreenState extends State<SplashScreen> {
                       imagePath: 'assets/onboarding/onboarding_2.gif',
                     ),
                     OnboardingPage(
-                      title: 'Costumize Comp Names',
+                      title: 'Customize Comp Names',
                       description:
-                          'As tacticians, we are fond of building powerful synergies by trying out different builds, synergies, and compositions. With TFT Synk, you can save and review your costumized comps in a few clicks.',
+                          'As tacticians, we are fond of building powerful synergies by trying out different builds, synergies, and compositions. With TFT Synk, you can save and review your customized comps in a few clicks.',
                       imagePath: 'assets/onboarding/onboarding_3.gif',
                     ),
                     OnboardingPage(
