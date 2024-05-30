@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tft_synk/utils/synergy_list_mini.dart';
 
 import './detailed_view.dart';
 import './firestore/firebase_service.dart';
@@ -152,21 +153,26 @@ class _CompViewTabState extends State<CompViewTab> with RouteAware {
                               SizedBox(height: 5),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: compositions[index]
-                                      .champions
-                                      .map((champion) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 1.0),
-                                      child: Image.asset(
-                                        'assets/champions/${champion}.png',
-                                        width: 40,
-                                        height: 40,
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: compositions[index]
+                                          .champions
+                                          .map((champion) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 1.0),
+                                          child: Image.asset(
+                                            'assets/champions/${champion}.png',
+                                            width: 40,
+                                            height: 40,
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                    SynergyListMini(champions: compositions[index].champions),
+                                  ],
+                                )
                               ),
                             ],
                           ),
