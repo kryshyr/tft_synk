@@ -109,79 +109,78 @@ class _CompViewTabState extends State<CompViewTab> with RouteAware {
         ),
       ),
       body: SafeArea(
-        child: compositions.isEmpty
-            ? const Center(child: CircularProgressIndicator())
-            : RefreshIndicator(
-                onRefresh: _fetchTeamComps,
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: compositions.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailedViewPage(
-                                title: compositions[index].name),
+        child: RefreshIndicator(
+          onRefresh: _fetchTeamComps,
+          child: ListView.builder(
+            padding: const EdgeInsets.all(8.0),
+            itemCount: compositions.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DetailedViewPage(title: compositions[index].name),
+                    ),
+                  );
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 5,
+                  margin: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.primaryVariant,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          compositions[index].name.toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.hintText,
                           ),
-                        );
-                      },
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        elevation: 5,
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.primaryVariant,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                compositions[index].name.toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.hintText,
+                        SizedBox(height: 5),
+                        SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: compositions[index]
+                                      .champions
+                                      .map((champion) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      child: Image.asset(
+                                        'assets/champions/${champion}.png',
+                                        width: 40,
+                                        height: 40,
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
-                              ),
-                              SizedBox(height: 5),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: compositions[index]
-                                          .champions
-                                          .map((champion) {
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 1.0),
-                                          child: Image.asset(
-                                            'assets/champions/${champion}.png',
-                                            width: 40,
-                                            height: 40,
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                    SynergyListMini(championsList: compositions[index].champions),
-                                  ],
-                                )
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+                                SynergyListMini(
+                                    championsList:
+                                        compositions[index].champions),
+                              ],
+                            )),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
