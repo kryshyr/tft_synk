@@ -41,46 +41,57 @@ class FirebaseService {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppColors.primaryVariant,
           title: const Padding(
             padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Delete',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Text('Delete', style: AppTextStyles.headline1BeaufortforLOL),
           ),
           content: Padding(
             padding: EdgeInsets.only(top: 4.0),
-            child: Text(
-              'Would you like to delete "$compName"?',
-              style: const TextStyle(
-                fontSize: 14.0,
-              ),
-            ),
+            child: Text('Would you like to delete "$compName"?',
+                style: AppTextStyles.bodyText6Spiegel),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
+            Container(
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 8, 40, 48),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancel',
+                  style: AppTextStyles.headline5BeaufortforLOL,
+                ),
+              ),
             ),
-            TextButton(
-              onPressed: () {
-                LoadingScreen.showLoadingScreen(context);
-                Timer(Duration(seconds: 2), () {
-                  deleteTeamComp(compName, deviceDocRef);
-                  for (int i = 0; i < 3; i++) {
-                    Navigator.of(context).pop();
-                  }
-                  showFirebaseDialog(
-                      context, 'Team composition deleted successfully.');
-                });
-              },
-              child: Text('Delete'),
-            ),
+            Container(
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 8, 40, 48),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  LoadingScreen.showLoadingScreen(context);
+                  Timer(const Duration(seconds: 2), () {
+                    deleteTeamComp(compName, deviceDocRef);
+                    for (int i = 0; i < 3; i++) {
+                      Navigator.of(context).pop();
+                    }
+                    showFirebaseDialog(
+                        context, 'Team composition deleted successfully.');
+                  });
+                },
+                child: const Text(
+                  'Delete',
+                  style: AppTextStyles.headline5BeaufortforLOL,
+                ),
+              ),
+            )
           ],
         );
       },

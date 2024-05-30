@@ -54,7 +54,23 @@ class _SummonerSearchState extends State<SummonerSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Summoner Search'),
+        backgroundColor: AppColors.background,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: AppColors.secondary),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(4.0),
+            child: Container(
+              color: Color.fromRGBO(200, 155, 60, 1),
+              height: 1.0,
+            )),
+        title: const Text(
+          'Summoner Search',
+          style: AppTextStyles.headline1BeaufortforLOL,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -70,9 +86,20 @@ class _SummonerSearchState extends State<SummonerSearch> {
                     color: AppColors.hintText,
                     fontFamily: 'Spiegel',
                     fontWeight: FontWeight.normal),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.primary)),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.secondary),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.tertiaryAccent),
+                ),
+                prefixIcon: Icon(Icons.person, color: AppColors.secondary),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 10),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
               style: AppTextStyles.bodyText6Spiegel,
               controller: _tagLineController,
@@ -82,18 +109,50 @@ class _SummonerSearchState extends State<SummonerSearch> {
                     color: AppColors.hintText,
                     fontFamily: 'Spiegel',
                     fontWeight: FontWeight.normal),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.primary)),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.secondary),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.tertiaryAccent),
+                ),
+                prefixIcon: Icon(Icons.tag, color: AppColors.secondary),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 10),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _searchSummoner,
-              child: Text(
-                'Search',
+              style: ElevatedButton.styleFrom(
+                foregroundColor: AppColors.secondary,
+                backgroundColor: AppColors.primaryVariant, // Text color
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                  side: BorderSide(
+                      color: AppColors.secondary,
+                      width: 2), // Border color and width
+                ),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.search,
+                    color: AppColors.secondary,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'Search',
+                    style: AppTextStyles.headline5BeaufortforLOL,
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             _isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : _errorMessage.isNotEmpty
                     ? Text(_errorMessage)
                     : _puuid.isNotEmpty
@@ -105,29 +164,110 @@ class _SummonerSearchState extends State<SummonerSearch> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: _statusList
-                                          .map((status) => Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('Tier: ${status.tier}',
-                                                      style: AppTextStyles
-                                                          .bodyText6Spiegel),
-                                                  Text('Rank: ${status.rank}',
-                                                      style: AppTextStyles
-                                                          .bodyText6Spiegel),
-                                                  Text(
-                                                      'League Points: ${status.leaguePoints}',
-                                                      style: AppTextStyles
-                                                          .bodyText6Spiegel),
-                                                  Text('Wins: ${status.wins}',
-                                                      style: AppTextStyles
-                                                          .bodyText6Spiegel),
-                                                  Text(
-                                                      'Losses: ${status.losses}',
-                                                      style: AppTextStyles
-                                                          .bodyText6Spiegel),
-                                                  Divider(),
-                                                ],
+                                          .map((status) => Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 8.0),
+                                                child: Card(
+                                                  color: AppColors.background,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    side: const BorderSide(
+                                                      color:
+                                                          AppColors.secondary,
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16.0),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Icon(Icons.person,
+                                                                color: AppColors
+                                                                    .secondary),
+                                                            SizedBox(width: 8),
+                                                            Text(
+                                                              _gameNameController
+                                                                  .text,
+                                                              style: AppTextStyles
+                                                                  .headline5BeaufortforLOL,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: 8),
+                                                        Row(
+                                                          children: [
+                                                            Icon(Icons.tag,
+                                                                color: AppColors
+                                                                    .secondary),
+                                                            SizedBox(width: 8),
+                                                            Text(
+                                                              _tagLineController
+                                                                  .text,
+                                                              style: AppTextStyles
+                                                                  .headline5BeaufortforLOL,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Divider(),
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                      'Tier: ${status.tier}',
+                                                                      style: AppTextStyles
+                                                                          .bodyText6Spiegel),
+                                                                  Text(
+                                                                      'Rank: ${status.rank}',
+                                                                      style: AppTextStyles
+                                                                          .bodyText6Spiegel),
+                                                                  Text(
+                                                                      'League Points: ${status.leaguePoints}',
+                                                                      style: AppTextStyles
+                                                                          .bodyText6Spiegel),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                      'Wins: ${status.wins}',
+                                                                      style: AppTextStyles
+                                                                          .bodyText6Spiegel),
+                                                                  Text(
+                                                                      'Losses: ${status.losses}',
+                                                                      style: AppTextStyles
+                                                                          .bodyText6Spiegel),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ))
                                           .toList(),
                                     )
