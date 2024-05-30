@@ -25,7 +25,15 @@ class _SynergyListMiniState extends State<SynergyListMini> {
   }
 
   void _initializeTraitList() async {
+    List<String> countedChamps = [];
+
     for (String champion in widget.championsList) {
+      if (countedChamps.contains(champion)) {
+        continue;
+      }
+
+      countedChamps.add(champion);
+
       List<String> traits = await getTraitListFromJson(champion);
       setState(() {
         for (String trait in traits) {
