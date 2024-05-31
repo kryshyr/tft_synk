@@ -135,15 +135,15 @@ class OnboardingPage extends StatelessWidget {
             ),
             child: Image.asset(
               imagePath,
-              height: 400.0,
+              height: 350.0,
             ),
           ),
-          const SizedBox(height: 30.0),
+          const SizedBox(height: 20.0),
           Text(
             title,
             style: AppTextStyles.headline1BeaufortforLOL,
           ).animate().slide().fade(),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 10.0),
           Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
             child: Text(
@@ -172,7 +172,11 @@ class OnboardingLastPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(page.title, style: AppTextStyles.headline1Spiegel),
+          Text(
+            page.title,
+            style: AppTextStyles.headline1Spiegel,
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 16.0),
           Text(page.description,
               textAlign: TextAlign.center,

@@ -15,7 +15,7 @@ class _SummonerSearchState extends State<SummonerSearch> {
   final TextEditingController _gameNameController = TextEditingController();
   final TextEditingController _tagLineController = TextEditingController();
   String _puuid = '';
-  String _summonerId = '';
+  // String _summonerId = '';
   List<Status> _statusList = [];
   bool _isLoading = false;
   String _errorMessage = '';
@@ -38,7 +38,7 @@ class _SummonerSearchState extends State<SummonerSearch> {
 
       setState(() {
         _puuid = summoner.puuid;
-        _summonerId = summonerId.id;
+        // _summonerId = summonerId.id;
         _statusList = statusList; // Set status list
         _isLoading = false;
         _errorMessage = '';
