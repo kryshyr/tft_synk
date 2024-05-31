@@ -96,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Callbacks
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

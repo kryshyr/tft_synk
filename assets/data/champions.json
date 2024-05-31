@@ -364,7 +364,7 @@
         },
         {
             "id": "tahm_kench",
-            "name": "Tahm Kench",
+            "name": "TahmKench",
             "tier": 3,
             "image": "TahmKench.png",
             "traits": [
@@ -499,7 +499,7 @@
         },
         {
             "id": "lee_sin",
-            "name": "Lee Sin",
+            "name": "LeeSin",
             "tier": 4,
             "image": "LeeSin.png",
             "traits": [
